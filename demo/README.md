@@ -106,10 +106,15 @@ first, then this tour, starting with `announced/`.
 
 Deploy with Cloudflare Workers static assets over `_site/` (`wrangler.jsonc`).
 Set the root directory to `demo`, the
-build command to `npx -y -p deno@2.8.3 -c 'deno task build'` and the deploy command
+build command to `npm run build` and the deploy command
 to `npx wrangler deploy`. Before publishing, set `host` in `phases.ts` to
 `kcd-website-demo.cloudnativehu.workers.dev`. See the
 [deployment guide](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/deployment.md) for branch previews.
+
+For a local deployment build, run `npm ci` first. The npm build script sets
+`DENO_NO_PACKAGE_JSON=1` before starting Deno so its task runner does not
+interpret the npm-installed Deno binary as JavaScript. The setting is inherited
+by the phase and showcase builds; their dependencies come from `deno.json`.
 
 ## Adding a phase
 

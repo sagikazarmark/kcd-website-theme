@@ -63,9 +63,14 @@ See the [demo README](../demo/README.md) and [showcase README](../showcase/READM
 | Feature showcase | `showcase` | `_site/` |
 | Starter preview | External template repository root | `_site/` |
 
-Build with `npx -y -p deno@2.8.3 -c 'deno task build'`; deploy with
-`npx wrangler deploy`. The npm command places Deno on the child-process PATH
-as well, which the demo's build subprocesses need.
+For the demo and showcase, install the toolchain with `npm ci`, build with
+`npm run build` and deploy with `npx wrangler deploy`. Use `npm run build` as
+the Cloudflare build command. npm places Deno on the child-process PATH,
+which the demo's build subprocesses need. The build scripts also set
+`DENO_NO_PACKAGE_JSON=1` before starting Deno: without it, Deno's task runner
+can interpret the npm-installed native Deno executable as JavaScript and fail
+with `Invalid or unexpected token`. Site dependencies are defined in
+`deno.json`, so package.json discovery is unnecessary for these builds.
 
 ## Releasing updates
 

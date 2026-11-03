@@ -37,3 +37,24 @@ jobs:
 
       - name: Build the showcase and the demo
         run: deno task build
+
+  cloudflare-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        site: [demo, showcase]
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.site }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install the npm toolchain used by Cloudflare
+        run: npm ci
+
+      - name: Build with the npm-installed Deno runtime
+        run: npm run build

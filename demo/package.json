@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "deno task build",
+    "build": "DENO_NO_PACKAGE_JSON=1 deno task build",
     "deploy": "wrangler deploy",
     "preview": "wrangler preview"
   },
