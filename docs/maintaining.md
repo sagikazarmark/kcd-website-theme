@@ -71,6 +71,9 @@ which the demo's build subprocesses need. The build scripts also set
 can interpret the npm-installed native Deno executable as JavaScript and fail
 with `Invalid or unexpected token`. Site dependencies are defined in
 `deno.json`, so package.json discovery is unnecessary for these builds.
+The devenv shell sets the same variable for local development and CI. When
+running the Deno commands above outside devenv, export `DENO_NO_PACKAGE_JSON=1`
+first so the Cloudflare tooling manifests do not change dependency resolution.
 
 ## Releasing updates
 
