@@ -1,0 +1,7 @@
+# Sponsor logos for the home page, tiers and logos in this order. SVGs in
+# src/assets/sponsors/ on one 500x300 canvas; `url` makes a logo a link.
+# `style` sizes a tier as Tailwind classes: `container` on the (centred,
+# wrapping) row, `item` on each logo. The section disappears with an empty
+# `tiers` list; the demo's sponsors phase fills it with two tiers (a few big
+# logos, then a row of four).
+tiers: []

@@ -1,0 +1,16 @@
+# Theme default: the event's logo by orientation and colour. The menu reads
+# `horizontal` (white over the hero, colour on inner pages), as does the
+# attending badge; the footer reads `vertical.white` unless `footer.logo`
+# names another file. `vertical` is optional, `vertical.color` within it too.
+#
+# The default paths are a convention: put your lockups at these paths under
+# src/assets/ and no logo.yaml is needed (the template ships placeholders
+# there: the official KCD logo with "YOUR CITY" over it and a dashed square,
+# "Your Logo", for your mark). Files elsewhere: copy this to
+# src/_data/logo.yaml and point at them.
+horizontal:
+  color: "/assets/logo-horizontal-color.svg"
+  white: "/assets/logo-horizontal-white.svg"
+vertical:
+  color: "/assets/logo-vertical-color.svg"
+  white: "/assets/logo-vertical-white.svg"

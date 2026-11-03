@@ -1,0 +1,12 @@
+# Call for papers: the facts. `open: false` removes the hero's "Submit a
+# talk" button and countdown and the home page's CFP section at the next
+# deploy (the menu entry is switched in nav.yaml); the words are in index.vto.
+# The demo's cfp-open phase shows the call open, with a filled-in FAQ.
+open: false
+url: "#"
+# ISO 8601 with offset; the CFP copy and buttons flip at this moment on their own.
+deadline: "2099-02-28T23:59:59+01:00"
+# The questions on /cfp-faq/, in order, `question` and `answer` (Markdown)
+# each; written when the call is prepared, with the page (`draft: true`
+# until then). Optional: drop it with the page.
+faq: []

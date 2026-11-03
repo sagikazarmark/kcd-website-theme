@@ -1,0 +1,382 @@
+{
+  "sessions": [
+    {
+      "id": "00000000-0000-4000-8000-00000000a001",
+      "title": "Registration",
+      "description": null,
+      "startsAt": "2030-05-15T08:00:00",
+      "endsAt": "2030-05-15T09:00:00",
+      "isServiceSession": true,
+      "isPlenumSession": true,
+      "speakers": [],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 1,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": null,
+      "isInformed": false,
+      "isConfirmed": false
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000a002",
+      "title": "Coffee break",
+      "description": null,
+      "startsAt": "2030-05-15T09:45:00",
+      "endsAt": "2030-05-15T10:00:00",
+      "isServiceSession": true,
+      "isPlenumSession": true,
+      "speakers": [],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 1,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": null,
+      "isInformed": false,
+      "isConfirmed": false
+    },
+    {
+      "id": "1001",
+      "title": "Why community days matter",
+      "description": "Conferences come and go, but the ones a community runs for itself leave something behind: the people who met there. This keynote looks at what a KCD does for a city's engineers that a vendor event cannot, and what it takes to keep one going.",
+      "startsAt": "2030-05-15T09:00:00",
+      "endsAt": "2030-05-15T09:45:00",
+      "isServiceSession": false,
+      "isPlenumSession": true,
+      "speakers": [
+        "00000000-0000-4000-8000-000000000001"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 103,
+          "answerValue": "true"
+        }
+      ],
+      "roomId": 1,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1002",
+      "title": "Kubernetes for the rest of us",
+      "description": "You do not need a platform team of twenty to run Kubernetes well. This talk walks through a small team's setup: one cluster per environment, a boring ingress, managed databases, and the handful of operational habits that keep it that way.\r\n\r\nExpect opinions, a few war stories and a checklist you can take home.",
+      "startsAt": "2030-05-15T10:00:00",
+      "endsAt": "2030-05-15T10:40:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "00000000-0000-4000-8000-000000000002"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 1,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1003",
+      "title": "Observability on a budget",
+      "description": "Metrics, logs and traces without the invoice: what the open source stack gives you for free, where the costs really come from, and how to decide what to keep. A practical tour of OpenTelemetry, Prometheus and friends for teams that count every euro.",
+      "startsAt": "2030-05-15T10:00:00",
+      "endsAt": "2030-05-15T10:40:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "00000000-0000-4000-8000-000000000003"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 2,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1004",
+      "title": "GitOps in practice",
+      "description": "Three migrations to GitOps, three sets of lessons. This talk covers the repository layouts that worked, the ones that did not, how to handle secrets and promotion between environments, and what to tell the people who liked clicking deploy.",
+      "startsAt": "2030-05-15T11:00:00",
+      "endsAt": "2030-05-15T11:40:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "00000000-0000-4000-8000-000000000004"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": 1,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1005",
+      "title": "My first contribution to a CNCF project",
+      "description": "From reading the contributing guide to a merged pull request: an honest account of a first open source contribution, including the parts that were confusing, the people who helped, and what to do when the CI goes red for reasons you do not understand.",
+      "startsAt": "2030-05-15T11:00:00",
+      "endsAt": "2030-05-15T11:40:00",
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "00000000-0000-4000-8000-000000000005"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 103,
+          "answerValue": "false"
+        },
+        {
+          "questionId": 104,
+          "answerValue": "true"
+        }
+      ],
+      "roomId": 2,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    },
+    {
+      "id": "1006",
+      "title": "Platform teams without the platform",
+      "description": "What a two-person team can do.\r\n\r\nAnd what it should not.",
+      "startsAt": null,
+      "endsAt": null,
+      "isServiceSession": false,
+      "isPlenumSession": false,
+      "speakers": [
+        "00000000-0000-4000-8000-000000000004"
+      ],
+      "categoryItems": [],
+      "questionAnswers": [],
+      "roomId": null,
+      "liveUrl": null,
+      "recordingUrl": null,
+      "status": "Accepted",
+      "isInformed": true,
+      "isConfirmed": true
+    }
+  ],
+  "speakers": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "firstName": "Ada",
+      "lastName": "Example",
+      "bio": "Ada runs the platform team at Example Corp, where she looks after the Kubernetes clusters that a few hundred developers deploy to every day.\r\n\r\nShe maintains a small open source tool for auditing cluster policies and has been part of the Demo City cloud native meetup since its first evening.",
+      "tagLine": "Principal Platform Engineer at Example Corp",
+      "profilePicture": "https://cdn.sessionize.com/image/0000-400o400o1-AdaExample.jpg",
+      "isTopSpeaker": false,
+      "links": [
+        {
+          "title": "LinkedIn",
+          "url": "https://example.com/kcd-demo-city/ada-example",
+          "linkType": "LinkedIn"
+        },
+        {
+          "title": "Twitter",
+          "url": "https://x.com/ada_example",
+          "linkType": "Twitter"
+        },
+        {
+          "title": "Blog",
+          "url": "https://ada.example",
+          "linkType": "Blog"
+        },
+        {
+          "title": "Company",
+          "url": "https://example.com",
+          "linkType": "Company_Website"
+        },
+        {
+          "title": "GitHub",
+          "url": "https://github.com/ada-example",
+          "linkType": "Other"
+        },
+        {
+          "title": "Facebook",
+          "url": "https://facebook.com/ada",
+          "linkType": "Facebook"
+        }
+      ],
+      "sessions": [
+        1001
+      ],
+      "fullName": "Ada Example",
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 101,
+          "answerValue": "Principal Platform Engineer"
+        },
+        {
+          "questionId": 102,
+          "answerValue": "Example Corp"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "firstName": "Bram",
+      "lastName": "Placeholder",
+      "bio": "Bram keeps the lights on at Demo Cloud and started the Demo City cloud native meetup in 2027.",
+      "tagLine": "SRE at Demo Cloud",
+      "profilePicture": null,
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1002
+      ],
+      "fullName": "Bram Placeholder",
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 101,
+          "answerValue": "Site Reliability Engineer"
+        },
+        {
+          "questionId": 102,
+          "answerValue": "Demo Cloud"
+        },
+        {
+          "questionId": 105,
+          "answerValue": "bram-placeholder"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "firstName": "Chloé",
+      "lastName": "Sample",
+      "bio": "Chloé talks to developers for a living and writes about observability for people who do not have a budget for it.",
+      "tagLine": "Developer Advocate at Sample Systems",
+      "profilePicture": null,
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1003
+      ],
+      "fullName": "Chloé Sample",
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 101,
+          "answerValue": "Developer Advocate"
+        },
+        {
+          "questionId": 102,
+          "answerValue": "Sample Systems"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000004",
+      "firstName": "Dev",
+      "lastName": "Fictional",
+      "bio": "Dev has moved three companies from hand-run deployments to GitOps and has the scars to prove it.",
+      "tagLine": "CTO at Fictional Labs",
+      "profilePicture": null,
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1004,
+        1006
+      ],
+      "fullName": "Dev Fictional",
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 101,
+          "answerValue": "CTO"
+        },
+        {
+          "questionId": 102,
+          "answerValue": "Fictional Labs"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "firstName": "Eli",
+      "lastName": "Mockup",
+      "bio": "Eli is finishing a computer science degree and made a first open source contribution last winter. This is Eli's first conference talk.",
+      "tagLine": "Student at Demo City University",
+      "profilePicture": null,
+      "isTopSpeaker": false,
+      "links": [],
+      "sessions": [
+        1005
+      ],
+      "fullName": "Eli Mockup",
+      "categoryItems": [],
+      "questionAnswers": [
+        {
+          "questionId": 101,
+          "answerValue": "Student"
+        },
+        {
+          "questionId": 102,
+          "answerValue": "Demo City University"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": 101,
+      "question": "Job Title",
+      "questionType": "Short_Text",
+      "sort": 1
+    },
+    {
+      "id": 102,
+      "question": "Company",
+      "questionType": "Short_Text",
+      "sort": 2
+    },
+    {
+      "id": 103,
+      "question": "Keynote",
+      "questionType": "Checkbox",
+      "sort": 3
+    },
+    {
+      "id": 104,
+      "question": "Cancelled",
+      "questionType": "Checkbox",
+      "sort": 4
+    },
+    {
+      "id": 105,
+      "question": "LinkedIn profile",
+      "questionType": "Short_Text",
+      "sort": 5
+    }
+  ],
+  "categories": [],
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Hall B",
+      "sort": 0
+    },
+    {
+      "id": 2,
+      "name": "Hall C",
+      "sort": 1
+    }
+  ]
+}

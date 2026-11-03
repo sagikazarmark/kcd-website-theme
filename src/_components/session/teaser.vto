@@ -1,0 +1,74 @@
+{{#
+    One talk out of many: every talk in `talks` as a large card linking into
+    the agenda page (`id: agenda`; the hash opens the talk's dialog), all but
+    the first hidden, and an inline script right after them showing a
+    random one instead. Inline, so the swap happens before paint and the
+    first talk never flashes; `hidden` on a bare wrapper, so nothing fights
+    it. The page picks the talks and writes the words around it.
+
+        {{ comp.session.teaser({ talks: schedule.sessions.filter((s) => !s.cancelled) }) }}
+
+    Props:
+        talks   normalised sessions from schedule.ts; nothing without any,
+                nor while the agenda page is not in the build
+#}}
+{{ set agendaPage = search.page("id=agenda") }}
+{{ if talks && talks.length && agendaPage }}
+    <div class="max-w-2xl mx-auto" data-teaser>
+        {{ for index, talk of talks }}
+            <div data-talk {{ if index > 0 }}hidden{{ /if }}>
+                <a
+                    href="{{ agendaPage.url }}#session-{{ talk.id }}"
+                    class="group block rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md md:p-8"
+                >
+                    <div class="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                        {{ if talk.start }}
+                            <span class="tabular-nums">
+                                <time datetime="{{ talk.startsAt }}">{{ talk.start }}</time>
+                                &ndash;
+                                <time datetime="{{ talk.endsAt }}">{{ talk.end }}</time>
+                            </span>
+                        {{ /if }}
+                        {{ if talk.room }}
+                            <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-gray-600">{{ talk.room |> escape }}</span>
+                        {{ /if }}
+                        {{ if talk.format }}
+                            <span class="rounded-full bg-accent/10 px-2.5 py-0.5 text-accent">{{ talk.format }}</span>
+                        {{ /if }}
+                    </div>
+                    <h3 class="mb-3 text-xl font-bold leading-snug text-black transition group-hover:text-primary md:text-2xl">
+                        {{ talk.title |> escape }}
+                    </h3>
+                    {{ if talk.paragraphs.length }}
+                        <p class="mb-6 line-clamp-3 text-gray-600">{{ talk.paragraphs[0] |> escape }}</p>
+                    {{ /if }}
+                    <ul class="flex flex-col gap-3">
+                        {{ for speaker of talk.speakers }}
+                            <li class="flex items-center gap-3">
+                                {{ comp.avatar({ speaker, size: "sm" }) }}
+                                <div class="min-w-0 text-sm leading-snug">
+                                    <p class="font-semibold text-black">{{ speaker.name |> escape }}</p>
+                                    {{ if speaker.byline }}
+                                        <p class="text-gray-600">{{ speaker.byline |> escape }}</p>
+                                    {{ /if }}
+                                </div>
+                            </li>
+                        {{ /for }}
+                    </ul>
+                    <p class="mt-6 text-sm font-semibold text-primary">
+                        Read the abstract
+                        {{ comp.ui.icon({ name: "fa-arrow-right", classes: "ml-1 transition group-hover:translate-x-1" }) }}
+                    </p>
+                </a>
+            </div>
+        {{ /for }}
+    </div>
+    <script>
+        (() => {
+            const talks = document.querySelectorAll("[data-teaser] [data-talk]");
+            if (talks.length < 2) return;
+            talks[0].hidden = true;
+            talks[Math.floor(Math.random() * talks.length)].hidden = false;
+        })();
+    </script>
+{{ /if }}

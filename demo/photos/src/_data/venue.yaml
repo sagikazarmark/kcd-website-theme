@@ -1,0 +1,52 @@
+# The venue as facts, shared by the home page's venue section, the map on
+# /venue/ and the hero; how to get there and parking are copy in venue.vto.
+# The demo venue is fictional; the photos are SVG placeholders (use 800x534
+# webp and a retina version).
+name: "Your City Convention Centre"
+building: "Hall B"
+address:
+  street: "1 Example Square"
+  city: "1000 Your City"
+  country: "Demoland"
+# WGS84; the map embed and the directions are derived from this and the
+# address (`map` below can override any of them).
+coordinates:
+  lat: 52.0
+  lon: 5.0
+website: "#"
+# The home page's venue section: a line, three highlights with icons, the
+# exterior photo (`src2x` is the retina version).
+summary: "A modern conference centre with two lecture halls and a bright foyer for the hallway track."
+highlights:
+  - icon: "fa-train"
+    text: "Five minutes on foot from the central station"
+  - icon: "fa-bicycle"
+    text: "Bike parking at the entrance"
+  - icon: "fa-utensils"
+    text: "Lunch and coffee breaks served on site"
+image:
+  src: "/assets/venue/venue-exterior.svg"
+  src2x: "/assets/venue/venue-exterior.svg"
+  alt: "Placeholder drawing of the convention centre's glass entrance"
+  width: 800
+  height: 534
+# Photos on /venue/, 800x534 with a retina version; optional.
+photos:
+  - src: "/assets/venue/venue-exterior.svg"
+    src2x: "/assets/venue/venue-exterior.svg"
+    alt: "Placeholder drawing of the convention centre's glass entrance"
+    caption: "Main entrance on Example Square"
+  - src: "/assets/venue/venue-hall.svg"
+    src2x: "/assets/venue/venue-hall.svg"
+    alt: "Placeholder drawing of the main lecture hall"
+    caption: "Hall B, the main stage"
+  - src: "/assets/venue/venue-foyer.svg"
+    src2x: "/assets/venue/venue-foyer.svg"
+    alt: "Placeholder drawing of the foyer"
+    caption: "The foyer, home of the hallway track"
+# The transit planner button in the page header. `embedUrl` (a maps.google.com
+# URL ending in `&output=embed`), `osmUrl`, `googleUrl` and `appleUrl` may
+# override the derived map links.
+map:
+  transitUrl: "#"
+  transitLabel: "Plan your trip with Demo Transit"

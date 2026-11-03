@@ -1,0 +1,10 @@
+# Where to follow the event: the footer, the "Stay tuned" band, the help
+# buttons (Discord). Any of website, discord, x, bluesky, mastodon, linkedin,
+# youtube, github; a key left out is skipped. "#" is a placeholder while there
+# is no account yet (the link stays on the page); replace with the URLs.
+discord: "#"
+x: "#"
+bluesky: "#"
+linkedin: "#"
+youtube: "#"
+github: "#"

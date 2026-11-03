@@ -1,0 +1,30 @@
+{{#
+    One logo in a row (a sponsor tier, the media partners); a link in a new
+    tab with `href`.
+
+        {{ comp.ui.logo({ name: "Acme", logo: "/assets/sponsors/acme.svg", href: "https://acme.example", width: 500, height: 300 }) }}
+
+    Props: name (the alt text), logo (the file), href (optional), width and
+    height of the file's canvas. `href`, not `url`: `url` is a page data
+    key every component sees, so an unset `url` prop would read the page's.
+#}}
+{{ set image }}
+    <img
+        src="{{ logo }}"
+        alt="{{ name }}"
+        width="{{ width }}"
+        height="{{ height }}"
+        loading="lazy"
+        decoding="async"
+        class="h-auto w-full"
+    />
+{{ /set }}
+{{ if href }}
+    <a
+        href="{{ href }}"
+        {{ href |> newTab }}
+        class="block rounded-lg transition hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+    >{{ image }}</a>
+{{ else }}
+    {{ image }}
+{{ /if }}

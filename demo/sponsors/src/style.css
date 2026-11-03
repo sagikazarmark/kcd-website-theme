@@ -1,0 +1,36 @@
+/*
+ * The site's stylesheet: the Tailwind v4 entry and the colour roles. This
+ * file is yours. The template ships it and the theme does not, so edit it;
+ * there is nothing to override.
+ *
+ * `theme.css` is the theme's: the CSS its components need beyond utilities
+ * (preflight fixes, rich-text links, the pretix widget). Lume resolves it
+ * from the theme's _includes/, so it keeps receiving theme updates. Leave
+ * the import in.
+ *
+ * The roles are what every component and page is written in (`bg-primary`,
+ * `text-accent`, `decoration-secondary/30`, `hover:bg-accent-strong`, ...).
+ * The values below are the CNCF palette; change them and the whole site
+ * follows, the attending badge included. Neutrals are Tailwind's `gray-*`
+ * scale and `black`/`white`; remap `--color-gray-*` here for warmer or
+ * cooler greys. `static` keeps the roles in the output even when no utility
+ * uses one, for assets/attending-badge.js, which paints the badge with them.
+ */
+@import "tailwindcss";
+@import "theme.css";
+
+@theme static {
+    /* Headings, links, outline buttons, the hero band, the primary section tone. */
+    --color-primary: #0086ff;
+    /* The darker step for small controls that need contrast on white. */
+    --color-primary-strong: color-mix(in oklab, var(--color-primary), black 20%);
+
+    /* Tints behind primary, underline decoration, the secondary button's hover,
+       the secondary section tone. */
+    --color-secondary: #93eaff;
+
+    /* Calls to action, badges and pills, link hover. */
+    --color-accent: #d62293;
+    /* The accent's hover/pressed step. */
+    --color-accent-strong: color-mix(in oklab, var(--color-accent), black 10%);
+}

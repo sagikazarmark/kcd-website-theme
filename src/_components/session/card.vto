@@ -1,0 +1,49 @@
+{{#
+    Agenda card for a talk; the title is a stretched <button> opening the
+    matching `session.dialog`. A cancelled talk keeps its card, muted and
+    marked. Props: session (normalised, from schedule.ts).
+#}}
+<article
+    class="relative flex h-full flex-col gap-3 rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary {{ if session.isPlenary }}border-accent/40{{ else }}border-gray-200{{ /if }}{{ if session.cancelled }} opacity-60{{ /if }}"
+    {{ if session.cancelled }}data-cancelled{{ /if }}
+>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500">
+        <span class="tabular-nums">
+            <time datetime="{{ session.startsAt }}">{{ session.start }}</time>
+            &ndash;
+            <time datetime="{{ session.endsAt }}">{{ session.end }}</time>
+        </span>
+        {{ if session.cancelled }}
+            <span class="rounded-full bg-gray-800 px-2.5 py-0.5 text-white">Cancelled</span>
+        {{ /if }}
+        {{ if session.format }}
+            <span class="rounded-full bg-accent/10 px-2.5 py-0.5 text-accent">{{ session.format }}</span>
+        {{ /if }}
+        {{# Plenary cards span the tracks, so they always name the room; the others sit under a column header on md up. #}}
+        {{ if session.room }}
+            <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-gray-600 {{ if !session.isPlenary }}md:hidden{{ /if }}">{{ session.room |> escape }}</span>
+        {{ /if }}
+    </div>
+    <h3 class="text-lg font-semibold leading-snug text-black{{ if session.cancelled }} line-through decoration-gray-400{{ /if }}">
+        <button
+            type="button"
+            data-dialog-open="session-{{ session.id }}"
+            class="text-left transition hover:text-primary focus:outline-none after:absolute after:inset-0"
+        >{{ session.title |> escape }}</button>
+    </h3>
+    {{ if session.speakers.length }}
+        <ul class="mt-auto flex flex-col gap-3 pt-1">
+            {{ for speaker of session.speakers }}
+                <li class="flex items-center gap-3">
+                    {{ comp.avatar({ speaker, size: "sm" }) }}
+                    <div class="min-w-0 text-sm leading-snug">
+                        <p class="font-semibold text-black">{{ speaker.name |> escape }}</p>
+                        {{ if speaker.byline }}
+                            <p class="text-gray-600">{{ speaker.byline |> escape }}</p>
+                        {{ /if }}
+                    </div>
+                </li>
+            {{ /for }}
+        </ul>
+    {{ /if }}
+</article>

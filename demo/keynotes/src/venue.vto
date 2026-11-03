@@ -1,0 +1,224 @@
+---
+id: venue
+title: Venue
+description: "KCD Your City 2099 takes place at the Your City Convention Centre. Find the address, map, public transport, cycling and parking options."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The facts come from `venue` (src/_data/venue.yaml) and `mapLinks(venue)`; how
+    to get here, parking and what to know are this page's copy, with ui.card,
+    venue.routes and ui.note: replace the fictional lines, stops and prices
+    with yours. #}}
+{{ set links = mapLinks(venue) }}
+
+<!-- Intro and photos -->
+{{ comp ui.section { width: "6xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Venue",
+        title: venue.name,
+        lede: `${event.name} ${event.year} takes place at the Your City Convention Centre, a short walk from the central station.`,
+    } }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Get directions", href: links.googleUrl, icon: "fa-diamond-turn-right", style: "primary", external: true }) }}
+            {{ comp.ui.button({ label: venue.map.transitLabel, href: venue.map.transitUrl, icon: "fa-route", style: "outline", external: true }) }}
+        {{ /comp }}
+    {{ /comp }}
+    {{ comp.venue.photos() }}
+{{ /comp }}
+
+<!-- Address and map -->
+{{ comp ui.band { id: "map", tone: "white", padding: "md" } }}
+    <div class="mx-auto max-w-6xl">
+        {{ comp.ui.heading({ title: "Where to find us" }) }}
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-5">
+            <div class="rounded-2xl bg-gray-50 p-8 shadow-lg lg:col-span-2">
+                <div class="mb-6 flex items-start gap-4">
+                    {{ comp.ui.icon({ name: "fa-location-dot", classes: "mt-1 text-3xl text-accent" }) }}
+                    <address class="not-italic">
+                        <p class="text-xl font-semibold text-black">{{ venue.name }}</p>
+                        {{ if venue.building }}
+                            <p class="text-gray-700">{{ venue.building }}</p>
+                        {{ /if }}
+                        <p class="mt-3 leading-7 text-gray-700">
+                            {{ venue.address.street }}<br />
+                            {{ venue.address.city }}<br />
+                            {{ venue.address.country }}
+                        </p>
+                    </address>
+                </div>
+                <p class="mb-6 leading-7 text-gray-700">
+                    Look for the glass building with the <em>Convention Centre</em> sign
+                    over the entrance, right on Example Square.
+                </p>
+                <div class="flex flex-col gap-3">
+                    {{ comp.ui.button({ label: "Open in Google Maps", href: links.googleUrl, icon: "fa-brands fa-google", style: "outline", size: "sm", external: true }) }}
+                    {{ comp.ui.button({ label: "Open in Apple Maps", href: links.appleUrl, icon: "fa-brands fa-apple", style: "outline", size: "sm", external: true }) }}
+                    <a
+                        href="{{ venue.website }}"
+                        {{ venue.website |> newTab }}
+                        class="mt-2 inline-flex items-center justify-center text-sm font-semibold text-gray-600 transition hover:text-primary"
+                    >
+                        {{ comp.ui.icon({ name: "fa-arrow-up-right-from-square", classes: "mr-2" }) }}
+                        Convention centre website
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative min-h-80 overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 shadow-lg lg:col-span-3">
+                <iframe
+                    src="{{ links.embedUrl }}"
+                    title="Map showing {{ venue.name }} at {{ venue.address.street }}, {{ event.city }}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="absolute inset-0 h-full w-full border-0"
+                ></iframe>
+                <a
+                    href="{{ links.osmUrl }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="absolute bottom-3 right-3 rounded-md bg-white/90 px-3 py-1.5 text-xs font-semibold text-gray-700 shadow transition hover:bg-white hover:text-primary"
+                >
+                    View larger map
+                </a>
+            </div>
+        </div>
+    </div>
+{{ /comp }}
+
+<!-- Getting there -->
+{{ comp ui.section { id: "getting-there", width: "6xl" } }}
+    {{ comp.ui.heading({
+        title: "Getting there",
+        lede: `The venue is well connected by public transport, and there is bike
+            parking at the door. A single Demo Transit ticket or pass covers
+            trams, buses and the metro within Your City.`,
+    }) }}
+
+    <div class="mb-10 grid grid-cols-1 gap-8 md:grid-cols-3">
+        {{ comp.ui.card({
+            icon: "fa-train-tram",
+            title: "By tram",
+            badges: { label: "Lines", items: ["1", "4"] },
+            details: [
+                { label: "Stop", text: "<em>Example Square</em>, right outside the venue" },
+                { label: "Connects", text: "Metro at <em>Central Station</em>" },
+            ],
+            footnote: "<strong>Walk time:</strong> 2 min",
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-bus",
+            title: "By bus",
+            badges: { label: "Lines", items: ["12", "40"] },
+            details: [
+                { label: "Stop", text: "<em>Convention Centre</em>" },
+                { label: "Tip", text: "Bus 12 is a direct ride from the airport" },
+            ],
+            footnote: "<strong>Walk time:</strong> 3 min",
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-bicycle",
+            title: "By bike",
+            details: [
+                { label: "Bike share", text: "<strong>Demo Bike</strong> station at the main entrance" },
+                { label: "Where", text: "Covered bike parking to the left of the doors" },
+            ],
+            footnote: "<em>A cycle path runs along Example Avenue all the way to the venue.</em>",
+        }) }}
+    </div>
+
+    {{ comp venue.routes { routes: [
+        { from: "Central Station", how: "<strong>Tram 1 or 4</strong> to <em>Example Square</em>, or a five-minute walk", time: "~5 min" },
+        { from: "Old Town", how: "<strong>Metro</strong> to <em>Central Station</em>, then <strong>tram 1 or 4</strong>", time: "~15 min" },
+        { from: "Your City Airport", how: "<strong>Bus 12</strong> to <em>Convention Centre</em>", time: "~35 min" },
+    ] } }}
+        Times are approximate. For live departures and exact routes use
+        <a href="{{ venue.map.transitUrl }}" {{ venue.map.transitUrl |> newTab }}>the Demo Transit journey planner</a>
+        or the Demo Transit app.
+    {{ /comp }}
+{{ /comp }}
+
+<!-- Parking -->
+{{ comp ui.band { id: "parking", tone: "white", padding: "md" } }}
+    <div class="mx-auto max-w-6xl">
+        {{ comp.ui.heading({
+            title: "Parking",
+            lede: `Street parking around the venue is scarce and time-limited, so we
+                recommend public transport. If you do drive, here is what to expect.`,
+        }) }}
+
+        <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-3">
+            {{ comp.ui.card({
+                icon: "fa-square-parking",
+                title: "Street parking",
+                tone: "gray",
+                details: [
+                    { label: "Zone", text: "City centre zone, paid on <strong>weekdays 09:00–18:00</strong>" },
+                    { label: "Rate", text: "4 per hour, <strong>3 hours maximum</strong>" },
+                    { label: "Payment", text: "Ticket machines and the Demo Parking app" },
+                ],
+                footnote: "<strong>Bottom line:</strong> fine for a quick stop, not for a full conference day.",
+            }) }}
+            {{ comp.ui.card({
+                icon: "fa-car",
+                title: "Car parks nearby",
+                tone: "gray",
+                details: [
+                    { label: "Square Garage", text: "Paid car park under <em>Example Square</em>, direct access to the venue" },
+                    { label: "Station car park", text: "Paid car park at <em>Central Station</em>, about 5 minutes' walk" },
+                ],
+                footnote: "<strong>Best for:</strong> leaving the car for the whole day.",
+            }) }}
+            {{ comp.ui.card({
+                icon: "fa-building",
+                title: "Parking at the venue",
+                tone: "gray",
+                text: "The convention centre has a small visitor car park; spaces cannot be reserved.",
+                footnote: "<em>Arrive early if you need one.</em>",
+            }) }}
+        </div>
+
+        {{ comp ui.note }}
+            Heads-up: the streets east of Example Avenue are residents-only.
+            Check the signs before you park.
+        {{ /comp }}
+    </div>
+{{ /comp }}
+
+<!-- Good to know -->
+{{ comp ui.section { id: "good-to-know", width: "6xl" } }}
+    {{ comp.ui.heading({ title: "Good to know" }) }}
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        {{ comp.ui.card({
+            icon: "fa-utensils",
+            title: "Food and drinks",
+            details: [
+                { label: "Included", text: "<strong>Lunch and coffee breaks</strong> are served at the venue throughout the event" },
+                { label: "On site", text: "Café in the foyer" },
+                { label: "Nearby", text: "Cafés, bakeries and restaurants around <em>Example Square</em>" },
+            ],
+            footnote: "<strong>Dietary requirements?</strong> Let us know in advance on Discord.",
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-taxi",
+            title: "Taxi and ride-hailing",
+            details: [
+                { label: "Apps", text: "The usual ride-hailing apps work in Your City" },
+                { label: "Fares", text: "Fixed, city-regulated tariff, so every company costs the same" },
+            ],
+            footnote: "<strong>Tell the driver:</strong> Convention Centre, Example Square",
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-universal-access",
+            title: "Accessibility",
+            text: "If you have accessibility needs or questions, let us know in advance and we will make arrangements with the venue.",
+            footnote: `<strong>Contact:</strong> <a href="${social.discord}" ${newTab(social.discord)}>the organizers on Discord</a>`,
+        }) }}
+    </div>
+{{ /comp }}
+
+<!-- Help -->
+{{ comp ui.cta { title: "Questions about the venue?", label: "Join the Discord", href: social.discord, icon: "fa-brands fa-discord", external: true } }}
+    Not sure how to get there, need help with accessibility, or travelling
+    from abroad? Ask the community and the organizers.
+{{ /comp }}

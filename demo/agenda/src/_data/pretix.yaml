@@ -1,0 +1,7 @@
+# The pretix shop, {host}/{organizer}/{event}/. The demo points at pretix's
+# public demo shop; replace `organizer` and `event` with yours.
+host: "https://pretix.eu"
+organizer: "demo"
+event: "democon"
+# A locale pretix ships the widget in.
+locale: "en"

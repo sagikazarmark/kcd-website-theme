@@ -1,0 +1,114 @@
+{{#
+    The site menu on every page: logo, the CTA button, and a hamburger (at
+    every width: more pages than fit a bar) opening a panel with the links.
+    Links come from `nav` (`main`, `secondary`, `cta`) through ui.navLinks,
+    which resolves `page` entries, leaves out drafts and disabled links and
+    marks the current page; the render functions below are the markup.
+
+    Props:
+        variant   "bar" (default: white, colour logo; layouts/page.vto) or
+                  "transparent" (over a hero, white logo; rendered by
+                   hero/frame.vto inside the hero's stacking context)
+        cta       optional override for nav.cta, including disabled
+        current   url of the page being rendered, for the active link
+
+    The toggle is the `menu` initialiser in src/theme.js (`data-menu`).
+#}}
+{{ set onHero = variant == "transparent" }}
+{{ set callToAction = cta || nav.cta }}
+
+{{# A main link: icon and label, primary when current; an absolute URL opens in a new tab. #}}
+{{ async function mainLink({ url, label, icon, active, draft }) }}
+    <li>
+        <a
+            href="{{ url }}"
+            {{ if active }}aria-current="page"{{ /if }}
+            {{ if url.startsWith("http://") || url.startsWith("https://") }}target="_blank" rel="noopener noreferrer"{{ /if }}
+            class="flex items-center gap-3 rounded-lg px-4 py-3 font-semibold transition {{ if active }}bg-primary/10 text-primary{{ else }}text-gray-700 hover:bg-gray-50 hover:text-primary{{ /if }}"
+        >
+            {{ comp.ui.icon({ name: icon, classes: `w-5 shrink-0 text-center text-sm ${active ? "text-primary" : "text-gray-400"}` }) }}
+            {{ label }}
+            {{ if draft }}{{ comp.ui.draftMark() }}{{ /if }}
+        </a>
+    </li>
+{{ /function }}
+
+{{# A legal link at the foot of the panel. #}}
+{{ async function secondaryLink({ url, label, active, draft }) }}
+    <li>
+        <a
+            href="{{ url }}"
+            {{ if active }}aria-current="page"{{ /if }}
+            class="inline-flex items-center gap-1.5 text-sm transition hover:text-primary {{ if active }}font-semibold text-primary{{ else }}text-gray-500{{ /if }}"
+        >
+            {{ label }}
+            {{ if draft }}{{ comp.ui.draftMark() }}{{ /if }}
+        </a>
+    </li>
+{{ /function }}
+
+{{# The CTA button beside the hamburger. #}}
+{{ async function ctaLink({ url, label, icon, draft }) }}
+    <a
+        {{ if callToAction.disabled }}
+            aria-disabled="true"
+        {{ else }}
+            href="{{ url }}"
+        {{ /if }}
+        class="inline-flex items-center rounded-lg border-2 border-accent bg-accent px-4 py-2 text-sm font-semibold text-white transition sm:px-5 md:text-base {{ if callToAction.disabled }}cursor-not-allowed opacity-60{{ else }}hover:border-accent-strong hover:bg-accent-strong{{ /if }} {{ if onHero }}shadow-lg{{ else }}shadow-sm{{ /if }}"
+    >
+        {{ comp.ui.icon({ name: icon, classes: "mr-2 shrink-0" }) }}
+        {{ label }}
+        {{ if draft }}{{ comp.ui.draftMark({ onDark: true }) }}{{ /if }}
+    </a>
+{{ /function }}
+
+
+<header data-menu class="relative {{ if onHero }}z-20{{ else }}bg-white shadow-sm{{ /if }}">
+    {{# The panel is anchored to the nav (the centred container), not the full-bleed header. #}}
+    <nav
+        class="container relative mx-auto flex items-center justify-between gap-4 px-6 {{ if onHero }}py-6{{ else }}py-5{{ /if }}"
+        aria-label="Main"
+    >
+        <a href="/" class="inline-flex shrink-0 items-center">
+            <img
+                src="{{ if onHero }}{{ logo.horizontal.white }}{{ else }}{{ logo.horizontal.color }}{{ /if }}"
+                alt="{{ event.name }}"
+                class="h-12 sm:h-16 md:h-20 {{ if onHero }}drop-shadow-lg{{ /if }}"
+            />
+        </a>
+
+        <div class="flex items-center gap-3">
+            {{ comp.ui.navLinks({ links: [callToAction], render: ctaLink }) }}
+
+            <button
+                type="button"
+                data-menu-toggle
+                aria-expanded="false"
+                aria-controls="site-menu"
+                aria-label="Menu"
+                class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border-2 transition {{ if onHero }}border-white/40 text-white hover:bg-white/15{{ else }}border-gray-200 text-gray-700 hover:bg-gray-100{{ /if }}"
+            >
+                {{ comp.ui.icon({ name: "fa-bars", classes: "text-xl" }) }}
+            </button>
+        </div>
+
+        {{# Inside the <nav>, so the Main landmark holds the links; full width on phones, a card under the button from sm up. #}}
+        <div
+            id="site-menu"
+            data-menu-panel
+            hidden
+            class="absolute inset-x-0 top-full z-30 border-y border-gray-100 bg-white p-4 shadow-xl sm:left-auto sm:right-6 sm:w-80 sm:rounded-lg sm:border"
+        >
+            <ul class="flex flex-col gap-1">
+                {{ comp.ui.navLinks({ links: nav.main, current, render: mainLink }) }}
+            </ul>
+
+            {{ if nav.secondary }}
+                <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-gray-100 px-4 pt-3">
+                    {{ comp.ui.navLinks({ links: nav.secondary, current, render: secondaryLink }) }}
+                </ul>
+            {{ /if }}
+        </div>
+    </nav>
+</header>

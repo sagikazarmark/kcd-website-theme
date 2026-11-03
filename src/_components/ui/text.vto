@@ -1,0 +1,12 @@
+{{#
+    Timed text: a plain string, or { html, until, after } that shows `html`
+    until the `until` time and `after` from then on (through ui.until /
+    ui.after). Any copy prop that flips at a deadline takes this shape.
+
+        {{ comp.ui.text({ value: { html: "CFP open", until: cfp.deadline, after: "CFP closed" } }) }}
+#}}
+{{ if value && typeof value == "object" }}
+    {{ comp ui.until { time: value.until } }}{{ value.html }}{{ /comp }}{{ comp ui.after { time: value.until } }}{{ value.after }}{{ /comp }}
+{{ else }}
+    {{ value }}
+{{ /if }}

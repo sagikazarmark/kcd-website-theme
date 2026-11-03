@@ -1,0 +1,67 @@
+{{#
+    Fact card: icon and title, then a label/value list, a paragraph, or
+    nothing more, with an optional footnote pinned to the bottom (cards in a
+    row stretch to equal height). With `href` the whole card is a link.
+
+        {{ comp.ui.card({
+            icon: "fa-train-tram",
+            title: "By tram",
+            badges: { label: "Lines", items: ["17", "19", "41"] },
+            details: [{ label: "Stop", text: "<em>Katinyi mártírok parkja</em>, outside the venue" }],
+            footnote: "<strong>Walk time:</strong> 2–3 min",
+        }) }}
+        {{ comp.ui.card({ icon: "fa-brands fa-youtube", iconClasses: "text-red-600", title: "Recordings", text: "Every talk on YouTube.", align: "center", href: "https://...", external: true }) }}
+
+    Props:
+        icon         glyph, see `ui.icon`
+        iconClasses  optional icon classes; default "text-accent"
+        title        card heading
+        badges       optional { label, items[] }, rendered as pills in the
+                     first row of the list
+        details      optional [{ label, text }]; text may carry inline HTML
+        text         optional paragraph, instead of `details`
+        align        optional; "center" for a centred blurb at body size,
+                     default a left-aligned small-print fact
+        footnote     optional inline HTML pinned to the bottom
+        tone         "white" (default) or "gray", to contrast with the band
+        href         optional; the whole card becomes a link
+        external     optional; with `href`, opens in a new tab
+#}}
+{{ set tag = href ? "a" : "div" }}
+<{{ tag }}
+    {{ if href }}href="{{ href }}"{{ /if }}
+    {{ if href && external }}{{ href |> newTab }}{{ /if }}
+    class="flex flex-col rounded-lg {{ if tone == "gray" }}bg-gray-50{{ else }}bg-white{{ /if }} p-8 shadow-lg{{ if href }} transition hover:shadow-xl{{ /if }}"
+>
+    <div class="mb-5 text-center">
+        {{ comp.ui.icon({ name: icon, classes: `mb-4 text-4xl ${iconClasses || "text-accent"}` }) }}
+        <h3 class="text-xl font-semibold text-black">{{ title }}</h3>
+    </div>
+    {{ if details || badges }}
+        <dl class="mb-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 text-sm leading-6">
+            {{ if badges }}
+                <dt class="font-semibold text-gray-500">{{ badges.label }}</dt>
+                <dd class="flex flex-wrap gap-1.5">
+                    {{ for item of badges.items }}
+                        <span class="inline-flex min-w-8 items-center justify-center rounded-md bg-primary/10 px-2 py-0.5 font-bold text-primary">{{ item }}</span>
+                    {{ /for }}
+                </dd>
+            {{ /if }}
+            {{ for detail of details }}
+                <dt class="font-semibold text-gray-500">{{ detail.label }}</dt>
+                <dd class="text-gray-700">{{ detail.text }}</dd>
+            {{ /for }}
+        </dl>
+    {{ else if text }}
+        {{ if align == "center" }}
+            <p class="mb-5 text-center leading-7 text-gray-700">{{ text }}</p>
+        {{ else }}
+            <p class="mb-5 text-sm leading-6 text-gray-700">{{ text }}</p>
+        {{ /if }}
+    {{ /if }}
+    {{ if footnote }}
+        <p class="mt-auto border-t border-gray-100 pt-4 text-sm leading-6 text-gray-600 [&>strong]:text-black [&_a]:font-semibold [&_a]:text-primary [&_a]:underline [&_a]:decoration-primary/30 [&_a]:underline-offset-4 [&_a:hover]:decoration-primary">
+            {{ footnote }}
+        </p>
+    {{ /if }}
+</{{ tag }}>

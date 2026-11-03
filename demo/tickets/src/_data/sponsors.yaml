@@ -1,0 +1,28 @@
+# Sponsor logos for the home page, tiers and logos in this order. SVGs in
+# src/assets/sponsors/ on one 500x300 canvas; `url` makes a logo a link.
+# `style` sizes a tier as Tailwind classes: `container` on the (centred,
+# wrapping) row, `item` on each logo. The two recipes here: two or three big
+# logos per row, and four per row (`max-w-4xl` stops a fifth, so seven split
+# 4 + 3). The section disappears with an empty `tiers` list.
+tiers:
+  - name: "Main sponsor"
+    style:
+      container: "gap-6"
+      item: "w-60 sm:w-72"
+    logos:
+      - name: "Alpha Cloud"
+        logo: "/assets/sponsors/alpha-cloud.svg"
+        url: "#"
+  - name: "Sponsors"
+    style:
+      container: "max-w-4xl gap-4 sm:gap-6"
+      item: "w-36 sm:w-32 md:w-40 lg:w-44"
+    logos:
+      - name: "Beta Systems"
+        logo: "/assets/sponsors/beta-systems.svg"
+        url: "#"
+      - name: "Gamma Labs"
+        logo: "/assets/sponsors/gamma-labs.svg"
+        url: "#"
+      - name: "Delta Hosting"
+        logo: "/assets/sponsors/delta-hosting.svg"

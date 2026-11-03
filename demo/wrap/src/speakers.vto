@@ -1,0 +1,62 @@
+---
+id: speakers
+title: Speakers
+description: "Meet the speakers of KCD Your City 2099. Engineers, maintainers and practitioners from across the cloud native community, with bios and their talks."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# `schedule.speakers` (everyone with a talk that is on), keynote speakers first in their own group. Before the announcement, `draft: true` keeps the page out of the build. #}}
+{{ set keynoteSpeakers = schedule.speakers.filter((speaker) => speaker.isKeynote) }}
+{{ set otherSpeakers = schedule.speakers.filter((speaker) => !speaker.isKeynote) }}
+
+<!-- Intro and speaker grid -->
+{{ comp ui.section { width: "6xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Speakers",
+        title: "Meet the speakers",
+        lede: schedule.speakers.length
+            ? `${schedule.speakers.length} engineers, maintainers and
+                practitioners from across the cloud native community. Select a
+                speaker to read their bio and find their talk.`
+            : "The line-up is being put together; follow us to hear first.",
+    } }}
+        <noscript>
+            <p class="mt-3 text-sm text-gray-500">
+                Enable JavaScript to open speaker profiles.
+            </p>
+        </noscript>
+    {{ /comp }}
+
+    {{ if keynoteSpeakers.length }}
+        <h2 class="mb-6 text-center text-2xl font-bold text-primary">Keynote speakers</h2>
+        {{# Centred, so two or three cards do not hug the left edge. #}}
+        <ul class="mb-14 grid justify-center gap-6 grid-cols-[repeat(auto-fit,minmax(16rem,18rem))]">
+            {{ for speaker of keynoteSpeakers }}
+                <li>
+                    {{ comp.speaker.card({ speaker }) }}
+                </li>
+            {{ /for }}
+        </ul>
+        <h2 class="mb-6 text-center text-2xl font-bold text-primary">Speakers</h2>
+    {{ /if }}
+
+    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {{ for speaker of otherSpeakers }}
+            <li>
+                {{ comp.speaker.card({ speaker }) }}
+            </li>
+        {{ /for }}
+    </ul>
+{{ /comp }}
+
+<!-- Agenda (the panel waits while the agenda page is a draft) -->
+{{ comp ui.cta { title: "Find their talks", label: "View the agenda", page: "agenda", icon: "fa-calendar-days", tone: "white" } }}
+    See when and where each talk happens{{ if schedule.rooms.length > 1 }} across the
+    {{ schedule.rooms.length }} tracks{{ /if }}.
+{{ /comp }}
+
+{{# One dialog per speaker, opened by the cards. #}}
+{{ for speaker of schedule.speakers }}
+    {{ comp.speaker.dialog({ speaker }) }}
+{{ /for }}

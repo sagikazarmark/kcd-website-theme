@@ -1,0 +1,18 @@
+{{#
+    Note: a tinted callout with an icon beside the content, for a heads-up
+    that stands apart from the cards around it. Narrow and centred.
+
+        {{ comp ui.note }}Heads-up: south of Nagyszombat utca the tariff is zone B.{{ /comp }}
+
+    Props: icon (default "fa-circle-info"), tone (info, default; warning,
+    amber), content (inline HTML allowed).
+#}}
+{{ set tones = {
+    info: { box: "border-secondary bg-secondary/20", icon: "text-primary" },
+    warning: { box: "border-amber-300 bg-amber-50", icon: "text-amber-500" },
+} }}
+{{ set style = tones[tone || "info"] }}
+<div class="mx-auto flex max-w-3xl items-start gap-4 rounded-lg border p-6 {{ style.box }}">
+    {{ comp.ui.icon({ name: icon || "fa-circle-info", classes: `mt-1 shrink-0 text-2xl ${style.icon}` }) }}
+    <p class="leading-7 text-gray-700">{{ content }}</p>
+</div>

@@ -1,0 +1,92 @@
+# Call for papers: the facts. `open: false` removes the hero's "Submit a
+# talk" button and countdown and the home page's CFP section at the next
+# deploy (the menu entry is switched in nav.yaml); the words are in index.vto.
+# Closed on 28 February 2099; the block is kept for the record and the next edition.
+open: false
+url: "#"
+# ISO 8601 with offset; the CFP copy and buttons flip at this moment on their own.
+deadline: "2099-02-28T23:59:59+01:00"
+# The questions on /cfp-faq/, in order; answers are Markdown. Optional: drop
+# it with the page.
+faq:
+  - question: "Who can submit a talk?"
+    answer: >-
+      Anyone with something to share about Kubernetes or the cloud native
+      ecosystem: engineers, operators, students, researchers, people from end
+      users, consultancies and vendors alike. You do not need to have spoken
+      at a conference before, and you do not need to work for a well-known
+      company. We care about what you learned and how you can pass it on.
+  - question: "What topics are you looking for?"
+    answer: |
+      Anything from the cloud native landscape that a room of practitioners
+      would want to hear. In past editions the talks people remembered were:
+
+      - lessons from running Kubernetes in production, including the failures
+      - platform engineering and developer experience on top of Kubernetes
+      - security, supply chain and policy
+      - observability, cost and performance
+      - running data, AI and machine-learning workloads on Kubernetes
+      - a deep dive into one CNCF project, by someone who uses or maintains it
+
+      Technical talks from end users carry the most weight. A product pitch
+      does not get in, however good the product; a talk about *how* you built
+      something with it may.
+  - question: "What formats can I submit?"
+    answer: >-
+      Regular talks are **30 minutes** including questions, and lightning
+      talks **10 minutes** with none. Pick the one that fits the story: a
+      lightning talk that makes one point well beats a half-hour that pads it
+      out. Panels and workshops are not part of the call this year.
+  - question: "Can I submit more than one proposal?"
+    answer: >-
+      Yes, up to three. We will accept at most one per speaker so that as many
+      people as possible get to the stage. If you submit several, make them
+      different talks rather than variations of one.
+  - question: "I have never given a talk. Should I still submit?"
+    answer: >-
+      Please do. Every speaker started somewhere, and a community day is the
+      friendliest place to start. If you tell us in your proposal that this
+      is your first talk, we will pair you with an organiser who will read
+      your draft, listen to a dry run and answer the questions you did not
+      want to ask in public. Ask on [Discord](#)
+      before the deadline if you want help with the proposal itself.
+  - question: "How are talks selected?"
+    answer: |
+      A programme committee of organisers and community members reads every
+      proposal and rates it on the same four things:
+
+      1. **Relevance**: is this what our attendees came for?
+      2. **Depth**: would a practitioner learn something they could use?
+      3. **Clarity**: do the title and abstract say what the talk will deliver?
+      4. **Voice**: does the speaker have first-hand experience of the subject?
+
+      Names and employers are hidden during the first pass. Sponsoring the
+      event does not buy a slot; sponsor sessions are labelled as such and
+      sit outside the call for papers.
+  - question: "When will I hear back?"
+    answer: >-
+      We send every submitter an answer, accepted or not, by the end of March
+      2099, and publish the schedule in April. If you have not heard from us
+      by then, check your spam folder and then ask us on Discord.
+  - question: "What do speakers get?"
+    answer: >-
+      A free ticket, a seat at the speakers' dinner the evening before, and a
+      recording of your talk on our YouTube channel to keep. We are a
+      volunteer-run community event with no travel budget, so we cannot pay
+      for travel or hotels in general; if the cost would stop you from
+      speaking, say so in the proposal and we will see what we can do.
+  - question: "Will my talk be recorded?"
+    answer: >-
+      Yes. Every talk is recorded and published on our YouTube channel a few
+      weeks after the event, and your slides go on the schedule page if you
+      send them to us. Tell us when you submit if your employer does not allow
+      recording.
+  - question: "Which language should I speak in?"
+    answer: >-
+      English. Our audience and a good share of our speakers come from outside
+      the country, and the recordings reach further in English.
+  - question: "What rules apply on the day?"
+    answer: >-
+      The [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/main/code-of-conduct.md)
+      applies to speakers, attendees, sponsors and organisers, on stage and
+      off. Read it before you submit; by submitting you agree to it.

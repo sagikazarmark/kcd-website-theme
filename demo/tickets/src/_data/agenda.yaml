@@ -1,0 +1,81 @@
+# As `deno task sessionize` writes it before the timetable is published: the
+# accepted talks with their speakers, no room or time on any of them, no
+# breaks, and the agenda page a draft. The next run overwrites this file;
+# corrections go in _data/patches/agenda.yaml (here the keynote flags).
+rooms:
+  - Green Room
+  - Yellow Room
+  - Restaurant
+sessions:
+  - id: '14022'
+    title: Aiden's Keynote
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000004
+    plenary: true
+  - id: '14020'
+    title: Emma's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000002
+  - id: '14019'
+    title: Jackson's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000001
+  - id: '14026'
+    title: Ava's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000008
+  - id: '14023'
+    title: Lucas's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000005
+  - id: '14027'
+    title: Mia's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000009
+  - id: '14025'
+    title: Noah's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000007
+  - id: '14024'
+    title: Liam's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000006
+  - id: '14018'
+    title: Sophia's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000000
+  - id: '14021'
+    title: Olivia's Session
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    speakers:
+      - 00000000-0000-0000-0000-000000000003
+breaks: []

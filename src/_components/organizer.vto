@@ -1,0 +1,116 @@
+{{#
+    One card in the home page's organizers row: portrait, name, role and
+    company, with a `dialog.frame` modal for the bio and links. Renders an
+    <li> sized for a 3-up flex-wrap row. The card is clickable (an invisible
+    <button> stretched over it, so <h3> stays valid and the keyboard works)
+    only when there is a bio or a link to show. The dialog's id is
+    `organizer-<slug of the name>`, also the URL hash while open.
+
+    Props (one entry of `organizers.people`):
+        name     required
+        photo    square portrait, optional; an icon avatar stands in
+        role, company  optional
+        bio      optional; a blank line starts a paragraph
+        links    optional network -> URL map (ui.socialLinks)
+#}}
+{{ set hasDetails = bio || links }}
+{{ set slugName = name |> slug }}
+{{ set id = `organizer-${slugName}` }}
+<li
+    {{# 1 -> 2 -> 3 -> 4 per row; each width subtracts its share of the gap-6 gutters. #}}
+    class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1.125rem)]"
+>
+    <div class="group relative flex h-full items-center gap-4 rounded-lg bg-white p-5 shadow-md {{ if hasDetails }}transition hover:shadow-xl{{ /if }}">
+        {{ if photo }}
+            {{# transform-images: Lume's optional picture plugin; 64 is the CSS size, @2 for retina. #}}
+            <img
+                src="{{ photo }}"
+                alt="{{ name }}"
+                width="400"
+                height="400"
+                loading="lazy"
+                transform-images="avif webp 64@2"
+                class="h-16 w-16 shrink-0 rounded-full object-cover"
+            />
+        {{ else }}
+            <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-300">
+                {{ comp.ui.icon({ name: "fa-user", classes: "text-2xl" }) }}
+            </span>
+        {{ /if }}
+        <div class="min-w-0 flex-1">
+            <h3 class="font-semibold leading-snug text-black">{{ name }}</h3>
+            {{ if role }}
+                <p class="mt-1 text-sm font-medium leading-snug text-accent">{{ role }}</p>
+            {{ /if }}
+            {{ if company }}
+                <p class="mt-0.5 text-xs leading-snug text-gray-500">{{ company }}</p>
+            {{ /if }}
+        </div>
+        {{ if hasDetails }}
+            {{ comp.ui.icon({ name: "fa-chevron-right", classes: "shrink-0 text-xs text-gray-300 transition group-hover:translate-x-0.5 group-hover:text-primary" }) }}
+            <button
+                type="button"
+                data-dialog-open="{{ id }}"
+                class="absolute inset-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                aria-label="More about {{ name }}"
+            ></button>
+        {{ /if }}
+    </div>
+
+    {{# Must match the card's clickable condition exactly, so a trigger always
+        has its dialog. #}}
+    {{ if hasDetails }}
+        {{ comp dialog.frame { id } }}
+            {{# `pr-8` keeps the name clear of the frame's close button. #}}
+            <div class="flex items-start gap-4 pr-8">
+                {{ if photo }}
+                    <img
+                        src="{{ photo }}"
+                        alt=""
+                        width="400"
+                        height="400"
+                        transform-images="avif webp 64@2"
+                        class="h-16 w-16 shrink-0 rounded-full object-cover"
+                    />
+                {{ else }}
+                    <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-300">
+                        {{ comp.ui.icon({ name: "fa-user", classes: "text-2xl" }) }}
+                    </span>
+                {{ /if }}
+                <div class="min-w-0 flex-1">
+                    <h3 id="{{ id }}-title" class="text-lg font-semibold text-black">{{ name }}</h3>
+                    {{ if role }}
+                        <p class="mt-1 text-sm font-medium leading-snug text-accent">{{ role }}</p>
+                    {{ /if }}
+                    {{ if company }}
+                        <p class="mt-0.5 text-xs leading-snug text-gray-500">{{ company }}</p>
+                    {{ /if }}
+                </div>
+            </div>
+            {{ if bio }}
+                <div class="mt-6 space-y-4 border-t border-gray-100 pt-6 leading-7 text-gray-700">
+                    {{ for paragraph of bio.split("\n") }}
+                        <p>{{ paragraph }}</p>
+                    {{ /for }}
+                </div>
+            {{ /if }}
+            {{ if links }}
+                {{# One profile link: a grey icon, primary on hover, named for
+                    the screen reader as "<name> on <network>". #}}
+                {{ async function profileLink({ link, label, icon }) }}
+                    <a
+                        href="{{ link }}"
+                        {{ link |> newTab }}
+                        class="text-gray-400 transition hover:text-primary"
+                        aria-label="{{ name }} on {{ label }}"
+                    >
+                        {{ comp.ui.icon({ name: icon, classes: "text-lg" }) }}
+                    </a>
+                {{ /function }}
+                <div class="mt-6 flex gap-4 border-t border-gray-100 pt-4">
+                    {{ comp.ui.socialLinks({ links, render: profileLink }) }}
+                </div>
+            {{ /if }}
+        {{ /comp }}
+    {{ /if }}
+</li>

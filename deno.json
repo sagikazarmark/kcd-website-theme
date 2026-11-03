@@ -1,0 +1,85 @@
+{
+  "imports": {
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts",
+    "@std/assert": "jsr:@std/assert@^1.0.19"
+  },
+  "tasks": {
+    "test": {
+      "description": "Theme tests: the data schema, the components and the layouts, rendered in-process; plus a build of every phase of the demo",
+      "command": "deno test -P=test tests/"
+    },
+    "check": {
+      "description": "Type-check the theme and the tests, then every instance's config with its own deno.json (where the kcd-theme/ alias lives), and the demo's build script",
+      "command": "deno check *.ts schema/*.ts scripts/*.ts tests/*.ts && cd showcase && deno check _config.ts && cd ../demo && deno check build.ts phases.ts && cd announced && deno check _config.ts && cd ../agenda && deno check _config.ts"
+    },
+    "lint": {
+      "description": "Lint every TypeScript file (Lume's lint plugin included)",
+      "command": "deno lint"
+    },
+    "build": {
+      "description": "Build the showcase on its own, then every demo milestone and the showcase under one _site/",
+      "command": "cd showcase && deno task build && cd ../demo && deno task build"
+    },
+    "serve": {
+      "description": "Serve the announcement demo for theme development; theme files are watched too",
+      "command": "cd demo/announced && deno task serve"
+    }
+  },
+  "compilerOptions": {
+    "types": [
+      "lume/types.ts"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "lume"
+  },
+  "unstable": [
+    "temporal",
+    "fmt-component"
+  ],
+  "lint": {
+    "plugins": [
+      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/lint.ts"
+    ],
+    "rules": {
+      "exclude": [
+        "no-import-prefix"
+      ]
+    },
+    "exclude": [
+      "demo/_site",
+      "demo/*/_site",
+      "showcase/_site",
+      "tests/.tmp"
+    ]
+  },
+  "permissions": {
+    "test": {
+      "read": true,
+      "write": [
+        "./tests/.tmp"
+      ],
+      "import": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443",
+        "deno.land:443",
+        "esm.sh:443"
+      ],
+      "net": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443",
+        "deno.land:443",
+        "esm.sh:443",
+        "registry.npmjs.org:443"
+      ],
+      "env": true
+    }
+  },
+  "allowScripts": {
+    "deny": [
+      "npm:sharp",
+      "npm:@parcel/watcher"
+    ]
+  },
+  "lock": false
+}

@@ -1,0 +1,58 @@
+{{#
+    One sponsorship package: the tier's accent bar, icon and name, a "Most
+    visible" chip when featured, price, summary, the includes with a tick
+    each, and the enquiry button pinned to the bottom. The tier palette
+    (gold, silver, bronze, afterparty; else primary) lives here.
+
+        {{ comp.sponsorship.package({ pkg, href: `mailto:${email}?subject=...` }) }}
+
+    Props: pkg ({ name, price, accent, featured?, summary, includes[] }),
+    href (the button's target), label (default "Enquire about <name>").
+#}}
+{{ set tiers = {
+    gold: { border: "border-amber-300", bar: "bg-amber-400", text: "text-amber-700", chip: "bg-amber-50", icon: "fa-medal" },
+    silver: { border: "border-gray-300", bar: "bg-gray-400", text: "text-gray-600", chip: "bg-gray-50", icon: "fa-medal" },
+    bronze: { border: "border-orange-300", bar: "bg-orange-400", text: "text-orange-700", chip: "bg-orange-50", icon: "fa-medal" },
+    afterparty: { border: "border-accent/40", bar: "bg-accent", text: "text-accent", chip: "bg-accent/10", icon: "fa-champagne-glasses" },
+} }}
+{{ set tier = tiers[pkg.accent] || { border: "border-primary/40", bar: "bg-primary", text: "text-primary", chip: "bg-primary/10", icon: "fa-medal" } }}
+<li class="flex flex-col overflow-hidden rounded-lg border-2 {{ tier.border }} bg-white shadow-lg" data-package="{{ pkg.accent }}">
+    <div class="h-1.5 {{ tier.bar }}" aria-hidden="true"></div>
+    <div class="flex flex-1 flex-col p-8">
+        <div class="flex items-baseline justify-between gap-4">
+            <h3 class="flex items-center gap-3 text-2xl font-bold text-black">
+                {{ comp.ui.icon({ name: tier.icon, classes: tier.text }) }}
+                {{ pkg.name }}
+            </h3>
+            {{ if pkg.featured }}
+                <span class="rounded-full {{ tier.chip }} px-3 py-1 text-xs font-semibold uppercase tracking-widest {{ tier.text }}">
+                    Most visible
+                </span>
+            {{ /if }}
+        </div>
+        <p class="mt-4 text-3xl font-bold text-primary">{{ pkg.price }}</p>
+        <p class="mt-4 leading-relaxed text-gray-700">{{ pkg.summary }}</p>
+
+        <p class="mt-8 text-xs font-semibold uppercase tracking-widest text-gray-500">
+            What's included
+        </p>
+        <ul class="mt-4 space-y-3">
+            {{ for item of pkg.includes }}
+                <li class="flex items-start gap-3 text-gray-700">
+                    {{ comp.ui.icon({ name: "fa-check", classes: `mt-1 shrink-0 text-sm ${tier.text}` }) }}
+                    <span>{{ item }}</span>
+                </li>
+            {{ /for }}
+        </ul>
+
+        <div class="mt-auto pt-8">
+            <a
+                href="{{ href }}"
+                class="inline-flex items-center justify-center rounded-lg border-2 border-accent px-6 py-2 font-semibold text-accent transition hover:bg-accent hover:text-white"
+            >
+                {{ label || `Enquire about ${pkg.name}` }}
+                {{ comp.ui.icon({ name: "fa-arrow-right", classes: "ml-2 text-xs" }) }}
+            </a>
+        </div>
+    </div>
+</li>

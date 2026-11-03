@@ -1,0 +1,72 @@
+{{#
+    The pretix ticket shop widget. The page puts `comp.pretix.head()` in its
+    `head` slot for the widget's CSS and script. The shop is `pretix`
+    (src/_data/pretix.yaml); pass `shop` to point one widget elsewhere.
+
+        {{ comp.pretix.widget() }}
+        {{ comp.pretix.widget({ shop: { ...pretix, event: "2027" }, disableVouchers: true }) }}
+
+    Props (all optional):
+        shop                 { host, organizer, event, locale }; one object,
+                             since a bare `event` prop would be shadowed by
+                             the `event` concept. `event: ""` lists every
+                             public event of the organizer.
+        items, categories, variations   comma-separated ids to restrict
+        voucher, subevent, listType ("list" | "calendar" | "week"), filter,
+        displayEventInfo, disableVouchers, disableIframe, disableFilters
+
+    Docs: https://docs.pretix.eu/guides/widget/
+#}}
+{{ set shop = shop || pretix }}
+{{ set shopUrl = shop.event ? `${shop.host}/${shop.organizer}/${shop.event}/` : `${shop.host}/${shop.organizer}/` }}
+<div class="pretix-embed">
+    {{# Shown until the widget script runs (pretix.head's callback removes it). #}}
+    <div
+        class="flex flex-col items-center justify-center gap-4 py-16 text-center text-gray-600"
+        role="status"
+        aria-live="polite"
+        data-pretix-loading
+    >
+        {{ comp.ui.icon({ name: "fa-circle-notch", classes: "fa-spin text-4xl text-accent" }) }}
+        <p class="font-medium">Loading the ticket shop&hellip;</p>
+        <p class="hidden text-sm" data-pretix-loading-slow>
+            This is taking longer than expected. You can also
+            <a
+                href="{{ shopUrl }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-semibold text-primary underline decoration-secondary underline-offset-4 transition hover:text-accent"
+            >open the ticket shop directly</a>.
+        </p>
+    </div>
+
+    {{# The leading space inside each block is required: Vento's autoTrim would glue the attributes. #}}
+    <pretix-widget
+        event="{{ shopUrl }}"
+        {{ if items }} items="{{ items }}"{{ /if }}
+        {{ if categories }} categories="{{ categories }}"{{ /if }}
+        {{ if variations }} variations="{{ variations }}"{{ /if }}
+        {{ if voucher }} voucher="{{ voucher }}"{{ /if }}
+        {{ if subevent }} subevent="{{ subevent }}"{{ /if }}
+        {{ if listType }} list-type="{{ listType }}"{{ /if }}
+        {{ if filter }} filter="{{ filter }}"{{ /if }}
+        {{ if displayEventInfo }} display-event-info="{{ displayEventInfo }}"{{ /if }}
+        {{ if disableVouchers }} disable-vouchers{{ /if }}
+        {{ if disableIframe }} disable-iframe{{ /if }}
+        {{ if disableFilters }} disable-filters{{ /if }}
+    ></pretix-widget>
+
+    <noscript>
+        <div class="rounded-xl border border-amber-300 bg-amber-50 p-6 text-center text-gray-800 md:p-8">
+            {{ comp.ui.icon({ name: "fa-triangle-exclamation", classes: "mb-3 text-3xl text-amber-500" }) }}
+            <p class="mb-2 text-xl font-semibold">This page needs JavaScript</p>
+            <p class="mx-auto mb-6 max-w-xl leading-7">
+                The embedded ticket shop is built with JavaScript, which is
+                turned off in your browser. Enable it and reload this page, or
+                buy your ticket in our pretix shop directly. The shop itself
+                works without JavaScript.
+            </p>
+            {{ comp.ui.button({ label: "Open the ticket shop", href: shopUrl, icon: "fa-ticket", style: "primary", external: true }) }}
+        </div>
+    </noscript>
+</div>

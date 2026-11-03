@@ -1,0 +1,26 @@
+---
+id: attending
+title: I'm attending
+description: "Create your personal KCD Your City 2099 social post image or profile ring. Add your photo, download your badge, and let the community know you're coming."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The generator is comp.attending.tool; the heading and the closing line are this page's. #}}
+{{ set siteTitle = `${event.name} ${event.year}` }}
+
+{{ comp ui.section { width: "6xl" } }}
+    {{ comp.ui.heading({
+        level: 1,
+        pill: `See you in ${event.city}`,
+        title: "Let them know you're coming.",
+        lede: `Create an image for your next social post and join the excitement for ${siteTitle}.`,
+    }) }}
+
+    {{ comp.attending.tool() }}
+
+    {{ set ticketsPage = search.page("id=tickets") }}
+    {{ if ticketsPage }}
+        <p class="mt-12 text-center text-gray-600">Still need a ticket? <a href="{{ ticketsPage.url }}" class="font-semibold text-primary underline underline-offset-4">Save your spot at {{ siteTitle }}</a>.</p>
+    {{ /if }}
+{{ /comp }}
+

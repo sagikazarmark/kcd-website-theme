@@ -1,0 +1,88 @@
+{{#
+    Speaker dialog: photo, name, title and company, profile links, bio, and
+    the speaker's talks linking into the agenda page (`id: agenda`) while it
+    is in the build. Opened by `speaker.card`. Props: speaker.
+#}}
+{{ async function profileLink({ link, label, icon }) }}
+    <a
+        href="{{ link |> escape }}"
+        {{ link |> newTab }}
+        class="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-accent"
+    >
+        {{ comp.ui.icon({ name: icon, classes: "text-lg" }) }}
+        {{ label }}
+    </a>
+{{ /function }}
+{{ comp dialog.frame { id: "speaker-" + speaker.id } }}
+    <div class="mb-6 flex flex-col items-center gap-5 text-center sm:flex-row sm:items-start sm:pr-8 sm:text-left">
+        {{ comp.avatar({ speaker, size: "xl" }) }}
+        <div class="min-w-0 flex-1 sm:pt-2">
+            <h2
+                id="speaker-{{ speaker.id }}-title"
+                class="text-2xl font-bold leading-tight text-primary md:text-3xl"
+            >{{ speaker.name |> escape }}</h2>
+            {{ if speaker.title }}
+                <p class="mt-2 text-gray-700">{{ speaker.title |> escape }}</p>
+            {{ /if }}
+            {{ if speaker.company }}
+                <p class="font-semibold text-black">{{ speaker.company |> escape }}</p>
+            {{ else if !speaker.title && speaker.tagline }}
+                <p class="mt-2 text-gray-700">{{ speaker.tagline |> escape }}</p>
+            {{ /if }}
+            {{ if Object.keys(speaker.links).length }}
+                <div class="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 sm:justify-start">
+                    {{ comp.ui.socialLinks({ links: speaker.links, render: profileLink }) }}
+                </div>
+            {{ /if }}
+        </div>
+    </div>
+
+    {{ if speaker.bio.length }}
+        <div class="space-y-4 leading-7 text-gray-700">
+            {{ for paragraph of speaker.bio }}
+                <p class="whitespace-pre-line">{{ paragraph |> escape }}</p>
+            {{ /for }}
+        </div>
+    {{ /if }}
+
+    {{ if speaker.sessions.length }}
+        <section class="mt-8 border-t border-gray-100 pt-6">
+            <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500">
+                {{ if speaker.sessions.length == 1 }}Talk{{ else }}Talks{{ /if }}
+            </h3>
+            <ul class="space-y-3">
+                {{ set agendaPage = search.page("id=agenda") }}
+                {{ set agendaUrl = agendaPage ? agendaPage.url : null }}
+                {{ for talk of speaker.sessions }}
+                    {{ set linked = agendaUrl && talk.start }}
+                    <li>
+                        <{{ linked ? "a" : "div" }}
+                            {{ if linked }}href="{{ agendaUrl }}#session-{{ talk.id }}"{{ /if }}
+                            class="group flex items-start gap-4 rounded-xl border border-gray-200 p-4 {{ if linked }}transition hover:border-primary hover:bg-gray-50{{ /if }}{{ if talk.cancelled }} opacity-60{{ /if }}"
+                        >
+                            <span class="min-w-0 flex-1">
+                                <span class="block font-semibold text-black transition group-hover:text-primary{{ if talk.cancelled }} line-through decoration-gray-400{{ /if }}">{{ talk.title |> escape }}</span>
+                                {{ if talk.start || talk.format || talk.cancelled }}
+                                    <span class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tabular-nums text-gray-500">
+                                        {{ if talk.start }}
+                                            <span>{{ talk.start }} &ndash; {{ talk.end }}{{ if talk.room }} &middot; {{ talk.room |> escape }}{{ /if }}</span>
+                                        {{ /if }}
+                                        {{ if talk.cancelled }}
+                                            <span class="rounded-full bg-gray-800 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-white">Cancelled</span>
+                                        {{ /if }}
+                                        {{ if talk.format }}
+                                            <span class="rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-accent">{{ talk.format }}</span>
+                                        {{ /if }}
+                                    </span>
+                                {{ /if }}
+                            </span>
+                            {{ if linked }}
+                                {{ comp.ui.icon({ name: "fa-arrow-right", classes: "mt-1 shrink-0 text-gray-300 transition group-hover:text-primary" }) }}
+                            {{ /if }}
+                        </{{ linked ? "a" : "div" }}>
+                    </li>
+                {{ /for }}
+            </ul>
+        </section>
+    {{ /if }}
+{{ /comp }}

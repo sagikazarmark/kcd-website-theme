@@ -1,0 +1,117 @@
+{
+  "imports": {
+    // The theme: the one place its location is written. `_config.ts` imports
+    // `kcd-theme/mod.ts` and the tasks below run `kcd-theme/scripts/...`.
+    // In the theme's own repository this is the repository root; a site made
+    // from the template pins a tag, and upgrades by changing it:
+    //   "kcd-theme/": "https://cdn.jsdelivr.net/gh/<owner>/kcd-theme@v0.1.0/"
+    "kcd-theme/": "../../",
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/",
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.15/jsx-runtime.ts"
+  },
+  "tasks": {
+    "lume": {
+      "description": "Run Lume command",
+      "command": "deno run -P=lume lume/cli.ts"
+    },
+    "build": {
+      "description": "Build the site into _site/",
+      "command": "deno task lume"
+    },
+    "serve": {
+      "description": "Run and serve the site for development",
+      "command": "deno task lume -s"
+    },
+    "sessionize": {
+      "description": "Write src/_data/agenda.yaml and speakers.yaml from the Sessionize event in src/_data/sessionize.yaml",
+      "command": "deno run --config deno.json -P=sessionize kcd-theme/scripts/sessionize.ts"
+    },
+    "overrides": {
+      "description": "List the theme files this site overrides (forks that no longer receive theme updates)",
+      "command": "deno run --config deno.json -P=overrides kcd-theme/scripts/overrides.ts"
+    },
+    "new": {
+      "description": "Create new content or code using artifacts",
+      "command": "deno task lume new"
+    }
+  },
+  "compilerOptions": {
+    "types": [
+      "lume/types.ts"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "lume"
+  },
+  "unstable": [
+    "temporal",
+    "fmt-component"
+  ],
+  "permissions": {
+    "lume": {
+      "read": true,
+      "write": [
+        "./"
+      ],
+      "import": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443",
+        "deno.land:443",
+        "esm.sh:443"
+      ],
+      "net": [
+        "0.0.0.0",
+        "cdn.jsdelivr.net:443",
+        "data.jsdelivr.com:443",
+        "jsr.io:443",
+        "deno.land:443",
+        "esm.sh:443",
+        "registry.npmjs.org:443"
+      ],
+      "env": true,
+      "run": true,
+      "ffi": true,
+      "sys": true
+    },
+    "sessionize": {
+      "read": [
+        "./src"
+      ],
+      "write": [
+        "./src/_data/agenda.yaml",
+        "./src/_data/speakers.yaml",
+        "./src/assets/speakers"
+      ],
+      "import": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443"
+      ],
+      "net": [
+        "sessionize.com:443",
+        "cdn.sessionize.com:443"
+      ]
+    },
+    "overrides": {
+      // "../../src" is the local theme's files to compare against; a published
+      // theme is listed through jsDelivr's API instead (the `net` entries).
+      "read": [
+        "./src",
+        "../../src"
+      ],
+      "import": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443"
+      ],
+      "net": [
+        "data.jsdelivr.com:443",
+        "cdn.jsdelivr.net:443"
+      ]
+    }
+  },
+  "allowScripts": {
+    "deny": [
+      "npm:sharp",
+      "npm:@parcel/watcher"
+    ]
+  },
+  "lock": false
+}

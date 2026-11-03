@@ -1,0 +1,24 @@
+---
+id: home-plain
+title: "Home: plain"
+description: "One shape of home page: no hero, the menu bar and a page intro like every inner page."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# One of three home-page shapes: no hero, the home page as an inner page over page.vto. The buttons are placeholders here; a site's name pages (`page: tickets`). #}}
+
+{{ comp ui.section { width: "4xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Tickets available",
+        title: `${event.name} ${event.year}`,
+        lede: `${event.date.label}, ${venue.name}. The Kubernetes Community Days are coming to Your City: tickets are available now, grab yours and join us.`,
+    } }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Get tickets", href: "#", icon: "fa-ticket", style: "primary" }) }}
+            {{ comp.ui.button({ label: "I'm attending", href: "#", icon: "fa-image", style: "outline" }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /comp }}
+
+{{ include "home/body.vto" }}

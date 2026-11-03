@@ -1,0 +1,43 @@
+{{#
+    Social links: calls the caller's render function once per network in a
+    map of network -> URL, in canonical order (website, discord, x, bluesky,
+    mastodon, linkedin, youtube, github). The one place the network ->
+    icon/label mapping lives; the caller owns the markup. Reads no global:
+    pass `social` or a person's `links`.
+
+        {{ async function socialLink({ link, label, icon }) }}
+            <a href="{{ link }}" {{ link |> newTab }} aria-label="{{ label }}">
+                {{ comp.ui.icon({ name: icon, classes: "text-xl" }) }}
+            </a>
+        {{ /function }}
+        {{ comp.ui.socialLinks({ links: social, render: socialLink }) }}
+
+    Declare the function `async`: components are awaited, so a body that
+    calls `comp.ui.icon` does not compile inside a plain `function`.
+
+    Props:
+        links     network -> URL; missing networks are skipped, an empty map
+                  renders nothing
+        networks  optional list of keys to show; the order stays canonical
+        render    a Vento function called once per link with
+                  { key, label, icon, link }
+
+    The `networks` list in schema/shared.ts has the same keys in the same
+    order; a network added here is added there too.
+#}}
+{{ set catalogue = [
+    { key: "website", icon: "fa-globe", label: "website" },
+    { key: "discord", icon: "fa-brands fa-discord", label: "Discord" },
+    { key: "x", icon: "fa-brands fa-x-twitter", label: "X" },
+    { key: "bluesky", icon: "fa-brands fa-bluesky", label: "Bluesky" },
+    { key: "mastodon", icon: "fa-brands fa-mastodon", label: "Mastodon" },
+    { key: "linkedin", icon: "fa-brands fa-linkedin", label: "LinkedIn" },
+    { key: "youtube", icon: "fa-brands fa-youtube", label: "YouTube" },
+    { key: "github", icon: "fa-brands fa-github", label: "GitHub" },
+] }}
+{{ set shown = catalogue.filter((network) =>
+    links && links[network.key] && (!networks || networks.includes(network.key))) }}
+
+{{ for network of shown }}
+    {{ await render({ key: network.key, label: network.label, icon: network.icon, link: links[network.key] }) }}
+{{ /for }}

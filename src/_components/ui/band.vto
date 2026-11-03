@@ -1,0 +1,33 @@
+{{#
+    Band: a full-bleed <section> with a background tone and vertical padding
+    around the centred page container; the shell of a home-page section.
+    The sibling `ui.section` is the untoned, narrow shell of an inner page.
+
+        {{ comp ui.band { id: "sponsors" } }}...{{ /comp }}
+        {{ comp ui.band { id: "keynotes", tone: "secondary" } }}...{{ /comp }}
+
+    Props:
+        tone     none (default): gray and white alternating by the band's
+                 position among its siblings (odd gray, even white), so a
+                 page whose sections come and go with their data keeps the
+                 rhythm without anyone renumbering; or a fixed one: white,
+                 gray (bg-gray-100), secondary (a wash), primary (dark,
+                 white text), for an accent or a page that mixes bands with
+                 other sections
+        padding  lg (py-20, default) or md (py-16)
+        align    optional "center", for a band centred as a whole
+        id       optional element id
+        content  block content
+#}}
+{{ set tones = {
+    white: "bg-white",
+    gray: "bg-gray-100",
+    secondary: "bg-secondary/10",
+    primary: "bg-primary text-white",
+} }}
+{{ set paddings = { lg: "py-20", md: "py-16" } }}
+<section{{ if id }} id="{{ id }}"{{ /if }} class="{{ paddings[padding || "lg"] }} {{ tone ? tones[tone] : "odd:bg-gray-100 even:bg-white" }}">
+    <div class="container mx-auto px-6{{ if align == "center" }} text-center{{ /if }}">
+        {{ content }}
+    </div>
+</section>

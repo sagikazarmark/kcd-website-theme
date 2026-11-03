@@ -1,0 +1,22 @@
+---
+id: home-big-hero
+title: "Home: big hero"
+description: "One shape of home page: the hero fills the screen and carries the menu."
+---
+{{ layout "layouts/home.vto" }}
+
+{{# One of three home-page shapes: the template's index.vto shape, a full-screen hero with the menu on top, without the stage logic. The buttons are placeholders here; a site's name pages (`page: tickets`). #}}
+
+{{ slot hero }}
+    {{ comp.hero.intro({
+        badge: "Tickets available",
+        tagline: "The Kubernetes Community Days are coming to Your City.",
+        lede: "Tickets are available now, grab yours and join us.",
+    }) }}
+    {{ comp ui.actions }}
+        {{ comp.ui.button({ label: "Get tickets", href: "#", icon: "fa-ticket", style: "primary" }) }}
+        {{ comp.ui.button({ label: "I'm attending", href: "#", icon: "fa-image", style: "secondary" }) }}
+    {{ /comp }}
+{{ /slot }}
+
+{{ include "home/body.vto" }}

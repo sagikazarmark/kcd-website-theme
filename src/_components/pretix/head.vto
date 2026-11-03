@@ -1,0 +1,42 @@
+{{#
+    The pretix widget's assets, once per page, from the page's `head` slot:
+    `{{ slot head }}{{ comp.pretix.head() }}{{ /slot }}`. The shop is
+    `pretix`; pass `shop` to override (one object, see pretix.widget). The
+    stylesheet is event-scoped, it carries the shop's theme. The inline
+    script must stay above the async widget script: pretix calls
+    window.pretixWidgetCallback right before it renders.
+#}}
+{{ set shop = shop || pretix }}
+{{ set locale = shop.locale || "en" }}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{{ shop.host }}/{{ shop.organizer }}/{{ shop.event }}/widget/v2.css"
+    crossorigin
+/>
+<script>
+    // Loading placeholders (see comp.pretix.widget). pretix waits for DOM ready,
+    // then calls this right before it builds the widgets and takes over with its
+    // own spinner while the product list is fetched. So the placeholders can go.
+    window.pretixWidgetCallback = function () {
+        document
+            .querySelectorAll("[data-pretix-loading]")
+            .forEach((el) => el.remove());
+    };
+
+    // Widget script blocked or unreachable: after a while, offer the direct link.
+    window.setTimeout(function () {
+        document
+            .querySelectorAll("[data-pretix-loading-slow]")
+            .forEach((el) => el.classList.remove("hidden"));
+    }, 10000);
+</script>
+<noscript>
+    <style>[data-pretix-loading] { display: none; }</style>
+</noscript>
+<script
+    type="text/javascript"
+    src="{{ shop.host }}/widget/v2.{{ locale }}.js"
+    async
+    crossorigin
+></script>

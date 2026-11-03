@@ -1,0 +1,69 @@
+{{#
+    Countdown card for the hero: a heading, the formatted deadline and a
+    live timer that theme.js (`countdown`) drives through the
+    data-countdown* attributes, swapping in the `expired*` texts once the
+    deadline has passed. One per page. Reads no global: the words are the
+    page's, the deadline the concept's.
+
+        {{ comp.ui.countdown({
+            deadline: cfp.deadline,
+            heading: "Time left to submit",
+            statusPrefix: "CFP closes",
+            expiredHeading: "Submissions closed",
+            expiredStatus: "The call for papers is closed.",
+            ariaSuffix: "left to submit",
+        }) }}
+
+    Props: heading, statusPrefix (the formatted deadline follows it),
+    deadline (ISO 8601 with offset), expiredHeading, expiredStatus,
+    ariaSuffix ("3 days, 2 hours ... left to submit").
+#}}
+<div
+    class="max-w-2xl mx-auto mb-8 rounded-2xl border border-white/25 bg-black/35 p-4 sm:p-6 text-white shadow-2xl backdrop-blur-sm"
+    aria-labelledby="countdown-heading"
+    data-countdown-card
+    data-expired-heading="{{ expiredHeading }}"
+    data-expired-status="{{ expiredStatus }}"
+    data-aria-suffix="{{ ariaSuffix }}"
+>
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1 mb-4">
+        <h2
+            id="countdown-heading"
+            class="text-lg font-semibold"
+            data-countdown-heading
+        >
+            {{ heading }}
+        </h2>
+        <p
+            class="text-sm text-white/90"
+            data-countdown-status
+        >
+            {{ statusPrefix }}
+            <time datetime="{{ deadline }}">{{ deadline |> formatDate("datetime") }}</time>
+        </p>
+    </div>
+    <div
+        class="grid grid-cols-4 gap-2 sm:gap-3"
+        role="timer"
+        aria-atomic="true"
+        data-countdown
+        data-deadline="{{ deadline }}"
+    >
+        {{ for unit of ["days", "hours", "minutes", "seconds"] }}
+            <div class="rounded-lg bg-black/20 px-1 py-3 sm:px-3">
+                <span
+                    class="block text-2xl sm:text-4xl font-bold tabular-nums leading-none"
+                    data-countdown-{{ unit }}
+                >--</span>
+                <span class="block mt-2 text-[0.65rem] sm:text-xs uppercase tracking-wider text-white/90">
+                    {{ unit }}
+                </span>
+            </div>
+        {{ /for }}
+    </div>
+    <noscript>
+        <p class="mt-4 text-sm text-white/90">
+            Enable JavaScript to see the live countdown.
+        </p>
+    </noscript>
+</div>

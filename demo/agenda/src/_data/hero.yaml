@@ -1,0 +1,15 @@
+# The hero picture (hero.frame's default `image`); what the hero says is in
+# index.vto. There is no theme default: this file is required.
+
+# Replace the gradient with a photo of your city or venue: `large` landscape
+# (1920x1080 or so), `small` an optional portrait crop served below 768px,
+# each `src2x` the optional retina file; or one file per crop with `width`
+# set and no `src2x`, for Lume's picture plugin to derive the sizes
+# (README.md, "Responsive images"). `alt` is empty when the picture is
+# decorative.
+image:
+  alt: ""
+  large:
+    src: "/assets/hero.svg"
+    width: 1920
+    height: 1080

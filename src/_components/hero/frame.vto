@@ -1,0 +1,100 @@
+{{#
+    The hero shell: a band over the background picture with a dark gradient,
+    the content centred in white, and, when asked, the transparent menu on
+    top. layouts/home.vto renders it full-screen with the menu around the
+    page's `hero` slot; a page renders it itself for a smaller band.
+
+        {{ comp hero.frame { size: "screen", menu: true, current: url } }}
+            {{ comp.hero.intro({ badge: "Tickets available", tagline: "..." }) }}
+            {{ comp ui.actions }}
+                {{ comp.ui.button({ label: "Get tickets", page: "tickets", icon: "fa-ticket", style: "primary" }) }}
+            {{ /comp }}
+        {{ /comp }}
+
+    Props:
+        size     screen (default; fills the viewport, scroll hint), lg (about
+                 two thirds), md (as tall as its content)
+        menu     bool; renders the transparent menu inside the band, where
+                 it sits in the hero's stacking context. Only for a hero at
+                 the top of the page.
+        current  url of the page being rendered, for the menu's active link
+        image    { alt, large: { src, src2x?, width, height }, small?: { src, src2x?, width } };
+                 default `hero.image`. Without `small` the large file
+                 serves every width. A raster `src` without `src2x` is
+                 marked for Lume's optional picture plugin ("Responsive
+                 images" in README.md), which derives the sizes from
+                 `width`; an SVG is served as is.
+        content  block content, centred in a `max-w-3xl` column
+#}}
+{{ set picture = image || hero.image }}
+{{ set large = picture.large }}
+{{ set small = picture.small || large }}
+{{ set kind = size || "screen" }}
+{{# The plugin resizes a crop without a hand-made retina file, unless it is an SVG (which it cannot process). #}}
+{{ set deriveSmall = !small.src2x && !small.src.endsWith(".svg") }}
+{{ set deriveLarge = !large.src2x && !large.src.endsWith(".svg") }}
+{{# Fixed strings, so Tailwind sees every class. #}}
+{{ set bands = {
+    screen: "min-h-screen",
+    lg: "min-h-[66vh]",
+    md: "",
+} }}
+{{ set paddings = {
+    screen: "py-16",
+    lg: "py-16",
+    md: "py-20 md:py-28",
+} }}
+
+<section class="relative flex flex-col overflow-hidden bg-primary text-white {{ bands[kind] }}">
+    <picture class="absolute inset-0">
+        {{# For the plugin the srcset is the bare file; the widths come from the declared `width`, since Sharp never enlarges. #}}
+        <source
+            media="(max-width: 767px)"
+            {{ if deriveSmall }}
+            srcset="{{ small.src }}"
+            transform-images="avif webp {{ Math.round(small.width / 2) }} {{ small.width }}"
+            {{ else }}
+            srcset="{{ small.src }} {{ small.width }}w{{ if small.src2x }}, {{ small.src2x }} {{ small.width * 2 }}w{{ /if }}"
+            {{ /if }}
+            sizes="(max-aspect-ratio: 3/4) 75vh, 100vw"
+        />
+        <source
+            {{ if deriveLarge }}
+            srcset="{{ large.src }}"
+            transform-images="avif webp {{ Math.round(large.width / 2) }} {{ large.width }}"
+            {{ else }}
+            srcset="{{ large.src }} {{ large.width }}w{{ if large.src2x }}, {{ large.src2x }} {{ large.width * 2 }}w{{ /if }}"
+            {{ /if }}
+            sizes="(max-aspect-ratio: 16/9) 178vh, 100vw"
+        />
+        {{# The no-<picture> fallback; a <source> always matches. #}}
+        <img
+            src="{{ large.src }}"
+            alt="{{ picture.alt }}"
+            width="{{ large.width }}"
+            height="{{ large.height }}"
+            fetchpriority="high"
+            class="h-full w-full object-cover object-center brightness-125"
+        />
+    </picture>
+    <div
+        class="absolute inset-0 bg-gradient-to-b from-black/55 via-slate-950/50 to-black/70"
+        aria-hidden="true"
+    ></div>
+
+    {{ if menu }}
+        {{ comp.menu({ variant: "transparent", current }) }}
+    {{ /if }}
+
+    <div class="relative z-10 flex flex-1 items-center justify-center px-6 text-center {{ paddings[kind] }}">
+        <div class="max-w-3xl">
+            {{ content }}
+        </div>
+    </div>
+
+    {{ if kind == "screen" }}
+        <div class="relative z-10 pb-8 text-center text-white/80 drop-shadow-md">
+            {{ comp.ui.icon({ name: "fa-chevron-down", classes: "text-2xl animate-bounce" }) }}
+        </div>
+    {{ /if }}
+</section>

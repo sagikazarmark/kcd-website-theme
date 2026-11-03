@@ -1,0 +1,56 @@
+{{#
+    Site footer, the same on every page: a partial, not a component. Reads
+    `footer`, `social`, `nav.secondary`
+    and `event`. Its logo is `footer.logo`, or the stacked white lockup
+    `logo.vertical.white` without it; with neither the social links centre.
+#}}
+{{ set footerLogo = footer.logo || logo?.vertical?.white }}
+
+{{# One social link; the aria-label is the network, the icon is all there is to see. #}}
+{{ async function socialLink({ link, label, icon }) }}
+    <a
+        href="{{ link }}"
+        {{ link |> newTab }}
+        class="text-gray-400 transition hover:text-white"
+        aria-label="{{ label }}"
+    >
+        {{ comp.ui.icon({ name: icon, classes: "text-xl" }) }}
+    </a>
+{{ /function }}
+
+{{# One legal link, a middle dot before all but the first. #}}
+{{ async function navLink({ url, label, index, draft }) }}
+    {{ if index > 0 }}
+        <span class="mx-2 text-gray-700" aria-hidden="true">&middot;</span>
+    {{ /if }}
+    <a
+        href="{{ url }}"
+        class="underline decoration-gray-700 underline-offset-4 transition hover:text-white"
+    >{{ label }}</a>
+    {{ if draft }}{{ comp.ui.draftMark({ onDark: true }) }}{{ /if }}
+{{ /function }}
+
+<footer class="bg-black py-12 text-white">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col items-center gap-6 md:flex-row {{ footerLogo ? "justify-between" : "justify-center" }}">
+            {{ if footerLogo }}
+                <img
+                    src="{{ footerLogo }}"
+                    alt="{{ event.name }}"
+                    class="h-40"
+                />
+            {{ /if }}
+            <div class="flex space-x-4">
+                {{ comp.ui.socialLinks({ links: social, render: socialLink }) }}
+            </div>
+        </div>
+        <div class="mt-8 border-t border-gray-800 pt-8 text-center">
+            <p class="text-gray-400">
+                &copy; {{ event.year }} {{ event.name }}. {{ footer.text }}
+            </p>
+            <p class="mt-4 text-sm text-gray-500">
+                {{ comp.ui.navLinks({ links: nav.secondary, render: navLink }) }}
+            </p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,10 @@
+# Link preview card (Open Graph / Twitter). Replace the SVG placeholder with
+# a 1200x630 JPEG or PNG before going live: scrapers do not render SVG, and
+# LinkedIn refuses webp. A page overrides the image with `shareImage`.
+image: "/assets/og-card.svg"
+width: 1200
+height: 630
+alt: "The KCD Your City logo on a blue gradient"
+# og:description for pages without one of their own.
+description: "KCD Your City 2099: a one-day Kubernetes and Cloud Native conference on 15 May at the Your City Convention Centre."
+twitter: "@kcddemocity"

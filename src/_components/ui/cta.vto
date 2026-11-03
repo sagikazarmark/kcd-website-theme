@@ -1,0 +1,37 @@
+{{#
+    Call-to-action panel: a dark rounded box with a heading, a line of copy
+    (the content) and one button. The "Questions about ...?" panel at the
+    foot of a page, and the cross-links between the agenda and speakers
+    pages. With `page` the whole panel is left out while that page is not
+    in the build.
+
+        {{ comp ui.cta { title: "Questions about the venue?", label: "Join the Discord", href: social.discord, icon: "fa-brands fa-discord", external: true } }}
+            Not sure how to get there? Ask the community and the organizers.
+        {{ /comp }}
+        {{ comp ui.cta { title: "Meet the speakers", label: "See all speakers", page: "speakers", icon: "fa-users" } }}
+            Read their bios and find their talks.
+        {{ /comp }}
+
+    Props:
+        title     the heading
+        label     the button text
+        page      a page id the button goes to
+        href      the target otherwise (one of `page` and `href`)
+        icon      optional glyph for the button
+        external  optional; opens in a new tab
+        tone      optional "white" background around the panel
+        padding   optional "bottom": no top padding, for a panel closing a section
+        content   the copy under the heading; inline HTML allowed
+#}}
+{{ set target = page ? search.page(`id=${page}`) : null }}
+{{ if !page || target }}
+<section class="px-6 {{ padding == "bottom" ? "pb-16" : "py-16" }}{{ if tone == "white" }} bg-white{{ /if }}">
+    <div class="container mx-auto max-w-3xl rounded-2xl bg-primary p-8 text-center text-white shadow-lg md:p-10">
+        <h2 class="mb-4 text-3xl font-bold">{{ title }}</h2>
+        {{ if content && content.trim() }}
+            <p class="mb-8 text-lg opacity-90">{{ content }}</p>
+        {{ /if }}
+        {{ comp.ui.button({ label, href, page, icon, style: "secondary", external }) }}
+    </div>
+</section>
+{{ /if }}

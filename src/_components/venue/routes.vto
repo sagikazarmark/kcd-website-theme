@@ -1,0 +1,33 @@
+{{#
+    Quick routes: a boxed list of "from here, take this, about that long"
+    rows with the caller's note under it. Convention: vehicles in <strong>,
+    stops in <em>.
+
+        {{ comp venue.routes { routes: [{ from: "Central Station", how: "<strong>Tram 1</strong> to <em>Example Square</em>", time: "~5 min" }] } }}
+            Times are approximate. For live departures use <a href="...">the journey planner</a>.
+        {{ /comp }}
+
+    Props: routes ([{ from, how, time }]; nothing without any), title
+    (default "Quick routes"), content (the note; inline HTML allowed).
+#}}
+{{ if routes && routes.length }}
+    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg">
+        <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+            <h3 class="text-lg font-semibold text-black">{{ title || "Quick routes" }}</h3>
+        </div>
+        <ul class="divide-y divide-gray-100">
+            {{ for route of routes }}
+                <li class="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-baseline sm:gap-6">
+                    <span class="shrink-0 font-semibold text-black sm:w-60">{{ route.from }}</span>
+                    <span class="flex-1 leading-7 text-gray-700 [&>strong]:text-black">{{ route.how }}</span>
+                    <span class="shrink-0 text-sm font-semibold text-primary">{{ route.time }}</span>
+                </li>
+            {{ /for }}
+        </ul>
+        {{ if content && content.trim() }}
+            <div class="border-t border-gray-200 bg-gray-50 px-6 py-4 text-sm text-gray-600 [&_a]:font-semibold [&_a]:text-primary [&_a]:underline [&_a]:decoration-primary/30 [&_a]:underline-offset-4 [&_a:hover]:decoration-primary">
+                {{ content }}
+            </div>
+        {{ /if }}
+    </div>
+{{ /if }}

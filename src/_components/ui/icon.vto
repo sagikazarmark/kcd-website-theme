@@ -1,0 +1,12 @@
+{{#
+    Font Awesome icon: one <i>, always `aria-hidden` (the text next to it
+    names the thing). The one place that knows the style prefix: a bare
+    glyph ("fa-ticket") gets `fas`, a class with its style ("fa-brands
+    fa-discord") is emitted as given.
+
+        {{ comp.ui.icon({ name: "fa-ticket", classes: "mr-3" }) }}
+
+    Props: name, classes (optional extras: size, colour, margin, `fa-spin`).
+#}}
+{{ set styled = /^(fas|fab|far|fa-solid|fa-brands|fa-regular)\s/.test(name) }}
+<i class="{{ styled ? name : `fas ${name}` }}{{ if classes }} {{ classes }}{{ /if }}" aria-hidden="true"></i>

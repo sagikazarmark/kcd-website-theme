@@ -1,0 +1,69 @@
+---
+id: terms
+title: Terms and Conditions
+description: "Terms and conditions for KCD Your City 2099 tickets. Registration and payment, cancellation and refunds, what the ticket includes and event rules."
+---
+{{ layout "layouts/page.vto" }}
+
+{{ set siteTitle = `${event.name} ${event.year}` }}
+
+{{# The versions are src/_data/terms/<lang>.md, loaded as `terms` keyed by language tag; listed by `order`, then by tag. #}}
+{{ set versions = Object.entries(terms)
+    .map(([lang, version]) => ({ lang, ...version }))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.lang.localeCompare(b.lang)) }}
+
+{{ set intro }}
+    Ticket and attendance terms for {{ siteTitle }}. See the
+    <a
+        href="{{ search.page("id=imprint").url }}"
+        class="font-semibold text-primary underline decoration-secondary underline-offset-4 transition hover:text-accent"
+    >Imprint</a>
+    for company details.
+{{ /set }}
+
+{{ comp ui.section { width: "3xl" } }}
+    {{ comp.ui.heading({
+        level: 1,
+        pill: "Legal",
+        title: "Terms and Conditions",
+        lede: intro,
+    }) }}
+
+    {{# Language tabs: plain anchors over stacked versions (no-JS safe); theme.js's `termsTabs` makes them a tablist. #}}
+    <div data-language-tabs>
+        <div
+            data-language-tablist
+            aria-label="Language"
+            class="mb-6 flex justify-center"
+        >
+            <div class="inline-flex gap-1 rounded-lg border-2 border-primary bg-white p-1 text-sm font-semibold">
+                {{ for version of versions }}
+                    <a
+                        href="#{{ version.lang }}"
+                        id="tab-{{ version.lang }}"
+                        lang="{{ version.lang }}"
+                        data-language-tab="{{ version.lang }}"
+                        class="rounded-md px-5 py-2 text-primary transition hover:bg-primary/10 aria-selected:bg-primary aria-selected:text-white aria-selected:hover:bg-primary"
+                    >{{ version.label }}</a>
+                {{ /for }}
+            </div>
+        </div>
+
+        {{# Each version: its title, then the Markdown (sections at `###`) in a `markdown-body`. #}}
+        <div class="space-y-8">
+            {{ for version of versions }}
+                <article
+                    id="{{ version.lang }}"
+                    lang="{{ version.lang }}"
+                    data-language-panel="{{ version.lang }}"
+                    class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8"
+                >
+                    <h2 class="mb-8 text-2xl font-bold text-primary">{{ version.title }}</h2>
+                    <div class="markdown-body">
+                        {{ version.content |> md }}
+                    </div>
+                </article>
+            {{ /for }}
+        </div>
+    </div>
+{{ /comp }}

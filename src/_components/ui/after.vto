@@ -1,0 +1,6 @@
+{{#
+    Timed content, the "after" half: hidden until `time`, shown from then
+    on. See `ui.until`. Props: time (ISO 8601 with offset), content.
+#}}
+{{ set passed = new Date(time).getTime() <= Date.now() }}
+<span class="contents" data-after="{{ time }}"{{ if !passed }} hidden{{ /if }}>{{ content }}</span>

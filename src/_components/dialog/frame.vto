@@ -1,0 +1,36 @@
+{{#
+    Modal shell: a native <dialog> that theme.js (`dialogs`) opens from any
+    [data-dialog-open="<id>"] trigger and closes from the button, Escape or
+    the backdrop; the open dialog's id is mirrored into the URL hash, so
+    every dialog is deep-linkable.
+
+        {{ comp dialog.frame { id: "session-123" } }}
+            <h2 id="session-123-title">...</h2>
+        {{ /comp }}
+        <button type="button" data-dialog-open="session-123">Open</button>
+
+    Props:
+        id        element id; the heading inside must have id "<id>-title"
+        size      md (default, max-w-2xl) or lg (max-w-4xl)
+        padded    default true; false when the content lays out its own panels
+        content   the dialog body
+#}}
+{{ set widths = { md: "max-w-2xl", lg: "max-w-4xl" } }}
+<dialog
+    id="{{ id }}"
+    data-dialog
+    aria-labelledby="{{ id }}-title"
+    class="m-auto w-[calc(100%-2rem)] {{ widths[size || "md"] }} rounded-2xl bg-white p-0 text-gray-900 shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+>
+    <button
+        type="button"
+        data-dialog-close
+        aria-label="Close"
+        class="absolute right-3 top-3 z-10 inline-flex size-10 items-center justify-center rounded-full bg-white/90 text-gray-500 transition hover:bg-gray-100 hover:text-black"
+    >
+        {{ comp.ui.icon({ name: "fa-xmark", classes: "text-xl" }) }}
+    </button>
+    <div class="max-h-[calc(100dvh-2rem)] overflow-y-auto{{ if padded !== false }} p-6 md:p-8{{ else }} rounded-2xl{{ /if }}">
+        {{ content }}
+    </div>
+</dialog>

@@ -1,0 +1,15 @@
+# The event. `name` and `year` make the site title ("KCD Your City 2099");
+# `city` appears in prose and, without spaces, as the hashtag (#KCDDemoCity);
+# `date.iso` feeds <time>, `date.label` is shown; `timezone` is what
+# deadlines are formatted in, wherever the site is built.
+#
+# Everything in this folder describes KCD Your City, a fictional edition.
+# Replace it with your own; the build fails with the file and key when
+# something is missing or misspelt.
+name: "KCD Your City"
+city: "Your City"
+year: 2099
+date:
+  iso: "2099-05-15"
+  label: "15 May 2099"
+timezone: "Europe/Amsterdam"

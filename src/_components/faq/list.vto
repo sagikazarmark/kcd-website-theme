@@ -1,0 +1,16 @@
+{{#
+    Questions and answers, one `faq.item` per question in a bordered card.
+    Reads no global, so one list serves any FAQ:
+
+        {{ comp.faq.list({ items: cfp.faq }) }}
+
+    Props: items ([{ question, answer }], the `faqList` shape; nothing
+    without any), id (optional, on the card).
+#}}
+{{ if items && items.length }}
+    <div{{ if id }} id="{{ id }}"{{ /if }} class="divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        {{ for item of items }}
+            {{ comp.faq.item(item) }}
+        {{ /for }}
+    </div>
+{{ /if }}

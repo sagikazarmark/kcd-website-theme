@@ -1,0 +1,6 @@
+# The keynote speakers for the home page's section (index.vto), one card
+# each; the section disappears with an empty list. A card is a "to be
+# announced" placeholder until `announced`, so it can be filled in gradually;
+# prepare the announcement on a branch and merge on the day. The demo's
+# keynotes phase shows one announced and one to be announced.
+speakers: []

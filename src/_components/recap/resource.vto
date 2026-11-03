@@ -1,0 +1,28 @@
+{{# A resource published independently of its neighbours.
+    Props: id (optional), title, label (eyebrow), icon, text, action (link text),
+    resource: { url?, note?, enabled? }. No URL shows "Coming soon" without a
+    link; enabled: false hides the card. A note can describe a partial release.
+    Reads no global recap data and requires no recap schema. #}}
+{{ if resource && resource.enabled !== false }}
+    <article id="{{ id }}" class="flex flex-col rounded-2xl border border-gray-200 bg-white p-7 shadow-sm md:p-8">
+        <div class="mb-8 flex items-center justify-between gap-3">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-xl text-primary-strong">{{ comp.ui.icon({ name: icon }) }}</span>
+            <span class="rounded-full px-3 py-1 text-xs font-semibold {{ resource.url ? 'bg-secondary/40 text-primary-strong' : 'bg-gray-100 text-gray-600' }}">{{ resource.url ? "Explore now" : "Coming soon" }}</span>
+        </div>
+        <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-500">{{ label }}</p>
+        <h3 class="mb-4 text-2xl font-bold text-gray-900">{{ title }}</h3>
+        <p class="mb-6 text-gray-600">{{ text }}</p>
+        {{ if resource.note }}<p class="mb-6 text-sm text-gray-600">{{ resource.note }}</p>{{ /if }}
+        <div class="mt-auto border-t border-gray-100 pt-6">
+            {{ if resource.url }}
+                <a
+                    href="{{ resource.url }}"
+                    {{ if resource.url.startsWith("http") }} target="_blank" rel="noopener noreferrer"{{ /if }}
+                    class="inline-flex items-center gap-3 font-semibold text-primary-strong underline underline-offset-4"
+                >{{ action }}{{ comp.ui.icon({ name: "fa-arrow-right" }) }}</a>
+            {{ else }}
+                <p class="text-sm text-gray-500">We'll share the link here when it's ready.</p>
+            {{ /if }}
+        </div>
+    </article>
+{{ /if }}

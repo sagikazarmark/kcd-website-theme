@@ -1,0 +1,26 @@
+{{#
+    Venue photos: captioned 3:2 figures, three to a row from md up. Props:
+    photos (optional, [{ src, src2x, alt, caption }]; default `venue.photos`).
+#}}
+{{ set items = photos || (venue && venue.photos) || [] }}
+{{ if items.length }}
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {{ for photo of items }}
+            <figure class="overflow-hidden rounded-2xl bg-white shadow-lg">
+                <img
+                    src="{{ photo.src }}"
+                    srcset="{{ photo.src }} 800w, {{ photo.src2x }} 1600w"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    alt="{{ photo.alt }}"
+                    width="800"
+                    height="534"
+                    loading="lazy"
+                    class="aspect-[3/2] w-full object-cover"
+                />
+                <figcaption class="px-5 py-3 text-sm text-gray-600">
+                    {{ photo.caption }}
+                </figcaption>
+            </figure>
+        {{ /for }}
+    </div>
+{{ /if }}

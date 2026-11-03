@@ -1,0 +1,14 @@
+{{#
+    Timed content, the "before" half: shown until `time`, hidden from then
+    on; pair with `ui.after`. Both halves are in the HTML; the build sets
+    the initial `hidden` and theme.js (`timed`) flips them in the browser
+    when the deadline passes between deploys. The wrapper is
+    `display: contents`; preflight's `[hidden]` beats it, so no extra CSS.
+
+        {{ comp ui.until { time: cfp.deadline } }}Call for papers open{{ /comp }}
+        {{ comp ui.after { time: cfp.deadline } }}Call for papers closed{{ /comp }}
+
+    Props: time (ISO 8601 with offset), content.
+#}}
+{{ set passed = new Date(time).getTime() <= Date.now() }}
+<span class="contents" data-until="{{ time }}"{{ if passed }} hidden{{ /if }}>{{ content }}</span>

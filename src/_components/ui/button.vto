@@ -1,0 +1,57 @@
+{{#
+    A link styled as a button: an icon and a label on one of the site's
+    button looks.
+
+        {{ comp.ui.button({ label: "Get tickets", page: "tickets", icon: "fa-ticket", style: "primary" }) }}
+        {{ comp.ui.button({ label: "Submit a talk", href: cfp.url, external: true, style: "primary" }) }}
+
+    `page` names a page of the site by the `id` in its front matter; while
+    that page is not in the build (a draft) the button renders nothing.
+    `href` is for everything else: links out, mailto:, hashes. A button
+    that changes at a deadline is two buttons, one in each half of
+    `ui.until` / `ui.after`.
+
+    Props:
+        label     the text
+        page      a page id; its url is the target
+        href      the target otherwise (one of `page` and `href`)
+        icon      optional glyph, see `ui.icon`
+        style     primary (accent), secondary (white, on dark), ghost
+                  (translucent, on the hero), outline, outlineAccent
+        size      md (default) or sm (a stack of buttons in a narrow column)
+        external  bool; opens in a new tab
+        note      optional muted hint after the label, "(PDF, 1.5 MB)"
+        disabled  bool; no href, aria-disabled, the muted look
+        attrs     optional extra attributes, put on the <a> as-is
+#}}
+{{ set looks = {
+    primary: "bg-accent text-white hover:bg-accent-strong shadow-lg",
+    secondary: "bg-white text-primary hover:bg-secondary hover:text-black",
+    ghost: "bg-black/30 backdrop-blur-sm border border-white/30 text-white hover:bg-black/45",
+    outline: "border-2 border-primary text-primary hover:bg-primary hover:text-white",
+    outlineAccent: "border-2 border-accent text-accent hover:bg-accent hover:text-white",
+} }}
+{{ set sizes = { md: "px-8 py-3 text-lg", sm: "px-6 py-2.5" } }}
+{{ set target = page ? search.page(`id=${page}`) : null }}
+{{ if !page || target }}
+<a
+    {{ if disabled }}
+        aria-disabled="true"
+    {{ else }}
+        href="{{ page ? target.url : href }}"
+        {{ if external }}
+            {{ href |> newTab }}
+        {{ /if }}
+    {{ /if }}
+    class="inline-flex items-center justify-center rounded-lg font-semibold transition {{ sizes[size || "md"] }} {{ looks[style] }}{{ if disabled }} cursor-not-allowed opacity-60{{ /if }}"
+    {{ attrs }}
+>
+    {{ if icon }}
+        {{ comp.ui.icon({ name: icon, classes: "mr-3" }) }}
+    {{ /if }}
+    {{ label }}
+    {{ if note }}
+        <span class="ml-2 text-sm font-normal opacity-70">{{ note }}</span>
+    {{ /if }}
+</a>
+{{ /if }}

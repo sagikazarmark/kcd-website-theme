@@ -1,0 +1,97 @@
+{{#
+    The "I'm attending" image generator: format switch, preview canvas,
+    photo and crop controls, name and title, download, and the caption card
+    with the share links. Everything assets/attending-badge.js and .css look
+    for by id, class or data attribute is here, so markup and script change
+    together. Reads `event`, `venue.name`, `logo.horizontal.white` (the
+    logo on the image) and `hero.image.large.src` (its background).
+
+        {{ comp.attending.tool() }}
+        {{ comp attending.tool }}See you at {{ event.name }}! #KCD{{ /comp }}
+
+    Props:
+        content   optional; the suggested caption instead of the default
+                  built from the event (plain text, line breaks kept)
+
+    The stylesheet is linked here (valid in <body>; a component cannot reach
+    <head>) and the script is a module, so it runs after the markup.
+#}}
+{{ set siteTitle = `${event.name} ${event.year}` }}
+{{# "Demo City" -> #KCDDemoCity #}}
+{{ set eventTag = `#KCD${event.city.replace(/\s+/g, "")}` }}
+
+<link rel="stylesheet" href="/assets/attending-badge.css">
+
+<noscript>
+    <p class="mb-8 rounded-lg border border-amber-300 bg-amber-50 p-5">Please enable JavaScript to create your image. The generator runs entirely in your browser.</p>
+</noscript>
+
+<div id="badge-tool" class="badge-tool"
+    data-event-name="{{ siteTitle }}"
+    data-date="{{ event.date.label }}"
+    data-venue="{{ venue.name }}"
+    data-logo="{{ logo.horizontal.white |> url }}"
+    data-background="{{ hero.image.large.src |> url }}">
+    <div class="min-w-0">
+        <fieldset class="badge-formats">
+            <legend class="sr-only">Image format</legend>
+            <label><input type="radio" name="badge-format" value="card" checked> <span>Social post</span></label>
+            <label><input type="radio" name="badge-format" value="ring"> <span>Profile ring</span></label>
+        </fieldset>
+        <div class="badge-preview">
+            <canvas id="badge-canvas" width="2400" height="2400" role="img" aria-label="Your {{ event.name }} attending image preview" aria-describedby="badge-preview-help">Your personalised attending image will appear here.</canvas>
+        </div>
+        <p id="badge-preview-help" class="mt-4 text-center text-sm text-gray-600">Drag your photo to reposition it, or use the position controls.</p>
+        <p id="badge-format-help" class="mt-2 text-center text-xs text-gray-500">2400 × 2400 PNG · ready for your social feed</p>
+    </div>
+
+    <div class="min-w-0 space-y-6">
+        <fieldset id="badge-controls" class="badge-controls rounded-2xl border border-gray-200 bg-white p-6 shadow-sm" disabled>
+            <legend class="sr-only">Personalise your image</legend>
+            <h2 class="mb-5 text-xl font-bold">Make it yours</h2>
+            <label class="badge-label" for="badge-photo">Your photo</label>
+            <input id="badge-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="badge-photo-help">
+            <p id="badge-photo-help" class="mt-2 text-xs text-gray-500">Choose a JPG, PNG or WebP, up to 20 MB.</p>
+
+            <fieldset id="badge-crop" class="mt-5" disabled>
+                <legend class="sr-only">Photo crop</legend>
+                <label class="badge-label flex justify-between" for="badge-zoom">Zoom <output id="badge-zoom-value" for="badge-zoom">100%</output></label>
+                <input id="badge-zoom" type="range" min="1" max="3" step="0.01" value="1">
+                <div class="mt-3 grid grid-cols-2 gap-4">
+                    <div><label class="badge-label" for="badge-horizontal">Left / right</label><input id="badge-horizontal" type="range" min="-100" max="100" value="0"></div>
+                    <div><label class="badge-label" for="badge-vertical">Up / down</label><input id="badge-vertical" type="range" min="-100" max="100" value="0"></div>
+                </div>
+                <button id="badge-reset" class="mt-2 text-sm font-semibold text-primary underline underline-offset-4" type="button">Reset crop</button>
+            </fieldset>
+
+            <div id="badge-details" class="mt-5 space-y-4">
+                <div><label class="badge-label" for="badge-name">Your name <span class="font-normal text-gray-500">(optional)</span></label><input id="badge-name" type="text" maxlength="60" autocomplete="name" placeholder="e.g. Alex Kovács"></div>
+                <div><label class="badge-label" for="badge-title">Title &amp; company <span class="font-normal text-gray-500">(optional)</span></label><input id="badge-title" type="text" maxlength="90" placeholder="e.g. Platform Engineer at Acme"></div>
+            </div>
+            <button id="badge-download" type="button" class="mt-6 flex w-full items-center justify-center gap-3 rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-50" disabled>{{ comp.ui.icon({ name: "fa-download" }) }} Download PNG</button>
+            <p class="mt-3 text-center text-xs text-gray-500">Your photo stays on your device. Nothing is uploaded.</p>
+            <p id="badge-status" role="status" aria-live="polite" class="mt-3 text-sm text-gray-600 empty:hidden"></p>
+        </fieldset>
+
+        <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <h2 class="mb-3 text-xl font-bold">Share the excitement</h2>
+            <label class="sr-only" for="badge-caption">Suggested social post caption</label>
+            {{# The textarea's content is the caption verbatim; the text starts on the tag's line. #}}
+            <textarea id="badge-caption" class="badge-caption" rows="7" readonly>{{ if content && content.trim() }}{{ content.trim() |> escape }}{{ else }}I'm attending {{ siteTitle }}!
+
+Join me on {{ event.date.label }} at {{ venue.name }} for a day of Kubernetes, cloud native, and community.
+
+{{ "/" |> url(true) }}
+{{ eventTag }} #CloudNative #CNCF{{ /if }}</textarea>
+            <button id="badge-copy" type="button" class="mt-3 font-semibold text-primary underline underline-offset-4" disabled>Copy caption</button>
+            <p id="badge-copy-status" role="status" class="mt-2 text-sm text-gray-600"></p>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer" class="badge-social">{{ comp.ui.icon({ name: "fa-brands fa-linkedin" }) }} LinkedIn <span class="sr-only">(opens in a new tab)</span></a>
+                <a href="https://x.com/compose/post" target="_blank" rel="noopener noreferrer" class="badge-social">{{ comp.ui.icon({ name: "fa-brands fa-x-twitter" }) }} X <span class="sr-only">(opens in a new tab)</span></a>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-gray-600">Download your image, copy the caption, then start a post and attach the PNG. You can use it on any social network.</p>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/assets/attending-badge.js"></script>

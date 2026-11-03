@@ -1,0 +1,46 @@
+# Corrections merged over the imported agenda.yaml at build time, matched on
+# `id`; each other key replaces that key. The import never touches this file.
+# An unknown id or key fails the build.
+#
+# Sessionize's sample event is scheduled on 16-17 September 2023 and has no
+# "Keynote" checkbox, so the timetable is moved onto the event day (the
+# second day into the afternoon), two talks are marked as the opening and
+# closing keynotes, and one session is cut to the hour the slot has.
+sessions:
+  - id: "14022" # Aiden's Keynote: the opening keynote
+    keynote: true
+    start: "2099-05-15T09:00:00"
+    end: "2099-05-15T10:00:00"
+  - id: "14020" # Emma
+    start: "2099-05-15T10:15:00"
+    end: "2099-05-15T11:15:00"
+  - id: "14019" # Jackson
+    start: "2099-05-15T10:15:00"
+    end: "2099-05-15T11:15:00"
+  - id: "14026" # Ava
+    start: "2099-05-15T11:30:00"
+    end: "2099-05-15T12:30:00"
+  - id: "14023" # Lucas
+    start: "2099-05-15T11:30:00"
+    end: "2099-05-15T12:30:00"
+  - id: "14027" # Mia: day two, into the afternoon
+    start: "2099-05-15T13:45:00"
+    end: "2099-05-15T14:45:00"
+  - id: "14025" # Noah: cut to the hour
+    start: "2099-05-15T13:45:00"
+    end: "2099-05-15T14:45:00"
+  - id: "14024" # Liam
+    start: "2099-05-15T15:00:00"
+    end: "2099-05-15T16:00:00"
+  - id: "14021" # Olivia
+    start: "2099-05-15T15:00:00"
+    end: "2099-05-15T16:00:00"
+  - id: "14018" # Sophia's Session: the closing keynote, alone in its slot
+    keynote: true
+    plenary: true
+    start: "2099-05-15T16:15:00"
+    end: "2099-05-15T17:15:00"
+breaks:
+  - id: "f91513e5-6e73-4910-9ee5-070a6ab04035" # Lunch
+    start: "2099-05-15T12:30:00"
+    end: "2099-05-15T13:45:00"

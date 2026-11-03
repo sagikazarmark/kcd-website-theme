@@ -1,0 +1,83 @@
+---
+id: tickets
+title: Tickets
+description: "Get your ticket for KCD Your City 2099. Buy directly on this page through our pretix ticket shop."
+---
+{{ layout "layouts/page.vto" }}
+{{ slot head }}{{ comp.pretix.head() }}{{ /slot }}
+
+{{# The shop is comp.pretix.widget over `pretix`, its assets in <head> through the `head` slot;
+    the help button is `social.discord`; the rest is this page's copy. Your own conditions (catering,
+    capacity, who gets an invoice, where billing questions go: `tickets.billingEmail`) are a box
+    of your own above the shop, written like the rest of the page. #}}
+{{ set siteTitle = `${event.name} ${event.year}` }}
+
+<!-- Ticket shop -->
+{{ comp ui.section { width: "4xl" } }}
+    {{ comp.ui.heading({ level: 1, pill: "Tickets", title: "Get your ticket", lede: `Secure your spot at ${siteTitle}.` }) }}
+
+    {{# The widget in a card, and a fallback link to the same shop (an empty `pretix.event` lists every event). #}}
+    {{ set shopUrl = pretix.event ? `${pretix.host}/${pretix.organizer}/${pretix.event}/` : `${pretix.host}/${pretix.organizer}/` }}
+    <div class="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg md:p-8">
+        {{ comp.pretix.widget() }}
+    </div>
+    <p class="mt-6 text-center text-sm text-gray-500">
+        Trouble with the embedded shop?
+        <a
+            href="{{ shopUrl }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-primary underline decoration-secondary underline-offset-4 transition hover:text-accent"
+        >Open the ticket shop in a new tab</a>.
+    </p>
+{{ /comp }}
+
+<!-- Attendee image -->
+{{# To the attending page, while it is in the build. #}}
+{{ set attendingPage = search.page("id=attending") }}
+{{ if attendingPage }}
+<section class="px-6 pb-12">
+    <div class="container mx-auto max-w-4xl rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center">
+        <h2 class="mb-3 text-2xl font-bold text-primary">Got your ticket? Let the community know.</h2>
+        <p class="mb-5 text-gray-600">Create your own {{ event.name }} social post image and find out who else is coming.</p>
+        <a href="{{ attendingPage.url }}" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-strong">Create my attending image</a>
+    </div>
+</section>
+{{ /if }}
+
+<!-- Good to know -->
+{{# Review against the pretix event settings (invoicing, delivery, refunds). #}}
+{{ comp ui.band { id: "good-to-know", tone: "white", padding: "md" } }}
+    <div class="mx-auto max-w-5xl">
+        {{ comp.ui.heading({ title: "Good to know" }) }}
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {{ comp.ui.card({
+                icon: "fa-lock",
+                title: "Secure checkout",
+                text: "Ordering and payment are handled by pretix, our ticketing partner. Your card details never touch our servers.",
+                align: "center",
+                tone: "gray",
+            }) }}
+            {{ comp.ui.card({
+                icon: "fa-envelope",
+                title: "Ticket by email",
+                text: "Once your payment is confirmed you receive your ticket by email. Bring it on your phone or print it out.",
+                align: "center",
+                tone: "gray",
+            }) }}
+            {{ comp.ui.card({
+                icon: "fa-file-invoice",
+                title: "Need an invoice?",
+                text: "Add your company details in the invoice address step during checkout and an invoice is issued with your order.",
+                align: "center",
+                tone: "gray",
+            }) }}
+        </div>
+    </div>
+{{ /comp }}
+
+<!-- Help -->
+{{ comp ui.cta { title: "Questions about tickets?", label: "Join the Discord", href: social.discord, icon: "fa-brands fa-discord", external: true } }}
+    Group bookings, sponsor passes, or something not working? Reach the
+    organisers on Discord and we will sort it out.
+{{ /comp }}

@@ -1,0 +1,11 @@
+_site
+_cache
+.DS_Store
+
+# Devenv
+/.devenv*
+/.direnv/
+devenv.local.nix
+.pre-commit-config.yaml
+tests/.snapshot-diff
+tests/.tmp

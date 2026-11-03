@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="500" height="300" role="img" aria-label="Delta Hosting">
+  <!-- Demo placeholder wordmark for a fictional partner. Replace with the partner's own SVG on the same canvas. -->
+  <rect x="2" y="2" width="496" height="296" rx="24" fill="none" stroke="#1f7a5c" stroke-width="4"/>
+  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" fill="#1f7a5c">Delta Hosting</text>
+</svg>

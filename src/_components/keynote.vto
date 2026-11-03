@@ -1,0 +1,187 @@
+{{#
+    Keynote speaker card for the home page, with a `dialog.frame` modal
+    behind "Read more" for the abstract, resources and bio. Until
+    `announced` it is a "to be announced" placeholder and every other prop
+    is ignored. The dialog's id is `keynote-<slug of the name>`, which is
+    also the URL hash while it is open (/#keynote-jane-doe). Without
+    `abstract`, `resources` and `bio` there is no modal and no button.
+
+    Props (one entry of `keynotes.speakers`):
+        announced  whether the speaker is public yet
+        name, role, company, talk
+        abstract   modal only; a blank line starts a paragraph
+        bio        same
+        resources  optional [{ label, url, icon? }] under the abstract;
+                   `icon` defaults to a link glyph
+        photo      square portrait; an icon avatar stands in without one
+        links      optional network -> URL map (ui.socialLinks)
+#}}
+{{ if announced }}
+    {{ set hasDetails = bio || abstract || (resources && resources.length) }}
+    {{ set slugName = name |> slug }}
+    {{ set id = `keynote-${slugName}` }}
+    <div>
+        <div class="flex h-full flex-col rounded-xl border-t-4 border-accent bg-white p-8 shadow-xl">
+            <div class="flex items-center gap-5">
+                {{ if photo }}
+                    {{# transform-images: Lume's optional picture plugin; the number is the CSS size, @2 for retina. #}}
+                    <img
+                        src="{{ photo }}"
+                        alt="{{ name }}"
+                        width="400"
+                        height="400"
+                        loading="lazy"
+                        transform-images="avif webp 96@2"
+                        class="h-24 w-24 shrink-0 rounded-2xl object-cover shadow-md"
+                    />
+                {{ else }}
+                    <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-gray-100 text-gray-300">
+                        {{ comp.ui.icon({ name: "fa-user", classes: "text-4xl" }) }}
+                    </span>
+                {{ /if }}
+                <div class="min-w-0 flex-1">
+                    <span class="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+                        Keynote
+                    </span>
+                    <h3 class="mt-3 text-xl font-bold leading-tight text-black">
+                        {{ name }}
+                    </h3>
+                    {{ if role }}
+                        <p class="mt-1 text-sm font-semibold leading-snug text-primary">
+                            {{ role }}
+                        </p>
+                    {{ /if }}
+                    {{ if company }}
+                        <p class="text-sm leading-snug text-gray-500">{{ company }}</p>
+                    {{ /if }}
+                </div>
+            </div>
+            {{ if talk }}
+                <p class="mt-6 border-t border-gray-100 pt-6 text-xl font-semibold leading-snug text-primary">
+                    {{ talk }}
+                </p>
+            {{ /if }}
+            {{ if hasDetails }}
+                <div class="mt-auto pt-6">
+                    <button
+                        type="button"
+                        data-dialog-open="{{ id }}"
+                        class="inline-flex items-center gap-2 rounded-lg border-2 border-primary px-6 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
+                        aria-label="Read more about {{ name }} and this keynote"
+                    >
+                        Talk details and bio
+                        {{ comp.ui.icon({ name: "fa-arrow-right", classes: "text-xs" }) }}
+                    </button>
+                </div>
+            {{ /if }}
+        </div>
+
+        {{ if hasDetails }}
+            {{ comp dialog.frame { id, size: "lg", padded: false } }}
+                <div class="md:grid md:grid-cols-[14rem_1fr]">
+                    <aside class="flex flex-col items-center border-b border-gray-100 bg-gray-50 p-8 text-center md:items-start md:border-b-0 md:border-r md:text-left">
+                        {{ if photo }}
+                            <img
+                                src="{{ photo }}"
+                                alt=""
+                                width="400"
+                                height="400"
+                                transform-images="avif webp 112@2"
+                                class="h-28 w-28 rounded-full object-cover shadow-sm ring-4 ring-white"
+                            />
+                        {{ /if }}
+                        <h3 id="{{ id }}-title" class="mt-5 text-xl font-bold leading-tight text-black">
+                            {{ name }}
+                        </h3>
+                        {{ if role }}
+                            <p class="mt-2 text-sm font-semibold leading-snug text-primary">
+                                {{ role }}
+                            </p>
+                        {{ /if }}
+                        {{ if company }}
+                            <p class="mt-3 inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-600">
+                                {{ comp.ui.icon({ name: "fa-building", classes: "text-gray-400" }) }}
+                                {{ company }}
+                            </p>
+                        {{ /if }}
+                        {{ if links }}
+                            {{ async function profileLink({ link, label, icon }) }}
+                                <a
+                                    href="{{ link }}"
+                                    {{ link |> newTab }}
+                                    class="text-gray-400 transition hover:text-primary"
+                                    aria-label="{{ name }} on {{ label }}"
+                                >
+                                    {{ comp.ui.icon({ name: icon, classes: "text-lg" }) }}
+                                </a>
+                            {{ /function }}
+                            <div class="mt-4 flex gap-4">
+                                {{ comp.ui.socialLinks({ links, render: profileLink }) }}
+                            </div>
+                        {{ /if }}
+                    </aside>
+
+                    <div class="p-8">
+                        {{ if talk }}
+                            <p class="text-xs font-semibold uppercase tracking-widest text-accent">
+                                Keynote
+                            </p>
+                            <h4 class="mt-3 pr-10 text-2xl font-bold leading-tight text-primary">
+                                {{ talk }}
+                            </h4>
+                            {{ if abstract }}
+                                <div class="mt-4 space-y-3 leading-relaxed text-gray-700">
+                                    {{ for paragraph of abstract.split("\n") }}
+                                        <p>{{ paragraph }}</p>
+                                    {{ /for }}
+                                </div>
+                            {{ /if }}
+                            {{ if resources }}
+                                <ul class="mt-5 flex flex-wrap gap-2">
+                                    {{ for resource of resources }}
+                                        <li>
+                                            <a
+                                                href="{{ resource.url }}"
+                                                {{ resource.url |> newTab }}
+                                                class="inline-flex items-center gap-2 rounded-lg bg-gray-50 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
+                                            >
+                                                {{ comp.ui.icon({ name: resource.icon || "fa-link" }) }}
+                                                {{ resource.label }}
+                                                {{ comp.ui.icon({ name: "fa-arrow-up-right-from-square", classes: "text-xs opacity-60" }) }}
+                                            </a>
+                                        </li>
+                                    {{ /for }}
+                                </ul>
+                            {{ /if }}
+                        {{ /if }}
+                        {{ if bio }}
+                            <div class="{{ if talk }}mt-8 border-t border-gray-100 pt-6{{ /if }}">
+                                <p class="text-xs font-semibold uppercase tracking-widest text-accent">
+                                    About the speaker
+                                </p>
+                                <div class="mt-4 space-y-3 leading-relaxed text-gray-700">
+                                    {{ for paragraph of bio.split("\n") }}
+                                        <p>{{ paragraph }}</p>
+                                    {{ /for }}
+                                </div>
+                            </div>
+                        {{ /if }}
+                    </div>
+                </div>
+            {{ /comp }}
+        {{ /if }}
+    </div>
+{{ else }}
+    <div class="flex h-full flex-col items-start gap-5 rounded-xl border-2 border-dashed border-gray-300 p-8 sm:flex-row sm:items-center">
+        <span class="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-gray-100 text-gray-300">
+            {{ comp.ui.icon({ name: "fa-user", classes: "text-4xl" }) }}
+        </span>
+        <div class="min-w-0 flex-1">
+            <h3 class="text-xl font-bold text-black">Keynote to be announced</h3>
+            <p class="mt-3 text-gray-600">
+                We're lining up the speaker for this slot. Follow us and you'll
+                be the first to know.
+            </p>
+        </div>
+    </div>
+{{ /if }}

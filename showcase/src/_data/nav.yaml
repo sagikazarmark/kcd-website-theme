@@ -1,0 +1,28 @@
+# The showcase's menu: its pages, not an event's. `page` names a page by the
+# `id` in its front matter (the label defaults to the page's title).
+main:
+  - page: home
+    label: "Showcase"
+    icon: "fa-house"
+  - page: components
+    icon: "fa-shapes"
+  - page: agenda
+    label: "Timetable"
+    icon: "fa-calendar-days"
+  - page: home-big-hero
+    icon: "fa-image"
+  - page: home-banner
+    icon: "fa-window-maximize"
+  - page: home-plain
+    icon: "fa-align-left"
+  - page: home-recap
+    icon: "fa-photo-film"
+  - page: home-pending
+    icon: "fa-clock"
+secondary:
+  - page: terms
+    label: "Terms"
+cta:
+  label: "Components"
+  page: components
+  icon: "fa-shapes"

@@ -1,0 +1,82 @@
+---
+id: home-recap
+title: Post-conference recap
+description: "The conference is over. Photos, recordings and slides are published here as they become ready."
+---
+{{ layout "layouts/site.vto" }}
+{{ slot header }}
+    {{ comp hero.frame { size: "screen", menu: true, current: url } }}
+        <p class="mb-6 text-2xl font-semibold text-white/90 md:text-3xl">{{ event.name }} {{ event.year }}</p>
+        <h1 class="mb-6 text-5xl font-bold md:text-7xl">That's a wrap!</h1>
+        <p class="mx-auto max-w-2xl text-xl">Thanks for joining us for a day of cloud native talks, shared experiences and new connections.</p>
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Explore the recap", href: "#photos", icon: "fa-photo-film", style: "primary" }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /slot }}
+
+{{ comp ui.band { id: "thanks", tone: "gray" } }}
+    {{ comp.ui.heading({ title: "Thank you!", lede: "To our attendees, speakers, volunteers and sponsors: thank you for being part of the day." }) }}
+{{ /comp }}
+
+{{ if sponsors.tiers.length }}
+    {{ comp ui.band { id: "sponsors", tone: "white" } }}
+        {{ comp.ui.heading({ title: "Our sponsors", lede: "Thank you to the companies that made this event possible." }) }}
+        <div class="space-y-12">
+            {{ for tier of sponsors.tiers }}
+                <h3 class="text-center text-sm font-semibold uppercase tracking-widest text-gray-500">{{ tier.name }}</h3>
+                <ul class="mx-auto flex flex-wrap justify-center {{ tier.style.container }}">
+                    {{ for item of tier.logos }}
+                        <li class="{{ tier.style.item }}">{{ comp.ui.logo({ name: item.name, logo: item.logo, href: item.url, width: 500, height: 300 }) }}</li>
+                    {{ /for }}
+                </ul>
+            {{ /for }}
+        </div>
+    {{ /comp }}
+{{ /if }}
+
+{{ comp ui.band { id: "photos", tone: "gray" } }}
+    {{ comp.ui.heading({ title: "A day to remember", lede: "On stage, in the hallways and between sessions. A look back at our day together." }) }}
+    {{ if recap.photos.images?.length }}
+        {{ comp.gallery({ id: "event-gallery", images: recap.photos.images.slice(0, 6) }) }}
+        <p class="mt-6 text-center text-sm text-gray-600">{{ recap.photos.credit }}</p>
+    {{ else }}
+        <p class="text-center text-gray-600">Photos coming soon. We're gathering highlights from the day.</p>
+    {{ /if }}
+    {{ if recap.photos.url }}
+        {{ comp ui.actions }}{{ comp.ui.button({ label: "View all photos", href: recap.photos.url, icon: "fa-images", style: "primary" }) }}{{ /comp }}
+    {{ /if }}
+{{ /comp }}
+
+{{ comp ui.band { id: "resources", tone: "white" } }}
+    {{ comp.ui.heading({ title: "Watch the talks", lede: "Catch a session you missed or revisit a favourite. Recordings and slides are published independently." }) }}
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
+        {{ comp.recap.resource({ id: "recordings", title: "Session recordings", label: "Watch", icon: "fa-play", text: "Talks from the conference, ready to watch at your own pace.", action: "Watch the recordings", resource: recap.recordings }) }}
+        {{ comp.recap.resource({ id: "slides", title: "Speaker slides", label: "Explore", icon: "fa-file-powerpoint", text: "The presentations, examples and references shared by our speakers.", action: "Browse the slides", resource: recap.slides }) }}
+    </div>
+{{ /comp }}
+
+{{ if recap.film }}
+    {{ comp ui.band { id: "film", tone: "primary" } }}
+        {{ comp.ui.heading({ title: "The recap film", lede: "Sample video: MDN's CC0 flower clip, not footage of this fictional event.", inverse: true }) }}
+        <div class="mx-auto aspect-video max-w-5xl overflow-hidden rounded-2xl bg-black">
+            <video src="{{ recap.film.url }}" aria-label="Sample video: flowers (CC0)" controls preload="none" class="h-full w-full">Sample video: <a href="{{ recap.film.url }}">download the CC0 flower clip</a>.</video>
+        </div>
+    {{ /comp }}
+{{ /if }}
+
+{{ if recap.transparency }}
+    {{ comp ui.band { id: "transparency", tone: "gray" } }}
+        {{ comp.ui.heading({ title: "Community, in the open", lede: "How the event came together, where the money went and what we learned." }) }}
+        {{ comp ui.actions }}{{ comp.ui.button({ label: "Read the transparency report", href: recap.transparency.url, icon: "fa-file-lines", style: "outline" }) }}{{ /comp }}
+    {{ /comp }}
+{{ /if }}
+
+{{ if organizers.people.length }}
+    {{ comp ui.band { id: "organizers", tone: "gray" } }}
+        {{ comp.ui.heading({ title: "Made possible by volunteers", lede: "Thank you to the local community members who put the event together." }) }}
+        <ul class="flex flex-wrap justify-center gap-6">
+            {{ for person of organizers.people }}{{ comp.organizer(person) }}{{ /for }}
+        </ul>
+    {{ /comp }}
+{{ /if }}

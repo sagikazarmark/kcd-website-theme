@@ -1,0 +1,59 @@
+{{#
+    Heading group: an optional pill, the heading, an optional lede, centred,
+    then the caller's content under them (a `ui.actions` row, a note).
+    Level 2 (default) is a section intro; level 1 the page intro every inner
+    page opens with inside `ui.section`, bigger and closer to its pill.
+
+        {{ comp.ui.heading({ pill: "The team", title: "Meet the organizers", lede: "Volunteers from the local community." }) }}
+
+        {{ comp ui.heading { level: 1, pill: "Venue", title: venue.name, lede: "..." } }}
+            {{ comp ui.actions }}...{{ /comp }}
+        {{ /comp }}
+
+    Props:
+        pill     optional uppercase label above the heading; plain or timed
+                 text ({ html, until, after }, see ui.text)
+        title    the heading text
+        lede     optional paragraph; inline HTML allowed; plain or timed text
+        inverse  optional; for a dark band: white heading, white lede at 90%
+        level    2 (default) or 1
+        content  optional, rendered last inside the wrapper; it carries its
+                 own gap above
+#}}
+{{ set styles = level == 1
+    ? {
+        wrapper: "mb-10 text-center md:mb-12",
+        pill: "mb-4 inline-block rounded-full bg-accent/10 px-4 py-1 text-sm font-semibold uppercase tracking-widest text-accent",
+        heading: "mb-4 text-4xl font-bold leading-tight text-primary md:text-5xl",
+        lede: "mx-auto max-w-2xl text-lg text-gray-600",
+    }
+    : inverse
+    ? {
+        wrapper: "max-w-3xl mx-auto text-center mb-12",
+        pill: "inline-block bg-white/15 text-white text-sm font-semibold uppercase tracking-widest px-4 py-1 rounded-full mb-6",
+        heading: "text-3xl md:text-4xl font-bold mb-4",
+        lede: "text-lg opacity-90",
+    }
+    : {
+        wrapper: "max-w-3xl mx-auto text-center mb-12",
+        pill: "inline-block bg-accent/10 text-accent text-sm font-semibold uppercase tracking-widest px-4 py-1 rounded-full mb-6",
+        heading: "text-3xl md:text-4xl font-bold mb-4 text-primary",
+        lede: "text-lg text-gray-600",
+    } }}
+{{ set tag = `h${level || 2}` }}
+<div class="{{ styles.wrapper }}">
+    {{ if pill }}
+        <span class="{{ styles.pill }}">
+            {{ comp.ui.text({ value: pill }) }}
+        </span>
+    {{ /if }}
+    <{{ tag }} class="{{ styles.heading }}">
+        {{ title }}
+    </{{ tag }}>
+    {{ if lede }}
+        <p class="{{ styles.lede }}">
+            {{ comp.ui.text({ value: lede }) }}
+        </p>
+    {{ /if }}
+    {{ content }}
+</div>

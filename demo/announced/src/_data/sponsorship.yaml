@@ -1,0 +1,24 @@
+# The offer to sponsors as /sponsors/ shows it: packages, the attendee
+# survey, key dates, from your prospectus (a PDF under src/assets/, linked
+# from sponsors.vto); revise the PDF, this file and the page together. The
+# theme has no schema for this file (only sponsors.vto reads it), so a
+# misspelt key is a missing section, not a build error; keep dates quoted.
+# Empty until the packages are decided (the page is `draft: true` until
+# then); the demo's sponsorship phase shows the shape. The sponsor logos are
+# sponsors.yaml.
+
+# `name`, `price` (text), `accent` (gold, silver, bronze or afterparty: the
+# tier palette in sponsorship.package), `featured` (the "Most visible" chip),
+# `summary`, `includes` (a list). High to low.
+packages: []
+
+# Attendee survey: `roles` (`label`, `value` as a percentage drawn as a bar)
+# and `facts` (`icon`, `text`, which may carry inline HTML). The sentence
+# naming the survey is in sponsors.vto.
+audience:
+  roles: []
+  facts: []
+
+# The prospectus's schedule: `label`, `date` (quoted ISO), `highlight: true`
+# on the deadline the page's sentence under "Key dates" refers to.
+dates: []

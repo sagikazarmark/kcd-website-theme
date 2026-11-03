@@ -1,0 +1,10 @@
+# The speakers, a list; only those with a talk in agenda.yaml that is on are
+# shown. Written by hand or by `deno task sessionize`, which overwrites it
+# (see agenda.yaml). Per speaker: `id` (the URL hash /speakers/#speaker-<id>,
+# what a talk's `speakers` names) and `name`; optional `title` and
+# `company` (the byline), `tagline` (shown when both are missing), `photo`
+# (a 400x400 portrait; initials stand in), `links` (website, x, bluesky,
+# mastodon, linkedin, github), `bio` (a blank line starts a paragraph).
+# Empty until the speakers are announced (the page is `draft: true` until
+# then); the demo's speakers phase shows the shape.
+[]

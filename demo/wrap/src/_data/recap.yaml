@@ -1,0 +1,7 @@
+# Instance-owned content; the theme does not prescribe a recap data schema.
+photos:
+  images: []
+recordings:
+  note: "Session videos will appear here as they're published."
+slides:
+  note: "We're collecting slide decks from our speakers."

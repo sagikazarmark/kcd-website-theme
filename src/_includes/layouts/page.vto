@@ -1,0 +1,14 @@
+{{#
+    The inner-page layout: the menu bar as the header, then the content.
+
+        ---
+        title: Tickets
+        description: Get your ticket.
+        ---
+        {{ layout "layouts/page.vto" }}
+        {{ slot head }}{{ comp.pretix.head() }}{{ /slot }}
+        {{ comp ui.section { width: "4xl" } }}...{{ /comp }}
+#}}
+{{ layout "layouts/site.vto" }}
+{{ slot header }}{{ comp.menu({ current: url }) }}{{ /slot }}
+{{ content }}

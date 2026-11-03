@@ -1,0 +1,22 @@
+{{#
+    The page shell between base.vto and the content: the `header` slot
+    (rendered outside <main>, so a <header> in it is the banner landmark),
+    <main>, the footer partial. page.vto and home.vto fill the header; a
+    page uses this directly for another header, say the menu bar and a
+    smaller hero under it:
+
+        {{ layout "layouts/site.vto" }}
+        {{ slot header }}
+            {{ comp.menu({ current: url }) }}
+            {{ comp hero.frame { size: "md" } }}{{ comp.hero.intro({ size: "md" }) }}{{ /comp }}
+        {{ /slot }}
+        ...
+
+    The footer is the same on every page; a page without one is a new layout.
+#}}
+{{ layout "layouts/base.vto" }}
+{{ header }}
+<main>
+    {{ content }}
+</main>
+{{ include "partials/footer.vto" }}

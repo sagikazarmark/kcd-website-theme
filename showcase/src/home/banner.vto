@@ -1,0 +1,26 @@
+---
+id: home-banner
+title: "Home: banner"
+description: "One shape of home page: the menu bar, then a smaller hero under it."
+---
+{{ layout "layouts/site.vto" }}
+
+{{# One of three home-page shapes: the menu bar, then a hero band the height of its content. Neither page.vto nor home.vto gives that header, so this uses site.vto and writes it. The buttons are placeholders here; a site's name pages (`page: tickets`). #}}
+
+{{ slot header }}
+    {{ comp.menu({ current: url }) }}
+    {{ comp hero.frame { size: "md" } }}
+        {{ comp.hero.intro({
+            size: "md",
+            badge: "Tickets available",
+            tagline: "The Kubernetes Community Days are coming to Your City.",
+            lede: "Tickets are available now, grab yours and join us.",
+        }) }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Get tickets", href: "#", icon: "fa-ticket", style: "primary" }) }}
+            {{ comp.ui.button({ label: "I'm attending", href: "#", icon: "fa-image", style: "secondary" }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /slot }}
+
+{{ include "home/body.vto" }}

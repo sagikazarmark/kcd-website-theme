@@ -1,0 +1,152 @@
+/*
+ * The CSS the theme's components need beyond Tailwind utilities. The site's
+ * `src/style.css` (the Tailwind entry, which the site owns) imports this file
+ * as `@import "theme.css"`; Lume's Tailwind plugin resolves a bare import
+ * from `_includes/`, and through the theme's remote fallback, so the site
+ * needs no copy. Every rule here pairs with a component: when a component
+ * changes and its CSS has to follow, the change ships with the theme.
+ *
+ * Colours are the roles the site's `style.css` defines (`primary`,
+ * `secondary`, `accent`, ...), never a brand or Tailwind palette colour.
+ *
+ * Overridable like any theme file (`src/_includes/theme.css`), and like any
+ * override a fork; there should be no reason to.
+ */
+
+/* gallery: a wide opening image beside the smaller previews. */
+.kcd-gallery figure { aspect-ratio: 4 / 3; }
+.kcd-gallery figure:first-child { grid-column: span 2; aspect-ratio: 16 / 9; }
+@media (min-width: 768px) {
+    .kcd-gallery figure:first-child { grid-row: span 2; aspect-ratio: auto; }
+}
+
+/*
+ * Tailwind v4 preflight leaves buttons with the browser's default arrow cursor.
+ * Restore the hand cursor for anything clickable that isn't a link (links get
+ * it natively), including the <button>s the pretix widget renders.
+ */
+@layer base {
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+
+    /*
+     * Modal dialogs (see src/_components/dialog/): stop the page behind an
+     * open dialog from scrolling along with the dialog's own content.
+     */
+    body:has(dialog[open]) {
+        overflow: hidden;
+    }
+}
+
+/*
+ * Prose authored in data (the files in src/_data/) carries plain <a>
+ * elements with no classes, so the links are styled from the container
+ * instead. `rich-text` is the body-copy look used on light sections;
+ * `rich-text-inverse` is the muted look for the dark footer credit line.
+ */
+@layer components {
+    .rich-text a {
+        @apply font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition hover:decoration-primary;
+    }
+
+    .rich-text-inverse a {
+        @apply underline decoration-gray-700 underline-offset-4 transition hover:text-white;
+    }
+}
+
+/*
+ * Rendered Markdown (`{{ content |> md }}`; see "Markdown data" in
+ * mod.ts): a document authored as a file, such as one terms version
+ * in src/_data/terms/<lang>.md. The output is bare elements, so the
+ * body-copy look is applied from the container. Headings start at <h3>: the
+ * page owns the <h1> and the <h2> above the body, and the file's sections
+ * are written as `###` to continue that outline.
+ */
+@layer components {
+    .markdown-body {
+        @apply leading-7 text-gray-700;
+    }
+
+    .markdown-body > * + * {
+        @apply mt-4;
+    }
+
+    .markdown-body h3 {
+        @apply text-xl font-semibold text-black;
+    }
+
+    .markdown-body h4 {
+        @apply text-lg font-semibold text-black;
+    }
+
+    .markdown-body > * + h3,
+    .markdown-body > * + h4 {
+        @apply mt-8;
+    }
+
+    .markdown-body h3 + *,
+    .markdown-body h4 + * {
+        @apply mt-3;
+    }
+
+    .markdown-body ul {
+        @apply list-disc pl-5 marker:text-accent;
+    }
+
+    .markdown-body ol {
+        @apply list-decimal pl-5 marker:text-accent;
+    }
+
+    .markdown-body li + li {
+        @apply mt-2;
+    }
+
+    .markdown-body strong {
+        @apply text-black;
+    }
+
+    .markdown-body a {
+        @apply font-semibold text-primary underline decoration-secondary underline-offset-4 transition hover:text-accent;
+    }
+}
+
+/*
+ * pretix widget (see src/_components/pretix/).
+ *
+ * The widget stylesheet is unlayered and loads after this file, so plain
+ * `.pretix-widget` rules here would lose ties. Everything is scoped under the
+ * `.pretix-embed` wrapper emitted by the component to win on specificity.
+ *
+ * Colours are deliberately NOT overridden here. pretix bakes the derived
+ * shades (hover, border, focus) into its CSS from the "Primary colour" set in
+ * the pretix backend (Event > Settings > Display), and that same setting also
+ * themes the checkout overlay, which our CSS cannot reach. Change it there.
+ */
+.pretix-embed {
+    --pretix-border-radius-small: 0.375rem;
+    --pretix-border-radius-base: 0.5rem;
+    --pretix-border-radius-large: 0.75rem;
+}
+
+.pretix-embed .pretix-widget {
+    /* Our card already provides border, spacing, and background. */
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: inherit;
+}
+
+/*
+ * Undo Tailwind's preflight `svg { display: block }` inside everything pretix
+ * renders. pretix centres its inline SVGs (loading spinners, overlay close
+ * buttons, alert icon) with text-align, which only works for inline elements.
+ * `.pretix-widget-wrapper` is the in-page widget; `.pretix-widget-overlay` is
+ * the checkout frame/lightbox pretix appends to <body>, outside .pretix-embed.
+ */
+.pretix-widget-wrapper svg,
+.pretix-widget-overlay svg {
+    display: inline;
+    vertical-align: baseline;
+}

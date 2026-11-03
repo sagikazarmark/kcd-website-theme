@@ -1,0 +1,35 @@
+{
+  "imports": {
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.6/"
+  },
+  "tasks": {
+    "build": {
+      "description": "Build every phase (phases.ts) into _site/<slug>/ with the switcher bar, plus the landing page and the 404",
+      "command": "deno run -P=build build.ts"
+    }
+  },
+  "permissions": {
+    "build": {
+      // Each phase builds through its own `deno task lume` (the `run`: not
+      // narrowed to `deno`, which Deno refuses when the shell carries a
+      // dynamic-linker variable such as devenv's LD_DYLD_PATH), into its own
+      // _site, which is then moved under ./_site: the writes are those moves
+       // (each phase's _site here and the showcase's next door)
+      // and ./_site itself.
+      "read": [
+        "./",
+        "../showcase"
+      ],
+      "write": [
+        "./",
+        "../showcase/_site"
+      ],
+      "run": true,
+      "import": [
+        "cdn.jsdelivr.net:443",
+        "jsr.io:443"
+      ]
+    }
+  },
+  "lock": false
+}

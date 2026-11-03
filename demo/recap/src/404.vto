@@ -1,0 +1,22 @@
+---
+title: Page not found
+description: "The page you were looking for does not exist on this site."
+# Cloudflare serves /404.html, with a 404 status, for any path that matches
+# neither a file nor a rule in _redirects. Without this, Lume's pretty URLs
+# would put the page at /404/index.html, where Cloudflare does not look.
+url: /404.html
+---
+{{ layout "layouts/page.vto" }}
+
+{{ comp ui.section { width: "3xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Error 404",
+        title: "Page not found",
+        lede: "The page you were looking for does not exist, or it has moved.",
+    } }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Back to the homepage", href: "/", icon: "fa-house", style: "primary" }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /comp }}

@@ -1,0 +1,26 @@
+{{# A preview grid with larger-image dialogs. Reads no global data.
+    Props: id (required, unique on the page), images (array; empty hides it).
+    Each image: { src, alt, width, height, full? }. `full` defaults to `src`.
+    The page selects its previews and owns the heading, credit and album link.
+    Reuses dialog.frame and theme.js for focus, Escape and backdrop dismissal.
+    Without JavaScript, the full-size links remain available. #}}
+{{ if images?.length }}
+    <div id="{{ id }}" class="kcd-gallery mx-auto grid max-w-6xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
+        {{ for index, image of images }}
+            <figure class="overflow-hidden rounded-2xl bg-gray-100">
+                <button type="button" data-dialog-open="{{ id }}-photo-{{ index }}" aria-label="Enlarge photo: {{ image.alt }}" class="group relative block h-full w-full cursor-zoom-in focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-primary">
+                    <img src="{{ image.src }}" alt="{{ image.alt }}" width="{{ image.width }}" height="{{ image.height }}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105" />
+                    <span class="absolute bottom-3 right-3 rounded-full bg-black/60 p-3 text-white">{{ comp.ui.icon({ name: "fa-expand" }) }}</span>
+                </button>
+                <noscript><a href="{{ image.full || image.src }}" class="block p-3 text-primary-strong underline">Open full-size photo</a></noscript>
+            </figure>
+        {{ /for }}
+    </div>
+    {{ for index, image of images }}
+        {{ comp dialog.frame { id: `${id}-photo-${index}`, size: "lg", padded: false } }}
+            <h2 id="{{ id }}-photo-{{ index }}-title" class="sr-only">{{ image.alt }}</h2>
+            <img src="{{ image.full || image.src }}" alt="{{ image.alt }}" loading="lazy" class="max-h-[80dvh] w-full bg-black object-contain" />
+            <p class="px-6 py-4 text-sm text-gray-600">{{ image.alt }}</p>
+        {{ /comp }}
+    {{ /for }}
+{{ /if }}

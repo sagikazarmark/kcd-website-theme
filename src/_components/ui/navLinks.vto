@@ -1,0 +1,51 @@
+{{#
+    Navigation links: calls the caller's render function once per link in
+    `nav.main`, `nav.secondary` or `[nav.cta]`, resolving the ones that name
+    a page and skipping the ones that should not show. The one place those
+    rules live; the caller owns the markup.
+
+    A link is `page: <id>` or `url: <href>`. With `page`, the page is looked
+    up by the `id` in its front matter: its `url` is the href, its `title`
+    the label unless the entry gives one. A page not in the build (a draft)
+    is not found and the link is left out; under `deno task serve`, where
+    drafts are built, the link renders and the render function is told
+    `draft: true` (the menu shows a "Draft" pill). An id no page declares is
+    a build error (schema/mod.ts). `enabled: false` leaves a link out for
+    any other reason.
+
+        {{ async function navLink({ url, label, index }) }}
+            {{ if index > 0 }}<span aria-hidden="true">&middot;</span>{{ /if }}
+            <a href="{{ url }}">{{ label }}</a>
+        {{ /function }}
+        {{ comp.ui.navLinks({ links: nav.secondary, render: navLink }) }}
+
+    Declare the function `async`: components are awaited, so a body that
+    calls `comp.ui.icon` does not compile inside a plain `function`.
+
+    Props:
+        links     the entries { page? | url, label?, icon?, enabled? }; empty
+                  renders nothing
+        current   optional url of the page being rendered, for `active`
+        render    a Vento function called once per shown link with
+                  { label, url, icon, active, draft, index }; `index` counts
+                  the shown links, so a separator "before all but the first"
+                  is right when an earlier link is left out
+#}}
+{{ set shown = (links || []).flatMap((item) => {
+    if (item.enabled === false) return [];
+    if (!item.page) return [item];
+    const target = search.page(`id=${item.page}`);
+    if (!target) return [];
+    return [{ ...item, url: target.url, label: item.label || target.title, draft: Boolean(target.draft) }];
+}) }}
+
+{{ for index, item of shown }}
+    {{ await render({
+        label: item.label,
+        url: item.url,
+        icon: item.icon,
+        active: current == item.url,
+        draft: Boolean(item.draft),
+        index,
+    }) }}
+{{ /for }}

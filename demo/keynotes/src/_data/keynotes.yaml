@@ -1,0 +1,26 @@
+# The keynote speakers for the home page's section (index.vto), one card
+# each; the section disappears with an empty list. A card is a "to be
+# announced" placeholder until `announced`, so it can be filled in gradually;
+# prepare the announcement on a branch and merge on the day. One announced
+# and one to be announced here; the second is filled in with the speakers.
+# (Sessionize's sample speaker; the portrait under assets/keynotes/ is the
+# site's own file.)
+speakers:
+  - announced: true
+    name: "Aiden Test"
+    role: "Professional public speaker"
+    talk: "Aiden's Keynote"
+    # Modal only; a blank line starts a paragraph.
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    # Square portrait, 400x400; an icon avatar stands in without one.
+    photo: "/assets/keynotes/aiden-test.jpg"
+    links:
+      x: "https://twitter.com/sessionizecom"
+      linkedin: "http://linkedin.com/in/domagojpa"
+    bio: >-
+      Pop culture fanatic. Friend of animals everywhere. Student. Thinker.
+      Bacon practitioner.
+
+  - announced: false

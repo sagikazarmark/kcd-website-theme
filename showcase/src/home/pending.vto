@@ -1,0 +1,15 @@
+---
+id: home-pending
+title: Disabled recap controls
+---
+{{ layout "layouts/site.vto" }}
+{{ slot header }}
+    {{ comp.menu({ current: url, cta: { label: "Photos & videos coming soon", url: "/home/recap/", icon: "fa-photo-film", disabled: true } }) }}
+{{ /slot }}
+{{ comp ui.section { width: "4xl" } }}
+    {{ comp.ui.heading({ level: 1, title: "Disabled recap controls", lede: "The menu CTA above uses nav.cta.disabled. The ordinary button below uses ui.button's disabled prop. Both retain their label and have no clickable link." }) }}
+    {{ comp ui.actions }}
+        {{ comp.ui.button({ label: "Photos & videos coming soon", disabled: true, icon: "fa-photo-film", style: "primary" }) }}
+        {{ comp.ui.button({ label: "See the published recap", page: "home-recap", style: "outline" }) }}
+    {{ /comp }}
+{{ /comp }}

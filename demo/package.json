@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "deno task build",
+    "deploy": "wrangler deploy",
+    "preview": "wrangler preview"
+  },
+  "devDependencies": {
+    "deno": "^2.9",
+    "wrangler": "^4"
+  },
+  "allowScripts": {
+    "deno": true,
+    "esbuild": true,
+    "workerd": true
+  }
+}

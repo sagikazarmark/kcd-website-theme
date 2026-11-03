@@ -1,0 +1,61 @@
+---
+id: cfp-faq
+title: CFP FAQ
+description: "Questions and answers about speaking at KCD Your City 2099: who can submit, what we look for, how talks are selected and what speakers get."
+# Goes live with the call for papers (`open: true` and the questions in
+# cfp.yaml, the menu entry in nav.yaml): delete the line then. Put it back
+# when the call closes if the answers should go down with it.
+draft: true
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The CFP FAQ: `cfp.faq` through `faq.list`, under an intro that names the deadline while the CFP is open. The page stays up after the CFP closes, so it reads `cfp.open` and, for the hours in between, the deadline through timed text. #}}
+
+{{ set ledeOpen }}
+    Everything you need to know before you submit. The call for papers is
+    open until
+    <time
+        datetime="{{ cfp.deadline }}"
+        class="whitespace-nowrap font-semibold text-primary"
+    >{{ cfp.deadline |> formatDate("datetime") }}</time>.
+{{ /set }}
+{{ set ledeClosed = "The call for papers is closed. The answers stay up for the next edition; follow us to hear when it opens." }}
+
+{{ comp ui.section { width: "3xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Call for papers",
+        title: "Speaking at KCD Your City",
+        lede: cfp.open ? { html: ledeOpen, until: cfp.deadline, after: ledeClosed } : ledeClosed,
+    } }}
+        {{ if cfp.open }}
+            {{ comp ui.actions }}
+                {{ comp ui.until { time: cfp.deadline } }}
+                    {{ comp.ui.button({
+                        label: "Submit your talk",
+                        href: cfp.url,
+                        icon: "fa-microphone-lines",
+                        style: "primary",
+                        external: true,
+                    }) }}
+                {{ /comp }}
+                {{ comp ui.after { time: cfp.deadline } }}
+                    {{ comp.ui.button({
+                        label: "Submissions closed",
+                        icon: "fa-microphone-lines",
+                        style: "primary",
+                        disabled: true,
+                    }) }}
+                {{ /comp }}
+            {{ /comp }}
+        {{ /if }}
+    {{ /comp }}
+
+    {{ comp.faq.list({ items: cfp.faq }) }}
+{{ /comp }}
+
+<!-- Help -->
+{{ comp ui.cta { title: "Still have a question?", label: "Ask on Discord", href: social.discord, icon: "fa-brands fa-discord", external: true, padding: "bottom" } }}
+    Ask the organisers on Discord. We are happy to read a draft
+    proposal before you submit it.
+{{ /comp }}

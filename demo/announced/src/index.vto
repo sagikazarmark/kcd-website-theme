@@ -1,0 +1,443 @@
+---
+id: home
+description: "KCD Your City 2099 is coming on 15 May! A day of Kubernetes and Cloud Native talks with the local community. Stay tuned for the call for papers, speakers and tickets."
+---
+{{ layout "layouts/home.vto" }}
+
+{{#
+    The home page: the hero (layouts/home.vto puts the `hero` slot into a
+    full-screen `hero.frame`), then the sections, each a `ui.band` written
+    here over the theme's components. Collection sections (sponsors,
+    keynotes, organizers) check their list length; the venue always renders. A section
+    over a page (the sponsoring invitation, the agenda teaser) checks that
+    the page is in the build, so a `draft: true` drops it. The copy is this
+    edition's and lives here, next to the conditions that pick it. This is
+    the site as announced: "Coming soon", the date and the venue, and a
+    button to the social links. While `cfp.open`, the hero names the
+    deadline, counts down to it and adds "Submit a talk", and the CFP
+    section shows; copy that changes at a deadline is timed text (ui.text),
+    so the page reads right between the deadline and the next deploy. The
+    words for the later stages (tickets on sale, early bird over) are
+    written in the demo's phases (the theme's demo/). Other shapes
+    of home page are in the theme's showcase (showcase/src/home/).
+#}}
+
+{{ set heroLedeCfp }}
+    The call for papers is open until
+    <time
+        datetime="{{ cfp.deadline }}"
+        class="font-semibold text-white whitespace-nowrap"
+    >{{ cfp.deadline |> formatDate }}</time>, and we'd love to hear your talk idea.
+{{ /set }}
+
+{{ set heroBadge = cfp.open
+    ? { html: "Call for papers open", until: cfp.deadline, after: "Call for papers closed" }
+    : "Coming soon" }}
+{{ set heroLede = cfp.open
+    ? { html: heroLedeCfp, until: cfp.deadline, after: "The call for papers is now closed. Thank you to everyone who shared a talk idea." }
+    : "Full details are on their way." }}
+
+{{# The countdown while the CFP is open; drop the `if` to keep the CFP open without one. #}}
+{{ slot hero }}
+    {{ comp.hero.intro({
+        badge: heroBadge,
+        tagline: "The Kubernetes Community Days are coming to Your City.",
+        lede: heroLede,
+    }) }}
+
+    {{ if cfp.open }}
+        {{ comp.ui.countdown({
+            deadline: cfp.deadline,
+            heading: "Time left to submit",
+            statusPrefix: "CFP closes",
+            expiredHeading: "Submissions closed",
+            expiredStatus: "The call for papers is closed.",
+            ariaSuffix: "left to submit",
+        }) }}
+    {{ /if }}
+
+    {{ comp ui.actions }}
+        {{# "Submit a talk" while the CFP is open, disabled at the deadline. #}}
+        {{ if cfp.open }}
+            {{ comp ui.until { time: cfp.deadline } }}
+                {{ comp.ui.button({
+                    label: "Submit a talk",
+                    href: cfp.url,
+                    icon: "fa-microphone-lines",
+                    style: "primary",
+                    external: true,
+                }) }}
+            {{ /comp }}
+            {{ comp ui.after { time: cfp.deadline } }}
+                {{ comp.ui.button({
+                    label: "Submissions closed",
+                    icon: "fa-microphone-lines",
+                    style: "primary",
+                    disabled: true,
+                }) }}
+            {{ /comp }}
+        {{ /if }}
+
+        {{# "Get tickets" waits while the tickets page is a draft; "Stay in the loop" scrolls to the social band. #}}
+        {{ comp.ui.button({ label: "Get tickets", page: "tickets", icon: "fa-ticket", style: "primary" }) }}
+        {{ comp.ui.button({ label: "Stay in the loop", href: "#stay-tuned", icon: "fa-bell", style: "secondary" }) }}
+    {{ /comp }}
+{{ /slot }}
+
+{{# Call for papers, while `cfp.open`: a timed pill and lede, the first-timers box, the buttons. #}}
+{{ if cfp.open }}
+    {{ comp ui.band { id: "call-for-papers" } }}
+        {{ comp.ui.heading({
+            pill: { html: "Call for papers open", until: cfp.deadline, after: "Call for papers closed" },
+            title: "Share your story on the KCD Your City stage",
+            lede: {
+                html: "Whether it's a hard-won production lesson, a deep dive into a cloud native project, or a fresh perspective on the ecosystem, we want to hear from you. Submit your talk and help shape KCD Your City 2099.",
+                until: cfp.deadline,
+                after: "The call for papers is now closed. Thank you to everyone who submitted a proposal and helped shape KCD Your City 2099.",
+            },
+        }) }}
+
+        <div class="mx-auto max-w-2xl rounded-lg border border-secondary bg-secondary/20 p-8 text-left">
+            <div class="flex items-start gap-4">
+                {{ comp.ui.icon({ name: "fa-hand-holding-heart", classes: "mt-1 shrink-0 text-3xl text-accent" }) }}
+                <div>
+                    <h3 class="mb-2 text-xl font-semibold text-black">First-time speakers are welcome</h3>
+                    <p class="text-gray-700">
+                        Never spoken at a conference before? This is the perfect place
+                        to start. We're happy to help you write your first proposal,
+                        shape your talk and prepare for the stage. Everyone starts
+                        somewhere, so reach out and we'll support you every step of
+                        the way.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {{ comp ui.actions }}
+            {{ comp ui.until { time: cfp.deadline } }}
+                {{ comp.ui.button({
+                    label: "Submit your talk",
+                    href: cfp.url,
+                    icon: "fa-microphone-lines",
+                    style: "primary",
+                    external: true,
+                }) }}
+            {{ /comp }}
+            {{ comp ui.after { time: cfp.deadline } }}
+                {{ comp.ui.button({
+                    label: "Submissions closed",
+                    icon: "fa-microphone-lines",
+                    style: "primary",
+                    disabled: true,
+                }) }}
+            {{ /comp }}
+            {{ comp.ui.button({ label: "CFP FAQ", page: "cfp-faq", icon: "fa-circle-question", style: "outlineAccent" }) }}
+            {{ comp.ui.button({
+                label: "Ask us for help",
+                href: social.discord,
+                icon: "fa-brands fa-discord",
+                style: "outline",
+                external: true,
+            }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /if }}
+
+{{# "What is KCD Your City?": the two paragraphs the page opens its content with. #}}
+{{ comp ui.band { id: "about" } }}
+    {{ comp ui.heading { title: `What is ${event.name}?` } }}
+        <p class="mt-6 text-lg text-gray-600 mb-6 rich-text">
+            <a href="https://www.cncf.io/kcds/" target="_blank" rel="noopener noreferrer">Kubernetes Community Days</a>
+            (or KCD) is a
+            <a href="https://www.cncf.io/" target="_blank" rel="noopener noreferrer">Cloud Native Computing Foundation (CNCF)</a>
+            supported event that takes place in dozens of cities every year. KCD Your
+            City is the first edition in our city: a day for the local cloud native
+            community to learn from each other and from guests from further afield.
+        </p>
+        <p class="text-lg text-gray-600 rich-text">
+            KCDs are community-organized events that gather adopters and
+            technologists from open source and cloud native communities for
+            education, collaboration, and networking.
+        </p>
+    {{ /comp }}
+{{ /comp }}
+
+{{# Sponsors: one `ui.logo` row per tier in sponsors.yaml, in file order; a tier's `style` sizes its row and items. Logos share a 500x300 canvas. #}}
+{{ if sponsors.tiers.length }}
+    {{ comp ui.band { id: "sponsors" } }}
+        {{ comp.ui.heading({ title: "Our sponsors", lede: `Companies that make ${event.name} possible` }) }}
+        <div class="space-y-12">
+            {{ for tier of sponsors.tiers }}
+                <div class="text-center">
+                    <h3 class="mb-6 text-sm font-semibold uppercase tracking-widest text-gray-500">
+                        {{ tier.name }}
+                    </h3>
+                    <ul class="mx-auto flex flex-wrap justify-center {{ tier.style.container }}">
+                        {{ for item of tier.logos }}
+                            <li class="{{ tier.style.item }}">
+                                {{ comp.ui.logo({ name: item.name, logo: item.logo, href: item.url, width: 500, height: 300 }) }}
+                            </li>
+                        {{ /for }}
+                    </ul>
+                </div>
+            {{ /for }}
+        </div>
+    {{ /comp }}
+{{ /if }}
+{{# Keynotes: a `comp.keynote` card per entry in keynotes.yaml. Prepare the announcement on a branch, merge on the day. #}}
+{{ if keynotes.speakers.length }}
+    {{ comp ui.band { id: "keynotes", tone: "secondary" } }}
+        {{ comp.ui.heading({
+            title: "Keynote speakers",
+            lede: `The keynotes open and close the day: industry leaders with their
+                take on what's changing for the people who keep software running.`,
+        }) }}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {{ for speaker of keynotes.speakers }}
+                {{ comp.keynote(speaker) }}
+            {{ /for }}
+        </div>
+    {{ /comp }}
+{{ /if }}
+
+{{# Agenda teaser: one random talk (session.teaser) under an intro that counts them; keynotes and cancelled talks left out; only while the agenda page is in the build. #}}
+{{ set talks = search.page("id=agenda")
+    ? schedule.sessions.filter((s) => s.format !== "Keynote" && !s.cancelled && s.speakers.length > 0)
+    : [] }}
+{{ if talks.length }}
+    {{ set agendaLede }}
+        {{ talks.length }} talks{{ if schedule.rooms.length > 1 }}
+        across {{ schedule.rooms.length }} tracks{{ /if }} follow
+        the keynotes. Here's a sneak peek.
+    {{ /set }}
+    {{ comp ui.band { id: "agenda" } }}
+        {{ comp.ui.heading({ pill: "Agenda", title: "Plan your day", lede: agendaLede }) }}
+
+        {{ comp.session.teaser({ talks }) }}
+
+        <div class="mt-10 text-center">
+            {{ comp.ui.button({
+                label: "See the full agenda",
+                page: "agenda",
+                icon: "fa-calendar-days",
+                style: "primary",
+            }) }}
+        </div>
+    {{ /comp }}
+{{ /if }}
+
+{{# "What to expect?": the lede and the cards. #}}
+{{ set whatToExpectLede }}
+    A day of Kubernetes and Cloud Native, full of talks, hallway conversations
+    and fun, ending with a party! We are a locally-focused but English-speaking
+    community of engineers, developers, professionals and students of all
+    things Cloud Native, coming together to celebrate our love and passion for
+    technology.
+{{ /set }}
+
+{{ comp ui.band { id: "what-to-expect" } }}
+    {{ comp.ui.heading({ title: "What to expect?", lede: whatToExpectLede }) }}
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <li class="flex items-start gap-5 bg-white rounded-lg shadow-lg p-6 md:col-span-2">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                {{ comp.ui.icon({ name: "fa-microphone-lines", classes: "text-accent text-xl" }) }}
+            </span>
+            <p class="text-gray-700">
+                Two tracks of technically competent talks, relevant to the larger
+                community and coming from end-users rather than vendors. The aim is
+                to ensure the highest possible quality of sessions for all types of
+                attendees.
+            </p>
+        </li>
+        <li class="flex items-start gap-5 bg-white rounded-lg shadow-lg p-6">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                {{ comp.ui.icon({ name: "fa-star", classes: "text-accent text-xl" }) }}
+            </span>
+            <p class="text-gray-700">
+                Special and well-known guests from the Open Source, DevOps and Cloud
+                Native communities.
+            </p>
+        </li>
+        <li class="flex items-start gap-5 bg-white rounded-lg shadow-lg p-6">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                {{ comp.ui.icon({ name: "fa-building-columns", classes: "text-accent text-xl" }) }}
+            </span>
+            <p class="text-gray-700">
+                A modern venue in the heart of Your City, with room for hundreds of
+                attendees.
+            </p>
+        </li>
+    </ul>
+{{ /comp }}
+
+{{# Venue: the picture (linking to the venue page while it is in the build) beside name, address, summary, highlights and a button, from venue.yaml. Its own left-aligned heading; `ui.heading` centres. #}}
+{{ set venuePage = search.page("id=venue") }}
+{{ set venueUrl = venuePage ? venuePage.url : null }}
+    {{ comp ui.band { id: "venue" } }}
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {{# The space inside the if is required: Vento's autoTrim would glue the attributes. #}}
+            <{{ venueUrl ? "a" : "div" }}
+                {{ if venueUrl }} href="{{ venueUrl }}"{{ /if }}
+                class="block overflow-hidden rounded-2xl shadow-xl"
+            >
+                <img
+                    src="{{ venue.image.src }}"
+                    srcset="{{ venue.image.src }} {{ venue.image.width }}w, {{ venue.image.src2x }} {{ venue.image.width * 2 }}w"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    alt="{{ venue.image.alt }}"
+                    width="{{ venue.image.width }}"
+                    height="{{ venue.image.height }}"
+                    loading="lazy"
+                    class="aspect-[3/2] w-full object-cover transition duration-300 hover:scale-105"
+                />
+            </{{ venueUrl ? "a" : "div" }}>
+            <div>
+                <span class="inline-block bg-accent/10 text-accent text-sm font-semibold uppercase tracking-widest px-4 py-1 rounded-full mb-6">
+                    Venue
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-3 text-primary">
+                    {{ venue.name }}
+                </h2>
+                <p class="flex items-center gap-3 text-gray-700 mb-6">
+                    {{ comp.ui.icon({ name: "fa-location-dot", classes: "text-accent" }) }}
+                    {{ venue.address.street }}, {{ venue.address.city }}
+                </p>
+                <p class="text-lg text-gray-600 mb-6">
+                    {{ venue.summary }}
+                </p>
+                <ul class="space-y-3 text-gray-700 mb-8">
+                    {{ for highlight of venue.highlights }}
+                        <li class="flex items-start gap-3">
+                            {{ comp.ui.icon({ name: highlight.icon, classes: "text-accent mt-1" }) }}
+                            {{ highlight.text }}
+                        </li>
+                    {{ /for }}
+                </ul>
+                {{ comp.ui.button({
+                    label: "Getting there and parking",
+                    page: "venue",
+                    icon: "fa-map-location-dot",
+                    style: "primary",
+                }) }}
+            </div>
+        </div>
+    {{ /comp }}
+{{# Sponsoring: the invitation, while the sponsors page is in the build (publishing it brings the band; the logos above show who already said yes). #}}
+{{ if search.page("id=sponsors") }}
+    {{ comp ui.band { id: "sponsoring", padding: "md" } }}
+        {{ comp ui.heading {
+            pill: "Sponsoring",
+            title: `Partner with ${event.name}`,
+            lede: `${event.name} is a community-organized, not-for-profit event, and it would not happen without its partners. Put your brand in front of the people who build and run cloud native infrastructure in this region.`,
+        } }}
+            {{ comp ui.actions }}
+                {{ comp.ui.button({ label: "See the packages", page: "sponsors", icon: "fa-handshake", style: "primary" }) }}
+            {{ /comp }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /if }}
+
+{{ comp ui.band { id: "video", padding: "md" } }}
+    {{ comp.ui.heading({
+        title: "A taste of what's coming",
+        lede: "New to community days? This is what a KCD looks like: a day of talks, hallway conversations and people who care about the same things you do.",
+    }) }}
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="aspect-video">
+                {{# A placeholder video id; replace it with yours. #}}
+                <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/AAAAAAAAAAA"
+                    title="What is a Kubernetes Community Day?"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    class="rounded-t-lg"
+                ></iframe>
+            </div>
+        </div>
+        <div class="mt-8 text-center">
+            {{ comp.ui.button({
+                label: "Watch on YouTube",
+                href: "#",
+                icon: "fa-clock-rotate-left",
+                style: "outline",
+            }) }}
+        </div>
+    </div>
+{{ /comp }}
+
+{{# Catch up: three ui.card links; the YouTube one keeps the brand red. #}}
+{{ comp ui.band { id: "catch-up", padding: "md" } }}
+    {{ comp.ui.heading({ title: "Catch up with the community" }) }}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        {{ comp.ui.card({
+            icon: "fa-people-group",
+            title: "The meetup",
+            text: "KCD Your City grew out of the monthly cloud native meetup. Join the next one.",
+            align: "center",
+            href: "#",
+            external: true,
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-brands fa-youtube",
+            iconClasses: "text-red-600",
+            title: "Meetup recordings",
+            text: "Watch the talks from previous meetups on YouTube.",
+            align: "center",
+            href: "#",
+            external: true,
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-newspaper",
+            iconClasses: "text-primary",
+            title: "Newsletter",
+            text: "A short monthly email about the community and the conference.",
+            align: "center",
+            href: "#",
+            external: true,
+        }) }}
+    </div>
+{{ /comp }}
+
+{{# Organizers: a `comp.organizer` card per entry in organizers.yaml, in a centred flex-wrap row (wider than the other sections: the cards are horizontal). #}}
+{{ if organizers.people.length }}
+    {{ comp ui.band { id: "organizers" } }}
+        {{ comp.ui.heading({
+            pill: "The team",
+            title: "Meet the organizers",
+            lede: `${event.name} is put together by volunteers from the local cloud
+                native community, in their own free time.`,
+        }) }}
+        <ul class="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
+            {{ for person of organizers.people }}
+                {{ comp.organizer(person) }}
+            {{ /for }}
+        </ul>
+    {{ /comp }}
+{{ /if }}
+
+{{# "Stay tuned": the dark band with the social links as stacked icons over `social`. #}}
+{{ comp ui.band { id: "stay-tuned", tone: "primary", align: "center" } }}
+    {{ comp.ui.heading({
+        title: `Stay tuned for ${event.name} ${event.year}`,
+        lede: "Follow us to be the first to hear about the call for papers, speakers, tickets and sponsorship opportunities.",
+        inverse: true,
+    }) }}
+    {{ async function socialLink({ link, label, icon }) }}
+        <a
+            href="{{ link }}"
+            {{ link |> newTab }}
+            class="text-white hover:text-secondary transition-colors duration-300 flex flex-col items-center"
+        >
+            {{ comp.ui.icon({ name: icon, classes: "text-4xl mb-2" }) }}
+            <span class="text-sm">{{ label }}</span>
+        </a>
+    {{ /function }}
+
+    <div class="flex justify-center space-x-8">
+        {{ comp.ui.socialLinks({ links: social, render: socialLink }) }}
+    </div>
+{{ /comp }}

@@ -1,0 +1,18 @@
+{{#
+    One question and its answer: a native <details>, the answer Markdown
+    rendered through the `md` filter in a `markdown-body`. One row of
+    `faq.list`, or on its own:
+
+        {{ comp.faq.item({ question: "Is there parking?", answer: "Yes, see [the venue page](/venue/)." }) }}
+
+    Props: question (plain text), answer (Markdown), open (optional).
+#}}
+<details class="group"{{ if open }} open{{ /if }}>
+    <summary class="flex cursor-pointer list-none items-start justify-between gap-4 px-6 py-5 text-left text-lg font-semibold text-black transition hover:text-primary [&::-webkit-details-marker]:hidden">
+        <span>{{ question }}</span>
+        {{ comp.ui.icon({ name: "fa-chevron-down", classes: "mt-1.5 shrink-0 text-sm text-gray-400 transition group-open:rotate-180" }) }}
+    </summary>
+    <div class="markdown-body px-6 pb-6">
+        {{ answer |> md }}
+    </div>
+</details>

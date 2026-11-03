@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <rect width="800" height="1200" fill="#e0f2fe"/><rect x="70" y="70" width="660" height="440" rx="30" fill="#93eaff"/>
+  <circle cx="260" cy="610" r="80" fill="#fbbf24"/><circle cx="540" cy="610" r="80" fill="#f59e0b"/>
+  <path d="M130 960V760Q260 650 390 760V960" fill="#0086ff"/><path d="M410 960V760Q540 650 670 760V960" fill="#d62293"/>
+  <text x="400" y="220" text-anchor="middle" fill="#0f172a" font-family="sans-serif" font-size="40">Between sessions</text>
+  <text x="400" y="300" text-anchor="middle" fill="#0f172a" font-family="sans-serif" font-size="26">Sample illustration</text>
+  <text x="400" y="1100" text-anchor="middle" fill="#0f172a" font-family="sans-serif" font-size="24">Gallery demo · portrait image</text>
+</svg>

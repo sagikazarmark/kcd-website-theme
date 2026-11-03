@@ -1,0 +1,33 @@
+{{#
+    A speaker's photo, or their initials on a disc without one. Decorative
+    (empty alt): the name is always next to it.
+
+    Props:
+        speaker   normalised speaker from schedule.ts (`avatar`, `initials`)
+        size      sm 40px, md 64px (default), lg 96px, xl 128px; each carries
+                  its pixel width for Lume's optional picture plugin
+                  (transform-images, @2 for retina)
+#}}
+{{ set sizes = {
+    sm: { classes: "size-10 text-sm", px: 40 },
+    md: { classes: "size-16 text-lg", px: 64 },
+    lg: { classes: "size-24 text-2xl", px: 96 },
+    xl: { classes: "size-32 text-4xl", px: 128 },
+} }}
+{{ set look = sizes[size] || sizes.md }}
+{{ if speaker.avatar }}
+    <img
+        src="{{ speaker.avatar |> escape }}"
+        alt=""
+        width="400"
+        height="400"
+        loading="lazy"
+        transform-images="avif webp {{ look.px }}@2"
+        class="{{ look.classes }} shrink-0 rounded-full bg-gray-100 object-cover"
+    />
+{{ else }}
+    <span
+        class="{{ look.classes }} inline-flex shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-primary"
+        aria-hidden="true"
+    >{{ speaker.initials |> escape }}</span>
+{{ /if }}

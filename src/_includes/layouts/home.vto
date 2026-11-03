@@ -1,0 +1,21 @@
+{{#
+    The home-page layout: a full-screen `hero.frame` with the transparent
+    menu as the header, around the page's `hero` slot (inside this layout
+    `hero` is the slot; components still find the `hero.image` concept).
+    One shape of home page; for the menu bar with a smaller hero, or no
+    hero, use site.vto or page.vto (see showcase/src/home/).
+
+        {{ layout "layouts/home.vto" }}
+        {{ slot hero }}
+            {{ comp.hero.intro({ badge: "Tickets available", tagline: "..." }) }}
+            {{ comp ui.actions }}...{{ /comp }}
+        {{ /slot }}
+        ...
+#}}
+{{ layout "layouts/site.vto" }}
+{{ slot header }}
+    {{ comp hero.frame { size: "screen", menu: true, current: url } }}
+        {{ hero }}
+    {{ /comp }}
+{{ /slot }}
+{{ content }}

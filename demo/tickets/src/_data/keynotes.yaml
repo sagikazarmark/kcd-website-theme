@@ -1,0 +1,38 @@
+# The keynote speakers for the home page's section (index.vto), one card
+# each; the section disappears with an empty list. A card is a "to be
+# announced" placeholder until `announced`, so it can be filled in gradually;
+# prepare the announcement on a branch and merge on the day. Both announced:
+# the opening and the closing keynote, Sessionize's sample speakers (their
+# portraits under assets/keynotes/, the site's own files).
+speakers:
+  - announced: true
+    name: "Aiden Test"
+    role: "Professional public speaker"
+    talk: "Aiden's Keynote"
+    # Modal only; a blank line starts a paragraph.
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    # Square portrait, 400x400; an icon avatar stands in without one.
+    photo: "/assets/keynotes/aiden-test.jpg"
+    links:
+      x: "https://twitter.com/sessionizecom"
+      linkedin: "http://linkedin.com/in/domagojpa"
+    bio: >-
+      Pop culture fanatic. Friend of animals everywhere. Student. Thinker.
+      Bacon practitioner.
+
+  - announced: true
+    name: "Sophia Test"
+    role: "CEO"
+    company: "Contoso"
+    talk: "Sophia's Session"
+    abstract: >-
+      Usually, you would find a session description here. But, this is not a
+      real session submission, so description is missing. Ha!
+    photo: "/assets/keynotes/sophia-test.jpg"
+    links:
+      x: "https://twitter.com/sessionizecom"
+    bio: >-
+      Award-winning zombie specialist. Reader. Twitter fan. Total introvert.
+      Internet evangelist. Thinker. Beer junkie. Food advocate.

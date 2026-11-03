@@ -1,0 +1,9 @@
+---
+id: pictures
+title: Photo album
+---
+{{ layout "layouts/page.vto" }}
+{{ comp ui.section { width: "6xl" } }}
+    {{ comp.ui.heading({ level: 1, title: "The photo album", lede: "Sample illustrations, not photographs of a real event. Select an image to open it." }) }}
+    {{ comp.gallery({ id: "album", images: recap.photos.images }) }}
+{{ /comp }}

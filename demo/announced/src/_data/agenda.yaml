@@ -1,0 +1,20 @@
+# The programme: rooms, talks and breaks, for /agenda/ and the speakers'
+# talks on /speakers/. A talk names its speakers by their `id` in
+# speakers.yaml. Written by hand here; with Sessionize, set `endpoint` in
+# sessionize.yaml and run `deno task sessionize`, which overwrites this file
+# and speakers.yaml (corrections then go in _data/patches/).
+#
+# `rooms` in display order (which are columns is derived). Times are the
+# event's local time, no offset, quoted. A session: `id` (the URL hash
+# /agenda/#session-<id>), `title`, `speakers` (ids), optional `abstract` (a
+# blank line starts a paragraph), and once scheduled `room`, `start`, `end`;
+# flags `keynote`, `plenary` (spans every column), `cancelled` (keeps its
+# slot, marked). A break: `title`, `start`, `end`, optional `room`,
+# `description`, `plenary`, `icon` (else picked from the title), `id`.
+#
+# Empty until there is a programme. The demo's speakers phase lists the
+# talks without times (the speakers page is up, the agenda a draft); its
+# agenda phase adds rooms, times and breaks.
+rooms: []
+sessions: []
+breaks: []

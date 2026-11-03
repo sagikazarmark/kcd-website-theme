@@ -1,0 +1,9 @@
+{{#
+    "Draft" pill after a menu or footer link to a page built as a draft,
+    which only happens under `deno task serve`; a production build has no
+    draft pages. Props: onDark (optional; translucent white instead of amber).
+#}}
+<span
+    class="ml-1 inline-block rounded-full px-1.5 py-px align-middle text-[10px] font-semibold uppercase tracking-widest {{ if onDark }}bg-white/20 text-white{{ else }}bg-amber-100 text-amber-800{{ /if }}"
+    data-draft
+>Draft</span>

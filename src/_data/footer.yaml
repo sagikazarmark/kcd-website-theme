@@ -1,0 +1,5 @@
+# Theme default: the footer's line under the copyright, "© <event.year>
+# <event.name>. <text>". The footer's logo is `logo.vertical.white`; `logo`
+# here names another file for the footer alone. Copy to src/_data/footer.yaml
+# to change either. The footer is always rendered.
+text: "Part of the global Kubernetes Community Days program."

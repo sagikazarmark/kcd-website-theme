@@ -1,0 +1,16 @@
+{{#
+    Button row: `ui.button`s side by side from sm up, stacked on phones,
+    centred; the buttons are the content, so which ones show is read where
+    it is decided. Brings its own `mt-8`. Under a `ui.heading` (as its
+    content) or under `hero.intro`:
+
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Get tickets", page: "tickets", icon: "fa-ticket", style: "primary" }) }}
+            {{ if cfp.open }}
+                {{ comp.ui.button({ label: "Submit a talk", href: cfp.url, style: "secondary", external: true }) }}
+            {{ /if }}
+        {{ /comp }}
+#}}
+<div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+    {{ content }}
+</div>

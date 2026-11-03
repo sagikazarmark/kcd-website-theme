@@ -1,0 +1,28 @@
+# The organizing team for the home page's section (index.vto), one card
+# each. Per person: `name`; optional `photo` (a 400x400 portrait; an icon
+# avatar stands in), `role`, `company`, `bio` (a blank line starts a
+# paragraph), `links` (website, x, bluesky, mastodon, linkedin, github).
+people:
+  - name: "Bram Placeholder"
+    role: "Site Reliability Engineer"
+    company: "Demo Cloud"
+    links:
+      x: "#"
+      website: "#"
+    bio: >-
+      Bram keeps the lights on at Demo Cloud and started the Your City cloud
+      native meetup in 2096 after one too many conversations about
+      Kubernetes in the office kitchen. He is the one who books the venue.
+
+  - name: "Chloé Sample"
+    role: "Developer Advocate"
+    company: "Sample Systems"
+    links:
+      linkedin: "#"
+    bio: >-
+      Chloé talks to developers for a living and looks after the KCD Your
+      City programme: the call for papers, the speakers and the schedule.
+
+  - name: "Dev Fictional"
+    role: "CTO"
+    company: "Fictional Labs"

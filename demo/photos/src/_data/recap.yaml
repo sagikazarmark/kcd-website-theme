@@ -1,0 +1,21 @@
+# Instance-owned content; the theme does not prescribe a recap data schema.
+photos:
+  url: /pictures/
+  credit: "Sample illustrations for the demo, not event photographs."
+  images:
+    - src: /assets/gallery/stage.svg
+      alt: "Sample illustration of a speaker on a blue keynote stage"
+      width: 1200
+      height: 800
+    - src: /assets/gallery/conversation.svg
+      alt: "Sample portrait illustration of two attendees talking"
+      width: 800
+      height: 1200
+    - src: /assets/gallery/community.svg
+      alt: "Sample illustration of the community at the closing session"
+      width: 1200
+      height: 800
+recordings:
+  note: "Session videos will appear here as they're published."
+slides:
+  note: "We're collecting slide decks from our speakers."

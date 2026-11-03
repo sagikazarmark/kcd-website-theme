@@ -1,0 +1,92 @@
+{{#
+    Session dialog: time and room, title, speakers with their profile links,
+    the abstract, a short bio per speaker; a cancelled talk says so above
+    the abstract. Opened by `session.card`. Props: session.
+#}}
+{{# One profile link of a speaker: the network's icon and name. #}}
+{{ async function profileLink({ link, label, icon }) }}
+    <a
+        href="{{ link |> escape }}"
+        {{ link |> newTab }}
+        class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition hover:text-accent"
+    >
+        {{ comp.ui.icon({ name: icon }) }}
+        {{ label }}
+    </a>
+{{ /function }}
+{{ comp dialog.frame { id: "session-" + session.id } }}
+    {{ if session.start || session.room || session.format || session.cancelled }}
+        <div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 pr-10 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            {{ if session.start }}
+                <span class="tabular-nums">
+                    <time datetime="{{ session.startsAt }}">{{ session.start }}</time>
+                    &ndash;
+                    <time datetime="{{ session.endsAt }}">{{ session.end }}</time>
+                </span>
+            {{ /if }}
+            {{ if session.cancelled }}
+                <span class="rounded-full bg-gray-800 px-2.5 py-0.5 text-white">Cancelled</span>
+            {{ /if }}
+            {{ if session.room }}
+                <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-gray-600">{{ session.room |> escape }}</span>
+            {{ /if }}
+            {{ if session.format }}
+                <span class="rounded-full bg-accent/10 px-2.5 py-0.5 text-accent">{{ session.format }}</span>
+            {{ /if }}
+        </div>
+    {{ /if }}
+    <h2
+        id="session-{{ session.id }}-title"
+        class="mb-6 pr-8 text-2xl font-bold leading-tight text-primary md:text-3xl"
+    >{{ session.title |> escape }}</h2>
+
+    {{ if session.cancelled }}
+        <p class="mb-6 rounded-xl border border-gray-300 bg-gray-100 px-4 py-3 text-sm text-gray-700" data-cancelled>
+            This talk has been cancelled.
+        </p>
+    {{ /if }}
+
+    {{ if session.speakers.length }}
+        <ul class="mb-6 flex flex-col gap-4">
+            {{ for speaker of session.speakers }}
+                <li class="flex items-center gap-4">
+                    {{ comp.avatar({ speaker, size: "md" }) }}
+                    <div class="min-w-0">
+                        <p class="font-semibold text-black">{{ speaker.name |> escape }}</p>
+                        {{ if speaker.byline }}
+                            <p class="text-sm text-gray-600">{{ speaker.byline |> escape }}</p>
+                        {{ /if }}
+                        {{ if Object.keys(speaker.links).length }}
+                            <div class="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                                {{ comp.ui.socialLinks({ links: speaker.links, render: profileLink }) }}
+                            </div>
+                        {{ /if }}
+                    </div>
+                </li>
+            {{ /for }}
+        </ul>
+    {{ /if }}
+
+    {{ if session.paragraphs.length }}
+        <div class="space-y-4 leading-7 text-gray-700">
+            {{ for paragraph of session.paragraphs }}
+                <p class="whitespace-pre-line">{{ paragraph |> escape }}</p>
+            {{ /for }}
+        </div>
+    {{ /if }}
+
+    {{ for speaker of session.speakers }}
+        {{ if speaker.bio.length }}
+            <section class="mt-8 border-t border-gray-100 pt-6">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500">
+                    About {{ speaker.name |> escape }}
+                </h3>
+                <div class="space-y-3 text-sm leading-6 text-gray-600">
+                    {{ for paragraph of speaker.bio }}
+                        <p class="whitespace-pre-line">{{ paragraph |> escape }}</p>
+                    {{ /for }}
+                </div>
+            </section>
+        {{ /if }}
+    {{ /for }}
+{{ /comp }}

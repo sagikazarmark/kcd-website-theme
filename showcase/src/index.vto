@@ -1,0 +1,82 @@
+---
+id: home
+title: Showcase
+description: "The KCD theme's components and the shapes a home page can take, each on a page over sample data."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The showcase's front page: what is here and where. The sample data is the
+    demo's last phase's (src/_data/), so every component has something to show. #}}
+
+{{ comp ui.section { width: "4xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "KCD theme",
+        title: "The components and the shapes",
+        lede: `Everything the theme ships, rendered over the sample data of
+            ${event.name} ${event.year}: every component on one page, the
+            timetable on its own, the terms in two languages (the switch over
+            the Markdown versions), and the three shapes a home page can take.
+            A site writes its pages over these; the standalone website template
+            shows them in use.`,
+    } }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Components", page: "components", icon: "fa-shapes", style: "primary" }) }}
+            {{ comp.ui.button({ label: "Timetable", page: "agenda", icon: "fa-calendar-days", style: "outline" }) }}
+            {{ comp.ui.button({ label: "Terms, in two languages", page: "terms", icon: "fa-language", style: "outline" }) }}
+            {{ comp.ui.button({ label: "Get the template", href: "https://github.com/sagikazarmark/kcd-website-template", external: true, icon: "fa-file-code", style: "outline" }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "shapes" } }}
+    {{ comp.ui.heading({
+        pill: "Home page",
+        title: "Three shapes",
+        lede: "The same sections under a different top. The template's index.vto is the first; keep the one you want.",
+    }) }}
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+        {{ comp.ui.card({
+            icon: "fa-image",
+            title: "Big hero",
+            text: "The hero fills the screen and carries the menu: the picture, the badge, the date and venue, the buttons. layouts/home.vto.",
+            align: "center",
+            href: search.page("id=home-big-hero").url,
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-window-maximize",
+            title: "Banner",
+            text: "The menu bar first, then a hero band the height of its content. layouts/site.vto with a written header.",
+            align: "center",
+            href: search.page("id=home-banner").url,
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-align-left",
+            title: "Plain",
+            text: "No hero: the home page as an inner page, a heading and buttons. layouts/page.vto.",
+            align: "center",
+            href: search.page("id=home-plain").url,
+        }) }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "recap" } }}
+    {{ comp.ui.heading({ title: "After the conference", lede: "A complete recap with a gallery, recordings, slides, film and transparency report, plus the disabled controls used while content is still coming." }) }}
+    {{ comp ui.actions }}
+        {{ comp.ui.button({ label: "Post-conference recap", page: "home-recap", icon: "fa-photo-film", style: "primary" }) }}
+        {{ comp.ui.button({ label: "Pending controls", page: "home-pending", icon: "fa-clock", style: "outline" }) }}
+    {{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "where" } }}
+    {{ comp.ui.heading({
+        pill: "Where things are",
+        title: "Theme, template, demo",
+        lede: "The theme is the repository root: layouts, components, the data schema. The template is a site at its first stage. The demo is that site at every later stage.",
+    }) }}
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+        {{ comp.ui.card({ icon: "fa-puzzle-piece", title: "Components", text: "Each component file starts with a comment naming its props; the components page renders every one of them.", align: "center", tone: "gray", href: search.page("id=components").url }) }}
+        {{ comp.ui.card({ icon: "fa-file-code", title: "The template", text: "What a new KCD starts from: the pages over the components, the data as a checklist, the first stage of an edition.", align: "center", tone: "gray", href: "https://github.com/sagikazarmark/kcd-website-template", external: true }) }}
+        {{ comp.ui.card({ icon: "fa-timeline", title: "The demo", text: "The template at every stage, from the call for papers to the post-conference recap, one site per stage with a bar at the bottom of every page to move between them.", align: "center", tone: "gray" }) }}
+    </div>
+{{ /comp }}

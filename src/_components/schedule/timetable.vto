@@ -1,0 +1,71 @@
+{{#
+    The timetable: per day of `schedule.days`, a day heading (when there are
+    several), the sticky row of track names, and a CSS grid with a time
+    column, one column per track and one row per distinct start time. Talks
+    are `session.card`, breaks `session.break`. Each item carries its grid
+    position in --row/--col (`Row.index`, `Placed.track`, `Placed.rowSpan`,
+    see schedule.ts), which applies from md up; below, items stack in
+    chronological order. The agenda page renders this under its heading and
+    writes the dialogs itself.
+
+        {{ comp.schedule.timetable() }}
+
+    Props:
+        source   optional { rooms, days }; default the `schedule` global
+                 (one object, so no prop shadows a global). Nothing without days.
+#}}
+{{ set data = source || schedule }}
+{{ for day of data.days }}
+    {{ if data.days.length > 1 }}
+        <h2 class="mb-6 mt-14 text-center text-3xl font-bold text-primary first:mt-0">
+            {{ day.label }}
+        </h2>
+    {{ /if }}
+
+    <div style="--tracks: {{ data.rooms.length }}" data-timetable="{{ day.date }}">
+        <div class="sticky top-0 z-10 hidden gap-4 border-b border-gray-200 bg-gray-50/95 py-3 backdrop-blur-sm md:grid md:grid-cols-[5rem_repeat(var(--tracks),minmax(0,1fr))]">
+            <div class="text-sm font-semibold uppercase tracking-widest text-gray-400">Time</div>
+            {{ for room of data.rooms }}
+                <div class="text-center text-sm font-semibold uppercase tracking-widest text-gray-500">
+                    {{ room |> escape }}
+                </div>
+            {{ /for }}
+        </div>
+
+        <div class="grid grid-cols-1 gap-3 pt-4 md:grid-cols-[5rem_repeat(var(--tracks),minmax(0,1fr))] md:gap-4">
+            {{ for row of day.rows }}
+                {{ if row.index > 0 }}
+                    {{# Rule between rows; emitted first, so a spanning item paints over it. #}}
+                    <div
+                        class="hidden h-px self-start bg-gray-200 md:-mt-2 md:block md:[grid-column:1/-1] md:[grid-row:var(--row)]"
+                        style="--row: {{ row.index + 1 }}"
+                        aria-hidden="true"
+                    ></div>
+                {{ /if }}
+
+                <div
+                    class="mt-5 first:mt-0 md:mt-0 md:pt-4 md:[grid-column:1] md:[grid-row:var(--row)]"
+                    style="--row: {{ row.index + 1 }}"
+                >
+                    <time
+                        datetime="{{ row.startsAt }}"
+                        class="text-xl font-bold tabular-nums text-primary"
+                    >{{ row.start }}</time>
+                </div>
+
+                {{ for placed of row.sessions }}
+                    <div
+                        class="relative grid md:[grid-column:var(--col)] md:[grid-row:var(--row)]"
+                        style="--row: {{ row.index + 1 }} / span {{ placed.rowSpan }}; --col: {{ placed.track == null ? "2 / -1" : placed.track + 2 }}"
+                    >
+                        {{ if placed.session.isBreak }}
+                            {{ comp.session.break({ session: placed.session, wide: placed.track == null }) }}
+                        {{ else }}
+                            {{ comp.session.card({ session: placed.session }) }}
+                        {{ /if }}
+                    </div>
+                {{ /for }}
+            {{ /for }}
+        </div>
+    </div>
+{{ /for }}

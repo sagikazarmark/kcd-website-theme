@@ -1,0 +1,44 @@
+---
+id: agenda
+title: Timetable
+description: "The schedule.timetable component over the sample programme: two tracks, breaks, an opening and a closing keynote, with a dialog per talk."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The template's agenda page as it stands, over the sample programme: the `schedule` global (from agenda.yaml and speakers.yaml), the grid comp.schedule.timetable, a comp.session.dialog per talk. The id is `agenda` so the components that link to the agenda page (session.teaser, speaker.dialog) find it. #}}
+
+<!-- Intro and timetable -->
+{{ comp ui.section { width: "6xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Agenda",
+        title: "Plan your day",
+        lede: "Select a session to read the abstract and meet the speakers.",
+    } }}
+        <p class="mt-3 text-sm text-gray-500">
+            All times are local to {{ event.city }}.
+        </p>
+        <noscript>
+            <p class="mt-3 text-sm text-gray-500">
+                Enable JavaScript to open session details.
+            </p>
+        </noscript>
+    {{ /comp }}
+
+    {{ if schedule.days.length }}
+        {{ comp.schedule.timetable() }}
+    {{ else }}
+        <p class="mt-10 text-center text-lg text-gray-600">The timetable is being put together.</p>
+    {{ /if }}
+{{ /comp }}
+
+<!-- Speakers: the cards and dialogs are on the components page -->
+{{ comp ui.cta { title: "Meet the speakers", label: "Speaker cards", href: "/components/#speakers", icon: "fa-users", tone: "white" } }}
+    {{ if schedule.speakers.length }}{{ schedule.speakers.length }} speakers{{ else }}Speakers{{ /if }} from across the cloud
+    native community. Read their bios and find their talks.
+{{ /comp }}
+
+{{# One dialog per talk, opened by the cards. #}}
+{{ for session of schedule.sessions }}
+    {{ comp.session.dialog({ session }) }}
+{{ /for }}

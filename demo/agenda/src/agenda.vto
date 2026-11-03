@@ -1,0 +1,44 @@
+---
+id: agenda
+title: Agenda
+description: "The KCD Your City 2099 agenda. A keynote and two tracks of talks, with abstracts and speaker details for every session."
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The `schedule` global (from agenda.yaml and speakers.yaml); the grid is comp.schedule.timetable. #}}
+
+<!-- Intro and timetable -->
+{{ comp ui.section { width: "6xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Agenda",
+        title: "Plan your day",
+        lede: "Select a session to read the abstract and meet the speakers.",
+    } }}
+        <p class="mt-3 text-sm text-gray-500">
+            All times are local to {{ event.city }}.
+        </p>
+        <noscript>
+            <p class="mt-3 text-sm text-gray-500">
+                Enable JavaScript to open session details.
+            </p>
+        </noscript>
+    {{ /comp }}
+
+    {{ if schedule.days.length }}
+        {{ comp.schedule.timetable() }}
+    {{ else }}
+        <p class="mt-10 text-center text-lg text-gray-600">The timetable is being put together.</p>
+    {{ /if }}
+{{ /comp }}
+
+<!-- Speakers (the panel waits while the speakers page is a draft) -->
+{{ comp ui.cta { title: "Meet the speakers", label: "See all speakers", page: "speakers", icon: "fa-users", tone: "white" } }}
+    {{ if schedule.speakers.length }}{{ schedule.speakers.length }} speakers{{ else }}Speakers{{ /if }} from across the cloud
+    native community. Read their bios and find their talks.
+{{ /comp }}
+
+{{# One dialog per talk, opened by the cards. #}}
+{{ for session of schedule.sessions }}
+    {{ comp.session.dialog({ session }) }}
+{{ /for }}

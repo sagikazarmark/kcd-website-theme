@@ -1,0 +1,386 @@
+[
+  {
+    "date": "2030-05-15T00:00:00",
+    "isDefault": true,
+    "rooms": [
+      {
+        "id": 1,
+        "name": "Hall B",
+        "sessions": [
+          {
+            "id": "00000000-0000-4000-8000-00000000a001",
+            "title": "Registration",
+            "description": null,
+            "startsAt": "2030-05-15T08:00:00",
+            "endsAt": "2030-05-15T09:00:00",
+            "isServiceSession": true,
+            "isPlenumSession": true,
+            "speakers": [],
+            "categories": [],
+            "roomId": 1,
+            "room": "Hall B",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": null,
+            "isInformed": false,
+            "isConfirmed": false
+          },
+          {
+            "id": "1001",
+            "title": "Why community days matter",
+            "description": "Conferences come and go, but the ones a community runs for itself leave something behind: the people who met there. This keynote looks at what a KCD does for a city's engineers that a vendor event cannot, and what it takes to keep one going.",
+            "startsAt": "2030-05-15T09:00:00",
+            "endsAt": "2030-05-15T09:45:00",
+            "isServiceSession": false,
+            "isPlenumSession": true,
+            "speakers": [
+              {
+                "id": "00000000-0000-4000-8000-000000000001",
+                "name": "Ada Example"
+              }
+            ],
+            "categories": [],
+            "roomId": 1,
+            "room": "Hall B",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": "Accepted",
+            "isInformed": true,
+            "isConfirmed": true
+          },
+          {
+            "id": "00000000-0000-4000-8000-00000000a002",
+            "title": "Coffee break",
+            "description": null,
+            "startsAt": "2030-05-15T09:45:00",
+            "endsAt": "2030-05-15T10:00:00",
+            "isServiceSession": true,
+            "isPlenumSession": true,
+            "speakers": [],
+            "categories": [],
+            "roomId": 1,
+            "room": "Hall B",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": null,
+            "isInformed": false,
+            "isConfirmed": false
+          },
+          {
+            "id": "1002",
+            "title": "Kubernetes for the rest of us",
+            "description": "You do not need a platform team of twenty to run Kubernetes well. This talk walks through a small team's setup: one cluster per environment, a boring ingress, managed databases, and the handful of operational habits that keep it that way.\r\n\r\nExpect opinions, a few war stories and a checklist you can take home.",
+            "startsAt": "2030-05-15T10:00:00",
+            "endsAt": "2030-05-15T10:40:00",
+            "isServiceSession": false,
+            "isPlenumSession": false,
+            "speakers": [
+              {
+                "id": "00000000-0000-4000-8000-000000000002",
+                "name": "Bram Placeholder"
+              }
+            ],
+            "categories": [],
+            "roomId": 1,
+            "room": "Hall B",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": "Accepted",
+            "isInformed": true,
+            "isConfirmed": true
+          },
+          {
+            "id": "1004",
+            "title": "GitOps in practice",
+            "description": "Three migrations to GitOps, three sets of lessons. This talk covers the repository layouts that worked, the ones that did not, how to handle secrets and promotion between environments, and what to tell the people who liked clicking deploy.",
+            "startsAt": "2030-05-15T11:00:00",
+            "endsAt": "2030-05-15T11:40:00",
+            "isServiceSession": false,
+            "isPlenumSession": false,
+            "speakers": [
+              {
+                "id": "00000000-0000-4000-8000-000000000004",
+                "name": "Dev Fictional"
+              }
+            ],
+            "categories": [],
+            "roomId": 1,
+            "room": "Hall B",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": "Accepted",
+            "isInformed": true,
+            "isConfirmed": true
+          }
+        ],
+        "hasOnlyPlenumSessions": false
+      },
+      {
+        "id": 2,
+        "name": "Hall C",
+        "sessions": [
+          {
+            "id": "1003",
+            "title": "Observability on a budget",
+            "description": "Metrics, logs and traces without the invoice: what the open source stack gives you for free, where the costs really come from, and how to decide what to keep. A practical tour of OpenTelemetry, Prometheus and friends for teams that count every euro.",
+            "startsAt": "2030-05-15T10:00:00",
+            "endsAt": "2030-05-15T10:40:00",
+            "isServiceSession": false,
+            "isPlenumSession": false,
+            "speakers": [
+              {
+                "id": "00000000-0000-4000-8000-000000000003",
+                "name": "Chloé Sample"
+              }
+            ],
+            "categories": [],
+            "roomId": 2,
+            "room": "Hall C",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": "Accepted",
+            "isInformed": true,
+            "isConfirmed": true
+          },
+          {
+            "id": "1005",
+            "title": "My first contribution to a CNCF project",
+            "description": "From reading the contributing guide to a merged pull request: an honest account of a first open source contribution, including the parts that were confusing, the people who helped, and what to do when the CI goes red for reasons you do not understand.",
+            "startsAt": "2030-05-15T11:00:00",
+            "endsAt": "2030-05-15T11:40:00",
+            "isServiceSession": false,
+            "isPlenumSession": false,
+            "speakers": [
+              {
+                "id": "00000000-0000-4000-8000-000000000005",
+                "name": "Eli Mockup"
+              }
+            ],
+            "categories": [],
+            "roomId": 2,
+            "room": "Hall C",
+            "liveUrl": null,
+            "recordingUrl": null,
+            "status": "Accepted",
+            "isInformed": true,
+            "isConfirmed": true
+          }
+        ],
+        "hasOnlyPlenumSessions": false
+      }
+    ],
+    "timeSlots": [
+      {
+        "slotStart": "08:00:00",
+        "rooms": [
+          {
+            "id": 1,
+            "name": "Hall B",
+            "session": {
+              "id": "00000000-0000-4000-8000-00000000a001",
+              "title": "Registration",
+              "description": null,
+              "startsAt": "2030-05-15T08:00:00",
+              "endsAt": "2030-05-15T09:00:00",
+              "isServiceSession": true,
+              "isPlenumSession": true,
+              "speakers": [],
+              "categories": [],
+              "roomId": 1,
+              "room": "Hall B",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": null,
+              "isInformed": false,
+              "isConfirmed": false
+            },
+            "index": 0
+          }
+        ]
+      },
+      {
+        "slotStart": "09:00:00",
+        "rooms": [
+          {
+            "id": 1,
+            "name": "Hall B",
+            "session": {
+              "id": "1001",
+              "title": "Why community days matter",
+              "description": "Conferences come and go, but the ones a community runs for itself leave something behind: the people who met there. This keynote looks at what a KCD does for a city's engineers that a vendor event cannot, and what it takes to keep one going.",
+              "startsAt": "2030-05-15T09:00:00",
+              "endsAt": "2030-05-15T09:45:00",
+              "isServiceSession": false,
+              "isPlenumSession": true,
+              "speakers": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000001",
+                  "name": "Ada Example"
+                }
+              ],
+              "categories": [],
+              "roomId": 1,
+              "room": "Hall B",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": "Accepted",
+              "isInformed": true,
+              "isConfirmed": true
+            },
+            "index": 1
+          }
+        ]
+      },
+      {
+        "slotStart": "09:45:00",
+        "rooms": [
+          {
+            "id": 1,
+            "name": "Hall B",
+            "session": {
+              "id": "00000000-0000-4000-8000-00000000a002",
+              "title": "Coffee break",
+              "description": null,
+              "startsAt": "2030-05-15T09:45:00",
+              "endsAt": "2030-05-15T10:00:00",
+              "isServiceSession": true,
+              "isPlenumSession": true,
+              "speakers": [],
+              "categories": [],
+              "roomId": 1,
+              "room": "Hall B",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": null,
+              "isInformed": false,
+              "isConfirmed": false
+            },
+            "index": 2
+          }
+        ]
+      },
+      {
+        "slotStart": "10:00:00",
+        "rooms": [
+          {
+            "id": 1,
+            "name": "Hall B",
+            "session": {
+              "id": "1002",
+              "title": "Kubernetes for the rest of us",
+              "description": "You do not need a platform team of twenty to run Kubernetes well. This talk walks through a small team's setup: one cluster per environment, a boring ingress, managed databases, and the handful of operational habits that keep it that way.\r\n\r\nExpect opinions, a few war stories and a checklist you can take home.",
+              "startsAt": "2030-05-15T10:00:00",
+              "endsAt": "2030-05-15T10:40:00",
+              "isServiceSession": false,
+              "isPlenumSession": false,
+              "speakers": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000002",
+                  "name": "Bram Placeholder"
+                }
+              ],
+              "categories": [],
+              "roomId": 1,
+              "room": "Hall B",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": "Accepted",
+              "isInformed": true,
+              "isConfirmed": true
+            },
+            "index": 3
+          },
+          {
+            "id": 2,
+            "name": "Hall C",
+            "session": {
+              "id": "1003",
+              "title": "Observability on a budget",
+              "description": "Metrics, logs and traces without the invoice: what the open source stack gives you for free, where the costs really come from, and how to decide what to keep. A practical tour of OpenTelemetry, Prometheus and friends for teams that count every euro.",
+              "startsAt": "2030-05-15T10:00:00",
+              "endsAt": "2030-05-15T10:40:00",
+              "isServiceSession": false,
+              "isPlenumSession": false,
+              "speakers": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000003",
+                  "name": "Chloé Sample"
+                }
+              ],
+              "categories": [],
+              "roomId": 2,
+              "room": "Hall C",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": "Accepted",
+              "isInformed": true,
+              "isConfirmed": true
+            },
+            "index": 3
+          }
+        ]
+      },
+      {
+        "slotStart": "11:00:00",
+        "rooms": [
+          {
+            "id": 1,
+            "name": "Hall B",
+            "session": {
+              "id": "1004",
+              "title": "GitOps in practice",
+              "description": "Three migrations to GitOps, three sets of lessons. This talk covers the repository layouts that worked, the ones that did not, how to handle secrets and promotion between environments, and what to tell the people who liked clicking deploy.",
+              "startsAt": "2030-05-15T11:00:00",
+              "endsAt": "2030-05-15T11:40:00",
+              "isServiceSession": false,
+              "isPlenumSession": false,
+              "speakers": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000004",
+                  "name": "Dev Fictional"
+                }
+              ],
+              "categories": [],
+              "roomId": 1,
+              "room": "Hall B",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": "Accepted",
+              "isInformed": true,
+              "isConfirmed": true
+            },
+            "index": 4
+          },
+          {
+            "id": 2,
+            "name": "Hall C",
+            "session": {
+              "id": "1005",
+              "title": "My first contribution to a CNCF project",
+              "description": "From reading the contributing guide to a merged pull request: an honest account of a first open source contribution, including the parts that were confusing, the people who helped, and what to do when the CI goes red for reasons you do not understand.",
+              "startsAt": "2030-05-15T11:00:00",
+              "endsAt": "2030-05-15T11:40:00",
+              "isServiceSession": false,
+              "isPlenumSession": false,
+              "speakers": [
+                {
+                  "id": "00000000-0000-4000-8000-000000000005",
+                  "name": "Eli Mockup"
+                }
+              ],
+              "categories": [],
+              "roomId": 2,
+              "room": "Hall C",
+              "liveUrl": null,
+              "recordingUrl": null,
+              "status": "Accepted",
+              "isInformed": true,
+              "isConfirmed": true
+            },
+            "index": 4
+          }
+        ]
+      }
+    ]
+  }
+]

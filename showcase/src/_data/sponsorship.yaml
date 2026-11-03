@@ -1,0 +1,87 @@
+# The offer to sponsors as /sponsors/ shows it: packages, the attendee
+# survey, key dates, from your prospectus (a PDF under src/assets/, linked
+# from sponsors.vto); revise the PDF, this file and the page together. The
+# theme has no schema for this file (only sponsors.vto reads it), so a
+# misspelt key is a missing section, not a build error; keep dates quoted.
+# The numbers are made up. The sponsor logos are sponsors.yaml.
+
+# `accent`: gold, silver, bronze or afterparty (the tier palette in
+# sponsorship.package); `featured` adds the "Most visible" chip. High to low.
+packages:
+  - name: "Gold"
+    price: "€4,000"
+    accent: "gold"
+    featured: true
+    summary: >-
+      Gold sponsors contribute the most to the conference and get a unique
+      presence before, during and after the event, including a booth in the
+      foyer and a short stage presentation before a break.
+    includes:
+      - "Logo on the website, screens, badges and in-room projector stills"
+      - "Sponsor introduction in the visitor information and post-event follow-up emails"
+      - "2 × 3 m stand area in the foyer"
+      - "Stage presentation before a break"
+      - "Two free conference tickets plus one stand staff member"
+
+  - name: "Silver"
+    price: "€2,000"
+    accent: "silver"
+    summary: >-
+      Silver sponsors are important contributors to the conference and get
+      strong visibility during and after the event, including a table in the
+      foyer.
+    includes:
+      - "Logo on the website, screens, badges and in-room projector stills"
+      - "Sponsor introduction in the visitor information and post-event follow-up emails"
+      - "Table in the foyer"
+      - "One free conference ticket plus one stand staff member"
+
+  - name: "Bronze"
+    price: "€1,000"
+    accent: "bronze"
+    summary: >-
+      Bronze sponsors support the conference and get visibility during the
+      event.
+    includes:
+      - "Logo on the website, screens, badges and projector stills"
+      - "Sponsor introduction in the visitor information and follow-up emails"
+      - "One free ticket"
+
+# Attendee survey. `value` is a percentage drawn as a bar; `text` may carry
+# inline HTML. The sentence naming the survey is in sponsors.vto.
+audience:
+  roles:
+    - label: "DevOps / SRE / SysAdmin"
+      value: 38
+    - label: "Developer"
+      value: 30
+    - label: "Architect"
+      value: 14
+    - label: "Other"
+      value: 10
+    - label: "Executive"
+      value: 8
+  facts:
+    - icon: "fa-location-dot"
+      text: >-
+        <strong>Most members</strong> live in Your City, the rest come from
+        across the country.
+    - icon: "fa-building"
+      text: >-
+        Organizations range from <strong>vendors and end users</strong> to
+        consulting firms and universities.
+
+# The prospectus's schedule. Quoted ISO dates; `highlight: true` marks the
+# deadline the page's sentence under "Key dates" refers to.
+dates:
+  - label: "CFP opens"
+    date: "2099-01-15"
+  - label: "CFP closes"
+    date: "2099-02-28"
+  - label: "Schedule announced"
+    date: "2099-03-31"
+  - label: "Fees and logo assets due"
+    date: "2099-05-01"
+    highlight: true
+  - label: "Event day"
+    date: "2099-05-15"

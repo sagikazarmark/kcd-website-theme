@@ -1,0 +1,47 @@
+{{#
+    Speaker card: photo, name, title, company and profile links; the name is
+    a stretched <button> opening `speaker.dialog`, the links sit above it so
+    they stay clickable. A keynote speaker gets the accent border, ring and
+    pill. Props: speaker (normalised, from schedule.ts).
+#}}
+{{# One profile link, named "<name> on <network>" for the screen reader. #}}
+{{ async function profileLink({ link, label, icon }) }}
+    <a
+        href="{{ link |> escape }}"
+        {{ link |> newTab }}
+        aria-label="{{ speaker.name |> escape }} on {{ label }}"
+        class="relative z-10 text-xl text-gray-400 transition hover:text-primary"
+    >
+        {{ comp.ui.icon({ name: icon }) }}
+    </a>
+{{ /function }}
+<article class="relative flex h-full flex-col items-center rounded-2xl border bg-white p-6 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary {{ if speaker.isKeynote }}border-accent/40{{ else }}border-gray-200{{ /if }}">
+    {{ if speaker.isKeynote }}
+        <span class="mb-4 rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-accent">Keynote</span>
+        <div class="rounded-full p-1 ring-2 ring-accent/40">
+            {{ comp.avatar({ speaker, size: "lg" }) }}
+        </div>
+    {{ else }}
+        {{ comp.avatar({ speaker, size: "lg" }) }}
+    {{ /if }}
+    <h3 class="mt-4 text-lg font-semibold leading-snug text-black">
+        <button
+            type="button"
+            data-dialog-open="speaker-{{ speaker.id }}"
+            class="transition hover:text-primary focus:outline-none after:absolute after:inset-0"
+        >{{ speaker.name |> escape }}</button>
+    </h3>
+    {{ if speaker.title }}
+        <p class="mt-1 text-sm leading-snug text-gray-600">{{ speaker.title |> escape }}</p>
+    {{ /if }}
+    {{ if speaker.company }}
+        <p class="mt-0.5 text-sm font-semibold text-primary">{{ speaker.company |> escape }}</p>
+    {{ else if !speaker.title && speaker.tagline }}
+        <p class="mt-1 text-sm leading-snug text-gray-600">{{ speaker.tagline |> escape }}</p>
+    {{ /if }}
+    {{ if Object.keys(speaker.links).length }}
+        <div class="mt-auto flex gap-4 pt-4">
+            {{ comp.ui.socialLinks({ links: speaker.links, render: profileLink }) }}
+        </div>
+    {{ /if }}
+</article>

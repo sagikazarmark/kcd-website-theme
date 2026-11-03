@@ -1,0 +1,12 @@
+# Corrections merged over the imported agenda.yaml at build time, matched on
+# `id`; each other key replaces that key. The import never touches this file.
+# An unknown id or key fails the build.
+#
+# Sessionize's sample event has no "Keynote" checkbox, so the two keynotes are
+# marked here. (The agenda phase adds the timetable's dates the same way.)
+sessions:
+  - id: "14022" # Aiden's Keynote: the opening keynote
+    keynote: true
+  - id: "14018" # Sophia's Session: the closing keynote
+    keynote: true
+    plenary: true

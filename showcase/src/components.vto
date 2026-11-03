@@ -1,0 +1,423 @@
+---
+id: components
+title: Components
+description: "Every component the KCD theme ships, rendered once over sample data: the UI primitives, timed content, the hero, cards for keynotes, organizers, speakers and talks, the sponsorship package, the venue pieces, the ticket shop and the attending badge."
+---
+{{ layout "layouts/page.vto" }}
+{{ slot head }}{{ comp.pretix.head() }}{{ /slot }}
+
+{{#
+    The gallery: every component in src/_components/, called the way a page
+    calls it, over the sample data in _data/ (the demo's last phase's). Each
+    section is a ui.band (so the page also shows the alternating tones) with
+    an id the list at the top links to; the heading names the component and
+    the lede says what it is for, and the component file's own comment says
+    the rest. Two things a gallery has to arrange: a card that opens a
+    dialog needs that dialog on the same page (speaker, session), and the
+    components that link to the agenda page (session.teaser, speaker.dialog)
+    find the timetable page, whose id is `agenda`.
+#}}
+
+{{ set sections = [
+    { id: "heading", title: "ui.heading, ui.section, ui.band" },
+    { id: "buttons", title: "ui.button, ui.actions" },
+    { id: "cards", title: "ui.card" },
+    { id: "gallery-demo", title: "gallery" },
+    { id: "resources", title: "recap.resource" },
+    { id: "notes", title: "ui.note, ui.cta" },
+    { id: "timed", title: "ui.until, ui.after, ui.text, ui.countdown" },
+    { id: "hero", title: "hero.frame, hero.intro" },
+    { id: "faq", title: "faq.list, faq.item" },
+    { id: "keynotes", title: "keynote" },
+    { id: "organizers", title: "organizer" },
+    { id: "speakers", title: "speaker.card, speaker.dialog, avatar" },
+    { id: "sessions", title: "session.card, session.teaser, session.dialog" },
+    { id: "packages", title: "sponsorship.package" },
+    { id: "logos", title: "ui.logo" },
+    { id: "venue", title: "venue.photos, venue.routes" },
+    { id: "misc", title: "ui.icon, ui.socialLinks, ui.draftMark, dialog.frame" },
+    { id: "pretix", title: "pretix.widget" },
+    { id: "attending", title: "attending.tool" },
+] }}
+
+{{# A deadline in the future and one in the past, for the timed pieces; and
+    one a few days from the build, for the countdown, so its tiles show the
+    numbers a live one shows rather than the 26,000 days to the event year. #}}
+{{ set future = "2099-02-28T23:59:59+01:00" }}
+{{ set past = "2020-01-01T00:00:00+01:00" }}
+{{ set soon = new Date(Date.now() + 4 * 86400000 + 5 * 3600000).toISOString().replace(/\.\d{3}Z$/, "+00:00") }}
+
+{{ comp ui.section { width: "4xl" } }}
+    {{ comp ui.heading {
+        level: 1,
+        pill: "Components",
+        title: "Every component, once",
+        lede: `What the theme ships under src/_components/, each rendered
+            over the sample data as a page would call it. Each component
+            file starts with a comment naming its props.`,
+    } }}
+        <nav aria-label="Components on this page" class="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">
+            {{ for section of sections }}
+                <a href="#{{ section.id }}" class="rounded-full border border-gray-200 px-3 py-1 text-gray-700 transition hover:border-primary hover:text-primary">{{ section.title }}</a>
+            {{ /for }}
+        </nav>
+    {{ /comp }}
+{{ /comp }}
+
+{{# ui.heading: pill, title, lede (timed), inverse; this page's bands are ui.band without a tone, alternating. #}}
+{{ comp ui.band { id: "heading" } }}
+    {{ comp ui.heading {
+        pill: { html: "A timed pill, open", until: future, after: "A timed pill, closed" },
+        title: "ui.heading: pill, title, lede",
+        lede: "The opening of every section: an optional uppercase pill (plain or timed text), the heading, an optional lede with inline HTML, and content under it, here a row of buttons. The band around it is ui.band with no tone, so it alternates gray and white with its neighbours; ui.section is the narrow, untoned shell of an inner page.",
+    } }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "Content under the heading", href: "#heading", icon: "fa-arrow-down", style: "outline" }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "buttons" } }}
+    {{ comp.ui.heading({
+        title: "ui.button, ui.actions",
+        lede: "The five styles, the two sizes, a note, a disabled one, a link out; a row of <code>ui.actions</code> holds two or three. A button that names a page (<code>page: tickets</code>) renders nothing while that page is a draft; these use <code>href</code>.",
+    }) }}
+    <div class="mx-auto max-w-4xl space-y-4">
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "primary", href: "#buttons", icon: "fa-ticket", style: "primary" }) }}
+            {{ comp.ui.button({ label: "outline", href: "#buttons", icon: "fa-map-location-dot", style: "outline" }) }}
+            {{ comp.ui.button({ label: "outlineAccent", href: "#buttons", icon: "fa-circle-question", style: "outlineAccent" }) }}
+        {{ /comp }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({ label: "With a note", href: "#buttons", icon: "fa-file-pdf", style: "primary", note: "(PDF, 1.5 MB)" }) }}
+            {{ comp.ui.button({ label: "Disabled", icon: "fa-microphone-lines", style: "primary", disabled: true }) }}
+            {{ comp.ui.button({ label: "A link out", href: "https://www.cncf.io/kcds/", icon: "fa-arrow-up-right-from-square", style: "outline", external: true }) }}
+        {{ /comp }}
+        <div class="mt-8 rounded-2xl bg-primary p-8">
+            <p class="mb-2 text-center text-sm font-semibold uppercase tracking-widest text-white/70">On a dark background</p>
+            {{ comp ui.actions }}
+                {{ comp.ui.button({ label: "secondary", href: "#buttons", icon: "fa-image", style: "secondary" }) }}
+                {{ comp.ui.button({ label: "ghost", href: "#buttons", icon: "fa-bell", style: "ghost" }) }}
+                {{ comp.ui.button({ label: "small", href: "#buttons", style: "secondary", size: "sm" }) }}
+            {{ /comp }}
+        </div>
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "cards" } }}
+    {{ comp.ui.heading({
+        title: "ui.card",
+        lede: "A fact card (icon, title, badges, details, footnote), a centred blurb that is a link, and the gray tone for a white band.",
+    }) }}
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
+        {{ comp.ui.card({
+            icon: "fa-train-tram",
+            title: "By tram",
+            badges: { label: "Lines", items: ["17", "19", "41"] },
+            details: [
+                { label: "Stop", text: "<em>Convention Centre</em>, outside the venue" },
+                { label: "From the centre", text: "about 15 minutes" },
+            ],
+            footnote: "<strong>Walk time:</strong> 2–3 min",
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-brands fa-youtube",
+            iconClasses: "text-red-600",
+            title: "A centred blurb, as a link",
+            text: "The whole card is the link; with <code>external</code> it opens in a new tab.",
+            align: "center",
+            href: "#cards",
+        }) }}
+        {{ comp.ui.card({
+            icon: "fa-lock",
+            title: "The gray tone",
+            text: "For a card on a white band; the default is white, for a gray band.",
+            align: "center",
+            tone: "gray",
+        }) }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "gallery-demo" } }}
+    {{ comp.ui.heading({ title: "gallery", lede: "Landscape and portrait sample illustrations. Select a preview to open its larger image; Escape, the backdrop or the close button dismisses it. The page supplies the heading, credit and album link." }) }}
+    {{ comp.gallery({ id: "sample-gallery", images: recap.photos.images }) }}
+    <p class="mt-6 text-center text-sm text-gray-600">{{ recap.photos.credit }}</p>
+    {{ comp ui.actions }}{{ comp.ui.button({ label: "View the sample album", page: "pictures", icon: "fa-images", style: "outline" }) }}{{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "resources" } }}
+    {{ comp.ui.heading({ title: "recap.resource", lede: "Each resource publishes independently. No URL means pending; a URL makes it available; a note can explain a partial release. No global recap concept or schema is required." }) }}
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+        {{ comp.recap.resource({ id: "pending-resource", title: "Slides pending", label: "Pending", icon: "fa-file-powerpoint", text: "Waiting for the speakers' decks.", action: "Browse slides", resource: {} }) }}
+        {{ comp.recap.resource({ id: "published-resource", title: "Photo album", label: "Published", icon: "fa-camera", text: "A complete collection of sample illustrations.", action: "Open the album", resource: { url: "/pictures/" } }) }}
+        {{ comp.recap.resource({ id: "partial-resource", title: "First recordings", label: "Partial release", icon: "fa-play", text: "Some sessions are ready to watch.", action: "Watch sample recordings", resource: { url: recap.recordings.url, note: "Example of a partial release: more recordings are being added. This link is a placeholder." } }) }}
+    </div>
+    {{ comp ui.actions }}
+        {{ comp.ui.button({ label: "Complete recap homepage", page: "home-recap", style: "outline" }) }}
+        {{ comp.ui.button({ label: "Disabled menu and hero controls", page: "home-pending", style: "outline" }) }}
+    {{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "notes" } }}
+    {{ comp.ui.heading({
+        title: "ui.note, ui.cta",
+        lede: "A tinted callout in two tones, and the dark call-to-action panel that closes a page or a section.",
+    }) }}
+    <div class="mx-auto max-w-3xl space-y-4">
+        {{ comp ui.note }}Heads-up: an info note, the default tone, with <strong>inline HTML</strong>.{{ /comp }}
+        {{ comp ui.note { tone: "warning", icon: "fa-triangle-exclamation" } }}A warning: the amber tone and its own icon.{{ /comp }}
+    </div>
+    {{ comp ui.cta { title: "ui.cta: a question and one button", label: "Join the Discord", href: social.discord, icon: "fa-brands fa-discord", external: true } }}
+        The copy under the heading; inline HTML allowed. With <code>page</code>
+        instead of <code>href</code> the whole panel waits while the page is a draft.
+    {{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "timed" } }}
+    {{ comp.ui.heading({
+        title: "ui.until, ui.after, ui.text, ui.countdown",
+        lede: "Content that flips at a moment: both halves are in the HTML, the build hides one, the browser re-checks the clock. The countdown card is written for the hero, so it sits on a dark panel here, counting down to a few days after the build.",
+    }) }}
+    <div class="mx-auto max-w-3xl space-y-6 text-center text-lg text-gray-700">
+        <p>
+            Until 2099:
+            {{ comp ui.until { time: future } }}<strong>this shows now</strong>{{ /comp }}
+            {{ comp ui.after { time: future } }}<strong>and this from then on</strong>{{ /comp }}
+        </p>
+        <p>
+            A deadline in 2020:
+            {{ comp ui.until { time: past } }}<strong>this showed before it</strong>{{ /comp }}
+            {{ comp ui.after { time: past } }}<strong>this shows since</strong>{{ /comp }}
+        </p>
+        <p>
+            ui.text, the same as a prop value:
+            <strong>{{ comp.ui.text({ value: { html: "before the deadline", until: future, after: "after the deadline" } }) }}</strong>
+        </p>
+    </div>
+    <div class="mx-auto mt-10 max-w-3xl rounded-2xl bg-primary p-8">
+        {{ comp.ui.countdown({
+            deadline: soon,
+            heading: "Time left to submit",
+            statusPrefix: "CFP closes",
+            expiredHeading: "Submissions closed",
+            expiredStatus: "The call for papers is closed.",
+            ariaSuffix: "left to submit",
+        }) }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "hero" } }}
+    {{ comp.ui.heading({
+        title: "hero.frame, hero.intro",
+        lede: "The band over the picture (here the medium size, without the menu) and the opening lines in it: badge, heading, date and venue, tagline, lede. The home page shapes show the full-screen one.",
+    }) }}
+    <div class="mx-auto max-w-5xl overflow-hidden rounded-2xl shadow-xl">
+        {{ comp hero.frame { size: "md" } }}
+            {{ comp.hero.intro({
+                size: "md",
+                badge: { html: "A timed badge", until: future, after: "After the deadline" },
+                tagline: "The tagline, one row under the venue line.",
+                lede: "The lede, a second row; plain or timed text.",
+            }) }}
+            {{ comp ui.actions }}
+                {{ comp.ui.button({ label: "Primary", href: "#hero", icon: "fa-ticket", style: "primary" }) }}
+                {{ comp.ui.button({ label: "Secondary", href: "#hero", icon: "fa-image", style: "secondary" }) }}
+                {{ comp.ui.button({ label: "Ghost", href: "#hero", icon: "fa-bell", style: "ghost" }) }}
+            {{ /comp }}
+        {{ /comp }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "faq" } }}
+    {{ comp.ui.heading({
+        title: "faq.list, faq.item",
+        lede: "A list of questions as native disclosures; the answers are Markdown. Here the first four of the sample CFP FAQ.",
+    }) }}
+    <div class="mx-auto max-w-3xl">
+        {{ comp.faq.list({ items: cfp.faq.slice(0, 4) }) }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "keynotes", tone: "secondary" } }}
+    {{ comp.ui.heading({
+        title: "keynote",
+        lede: "A card per keynote speaker with a dialog behind \"Read more\"; until <code>announced</code> it is the \"to be announced\" placeholder. The secondary tone, as on the home page.",
+    }) }}
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
+        {{ for speaker of keynotes.speakers }}
+            {{ comp.keynote(speaker) }}
+        {{ /for }}
+        {{ comp.keynote({ announced: false }) }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "organizers" } }}
+    {{ comp.ui.heading({
+        title: "organizer",
+        lede: "A card per organizer, in a centred wrapping row; with a bio or links the card opens a dialog.",
+    }) }}
+    <ul class="mx-auto flex max-w-7xl flex-wrap justify-center gap-6">
+        {{ for person of organizers.people }}
+            {{ comp.organizer(person) }}
+        {{ /for }}
+    </ul>
+{{ /comp }}
+
+{{ comp ui.band { id: "speakers" } }}
+    {{ comp.ui.heading({
+        title: "speaker.card, speaker.dialog, avatar",
+        lede: "The cards of the speakers page over <code>schedule.speakers</code>; each opens its dialog, which lists the speaker's talks and links them to the timetable. Under them, the avatar at its four sizes (initials stand in without a photo).",
+    }) }}
+    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {{ for speaker of schedule.speakers }}
+            <li>{{ comp.speaker.card({ speaker }) }}</li>
+        {{ /for }}
+    </ul>
+    <div class="mt-12 flex flex-wrap items-end justify-center gap-8">
+        {{ for size of ["sm", "md", "lg", "xl"] }}
+            <div class="text-center">
+                {{ comp.avatar({ speaker: schedule.speakers[0], size }) }}
+                <p class="mt-2 text-xs font-semibold uppercase tracking-widest text-gray-500">{{ size }}</p>
+            </div>
+        {{ /for }}
+    </div>
+    {{ for speaker of schedule.speakers }}
+        {{ comp.speaker.dialog({ speaker }) }}
+    {{ /for }}
+{{ /comp }}
+
+{{ set talks = schedule.sessions.filter((s) => s.format !== "Keynote" && !s.cancelled && s.speakers.length > 0) }}
+{{ comp ui.band { id: "sessions" } }}
+    {{ comp.ui.heading({
+        title: "session.card, session.teaser, session.dialog",
+        lede: "A talk as the timetable shows it (the first two of the sample programme), each opening its dialog; then the home page's teaser, one random talk out of the list with a link to the timetable. The grid itself, schedule.timetable, has its own page.",
+    }) }}
+    <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
+        {{ for session of schedule.sessions.slice(0, 2) }}
+            {{ comp.session.card({ session }) }}
+        {{ /for }}
+    </div>
+    <div class="mt-12">
+        {{ comp.session.teaser({ talks }) }}
+    </div>
+    <div class="mt-10 text-center">
+        {{ comp.ui.button({ label: "The timetable", page: "agenda", icon: "fa-calendar-days", style: "primary" }) }}
+    </div>
+    {{ for session of schedule.sessions }}
+        {{ comp.session.dialog({ session }) }}
+    {{ /for }}
+{{ /comp }}
+
+{{ comp ui.band { id: "packages" } }}
+    {{ comp.ui.heading({
+        title: "sponsorship.package",
+        lede: "One tier of the sponsorship offer: the accent palette (gold, silver, bronze, afterparty), the \"Most visible\" chip, the price, what it includes, the enquiry button.",
+    }) }}
+    <ul class="mx-auto grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-2">
+        {{ for pkg of sponsorship.packages }}
+            {{ comp.sponsorship.package({ pkg, href: "#packages" }) }}
+        {{ /for }}
+        {{ comp.sponsorship.package({
+            pkg: { name: "Afterparty", price: "Negotiable", accent: "afterparty", summary: "The drinks after the last talk, with your name on them.", includes: ["Branding at the afterparty venue", "A word of welcome", "Two tickets"] },
+            href: "#packages",
+        }) }}
+    </ul>
+{{ /comp }}
+
+{{ comp ui.band { id: "logos" } }}
+    {{ comp.ui.heading({
+        title: "ui.logo",
+        lede: "A logo on a fixed canvas, a link when it has one: the sponsor rows of the home page, one per tier, sized by the tier's classes.",
+    }) }}
+    <div class="space-y-12">
+        {{ for tier of sponsors.tiers }}
+            <div class="text-center">
+                <h3 class="mb-6 text-sm font-semibold uppercase tracking-widest text-gray-500">{{ tier.name }}</h3>
+                <ul class="mx-auto flex flex-wrap justify-center {{ tier.style.container }}">
+                    {{ for item of tier.logos }}
+                        <li class="{{ tier.style.item }}">
+                            {{ comp.ui.logo({ name: item.name, logo: item.logo, href: item.url, width: 500, height: 300 }) }}
+                        </li>
+                    {{ /for }}
+                </ul>
+            </div>
+        {{ /for }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "venue" } }}
+    {{ comp.ui.heading({
+        title: "venue.photos, venue.routes",
+        lede: "The photo row over <code>venue.photos</code>, and the quick-routes list with its note.",
+    }) }}
+    {{ comp.venue.photos() }}
+    <div class="mx-auto mt-12 max-w-3xl">
+        {{ comp venue.routes { routes: [
+            { from: "Central Station", how: "<strong>Tram 1</strong> to <em>Convention Centre</em>", time: "~15 min" },
+            { from: "The airport", how: "<strong>Bus 100E</strong> to <em>Central Station</em>, then tram 1", time: "~50 min" },
+            { from: "The old town", how: "A walk along the river", time: "~20 min" },
+        ] } }}
+            Times are approximate. For live departures use
+            <a href="{{ venue.map.transitUrl }}" {{ venue.map.transitUrl |> newTab }}>the journey planner</a>.
+        {{ /comp }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "misc" } }}
+    {{ comp.ui.heading({
+        title: "ui.icon, ui.socialLinks, ui.draftMark, dialog.frame",
+        lede: "The small parts: a Font Awesome glyph, a link per network through a render function, the pill a draft page's menu entry carries under <code>serve</code>, and the modal frame the cards open.",
+    }) }}
+    <div class="mx-auto max-w-3xl space-y-8 text-center">
+        <p class="flex flex-wrap justify-center gap-6 text-3xl text-primary">
+            {{ for name of ["fa-ticket", "fa-microphone-lines", "fa-calendar-days", "fa-location-dot", "fa-handshake", "fa-brands fa-discord", "fa-brands fa-youtube"] }}
+                {{ comp.ui.icon({ name }) }}
+            {{ /for }}
+            {{ comp.ui.icon({ name: "fa-spinner", classes: "fa-spin text-accent" }) }}
+        </p>
+        {{ async function socialLink({ link, label, icon }) }}
+            <a href="{{ link }}" {{ link |> newTab }} aria-label="{{ label }}" class="text-gray-600 transition hover:text-primary">
+                {{ comp.ui.icon({ name: icon, classes: "text-2xl" }) }}
+            </a>
+        {{ /function }}
+        <p class="flex justify-center gap-6">
+            {{ comp.ui.socialLinks({ links: social, render: socialLink }) }}
+        </p>
+        <p class="text-gray-700">
+            A menu entry to a draft page, under <code>serve</code>: Agenda {{ comp.ui.draftMark() }}
+            <span class="ml-6 inline-block rounded bg-primary px-3 py-1 text-white">on a dark background: Agenda {{ comp.ui.draftMark({ onDark: true }) }}</span>
+        </p>
+        <p>
+            <button type="button" data-dialog-open="showcase-dialog" class="rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-strong">Open a dialog.frame</button>
+        </p>
+    </div>
+    {{ comp dialog.frame { id: "showcase-dialog" } }}
+        <h2 id="showcase-dialog-title" class="mb-4 text-2xl font-bold text-primary">dialog.frame</h2>
+        <p class="text-gray-700">
+            The modal the keynote, organizer, speaker and session components
+            render their details in: a native <code>&lt;dialog&gt;</code> with a
+            close button, closed by Escape or a click outside, its id in the
+            URL hash while open, so <code>/#showcase-dialog</code> opens it.
+        </p>
+    {{ /comp }}
+{{ /comp }}
+
+{{ comp ui.band { id: "pretix" } }}
+    {{ comp.ui.heading({
+        title: "pretix.widget",
+        lede: "The ticket shop embedded, over <code>pretix</code> (here pretix's public demo shop); its assets come from <code>pretix.head</code> in the page's head slot.",
+    }) }}
+    <div class="mx-auto max-w-4xl rounded-2xl border border-gray-200 bg-white p-4 shadow-lg md:p-8">
+        {{ comp.pretix.widget() }}
+    </div>
+{{ /comp }}
+
+{{ comp ui.band { id: "attending" } }}
+    {{ comp.ui.heading({
+        title: "attending.tool",
+        lede: "The \"I'm attending\" image generator: a photo, a crop, a name and title, a card or a profile ring, a caption to copy. The event's name, date, venue, logo and hero picture come from the data.",
+    }) }}
+    <div class="mx-auto max-w-4xl">
+        {{ comp.attending.tool() }}
+    </div>
+{{ /comp }}

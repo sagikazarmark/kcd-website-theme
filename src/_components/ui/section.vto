@@ -1,0 +1,18 @@
+{{#
+    Page section: a full-bleed untoned <section> around a narrow centred
+    container; the shell an inner page opens with, a level-1 `ui.heading`
+    inside.
+
+        {{ comp ui.section { width: "6xl" } }}...{{ /comp }}
+
+    Props:
+        width    3xl (default), 4xl or 6xl; fixed strings so Tailwind sees them
+        id       optional element id
+        content  block content
+#}}
+{{ set widths = { "3xl": "max-w-3xl", "4xl": "max-w-4xl", "6xl": "max-w-6xl" } }}
+<section{{ if id }} id="{{ id }}"{{ /if }} class="px-6 py-12 md:py-16">
+    <div class="container mx-auto {{ widths[width || "3xl"] }}">
+        {{ content }}
+    </div>
+</section>

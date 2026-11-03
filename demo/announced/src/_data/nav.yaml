@@ -1,0 +1,34 @@
+# Navigation: the menu (`main`, `cta`) and the legal links (`secondary`,
+# also in the footer).
+
+# In menu order. A page is named by its id (`page: agenda`, the `id` in its
+# front matter; the label defaults to the page title) and its link waits
+# while the page is a draft. A link out is `url` and `label` (an absolute
+# URL opens in a new tab); `enabled: false` leaves a link out otherwise.
+main:
+  - page: home
+    label: "Home"
+    icon: "fa-house"
+  - page: agenda
+    icon: "fa-calendar-days"
+  - page: speakers
+    icon: "fa-users"
+  - page: venue
+    icon: "fa-location-dot"
+  - page: tickets
+    icon: "fa-ticket"
+  - page: sponsors
+    icon: "fa-handshake"
+  # The call for papers; `enabled: false` once it closes (keep in step with `cfp.open`).
+  - label: "Submit a talk"
+    url: "#"
+    icon: "fa-microphone-lines"
+    enabled: false
+secondary:
+  - page: imprint
+  - page: terms
+    label: "Terms"
+cta:
+  label: "Get tickets"
+  page: tickets
+  icon: "fa-ticket"

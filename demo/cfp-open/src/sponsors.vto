@@ -1,0 +1,306 @@
+---
+id: sponsors
+title: Sponsorship
+description: "Sponsor KCD Your City 2099 on 15 May at the Your City Convention Centre. Gold, Silver and Bronze packages, audience figures and key dates."
+# Until the packages are in sponsorship.yaml and the prospectus under assets/:
+# out of the build, every link to it waiting (the menu entry, the home page's
+# sponsoring band). Delete the line to publish.
+draft: true
+---
+{{ layout "layouts/page.vto" }}
+
+{{# The packages, the attendee survey and the key dates come from `sponsorship`
+    (src/_data/sponsorship.yaml), which tracks the prospectus; the words, the
+    headline numbers, the contact address and the prospectus link are this
+    page's. #}}
+
+{{ set siteTitle = `${event.name} ${event.year}` }}
+{{# The sponsors@ address (not the general one) and the prospectus, named in
+    more than one place below. The size is shown next to every download link
+    so nobody starts a large download unannounced on mobile data; update it
+    when the PDF is replaced. The demo's prospectus is a one-page placeholder. #}}
+{{ set email = "sponsors@example.com" }}
+{{ set prospectus = "/assets/kcd-your-city-2099-sponsorship-prospectus.pdf" }}
+{{ set prospectusSize = "PDF, 2 KB" }}
+{{# "Four ways to support the event"; digits past ten. #}}
+{{ set packageCount = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"][sponsorship.packages.length] || sponsorship.packages.length }}
+
+{{ set intro }}
+    KCD Your City is a community-organized, not-for-profit event, and it
+    would not happen without our partners. On
+    <time datetime="{{ event.date.iso }}">{{ event.date.label }}</time>
+    your brand can meet the people who build and run cloud native
+    infrastructure in this region.
+{{ /set }}
+
+<!-- Intro -->
+{{ comp ui.section { width: "4xl" } }}
+    {{ comp ui.heading { level: 1, pill: "Sponsorship", title: `Sponsor ${siteTitle}`, lede: intro } }}
+        {{ comp ui.actions }}
+            {{ comp.ui.button({
+                label: "Download the prospectus",
+                href: prospectus,
+                icon: "fa-file-pdf",
+                style: "primary",
+                note: `(${prospectusSize})`,
+            }) }}
+            {{ comp.ui.button({
+                label: "Talk to us",
+                href: `mailto:${email}?subject=${encodeURIComponent(`${siteTitle} sponsorship`)}`,
+                icon: "fa-envelope",
+                style: "outline",
+            }) }}
+        {{ /comp }}
+    {{ /comp }}
+{{ /comp }}
+
+<!-- Key numbers -->
+{{# Headline figures from the prospectus. #}}
+<section class="bg-white px-6 py-16">
+    <div class="container mx-auto max-w-4xl">
+        <dl class="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
+            <div>
+                <dt class="sr-only">Attendees</dt>
+                <dd>
+                    <span class="block text-4xl font-bold text-primary md:text-5xl">300</span>
+                    <span class="mt-2 block text-sm font-semibold uppercase tracking-widest text-gray-500">Attendees</span>
+                </dd>
+            </div>
+            <div>
+                <dt class="sr-only">Speakers</dt>
+                <dd>
+                    <span class="block text-4xl font-bold text-primary md:text-5xl">12</span>
+                    <span class="mt-2 block text-sm font-semibold uppercase tracking-widest text-gray-500">Speakers</span>
+                </dd>
+            </div>
+            <div>
+                <dt class="sr-only">Tracks</dt>
+                <dd>
+                    <span class="block text-4xl font-bold text-primary md:text-5xl">2</span>
+                    <span class="mt-2 block text-sm font-semibold uppercase tracking-widest text-gray-500">Tracks</span>
+                </dd>
+            </div>
+            <div>
+                <dt class="sr-only">Individual ticket</dt>
+                <dd>
+                    <span class="block text-4xl font-bold text-primary md:text-5xl">€99</span>
+                    <span class="mt-2 block text-sm font-semibold uppercase tracking-widest text-gray-500">Individual ticket</span>
+                </dd>
+            </div>
+        </dl>
+    </div>
+</section>
+
+<!-- Why sponsor -->
+<section id="why" class="px-6 py-16">
+    <div class="container mx-auto max-w-5xl">
+        <div class="mx-auto mb-12 max-w-2xl text-center">
+            <h2 class="mb-4 text-3xl font-bold text-primary md:text-4xl">
+                Why sponsor
+            </h2>
+            <p class="text-lg text-gray-600">
+                Sponsoring a KCD puts your company in front of a technical
+                audience that is hard to reach any other way.
+            </p>
+        </div>
+        <ul class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <li class="flex items-start gap-5 rounded-lg bg-white p-6 shadow-lg">
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                    {{ comp.ui.icon({ name: "fa-bullhorn", classes: "text-xl text-accent" }) }}
+                </span>
+                <div>
+                    <h3 class="mb-2 text-lg font-semibold text-black">Brand awareness</h3>
+                    <p class="text-gray-700">
+                        Unparalleled visibility within the cloud native and Kubernetes
+                        communities, connecting your company with highly engaged developers,
+                        system engineers, architects and technical leaders.
+                    </p>
+                </div>
+            </li>
+            <li class="flex items-start gap-5 rounded-lg bg-white p-6 shadow-lg">
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                    {{ comp.ui.icon({ name: "fa-handshake", classes: "text-xl text-accent" }) }}
+                </span>
+                <div>
+                    <h3 class="mb-2 text-lg font-semibold text-black">Networking</h3>
+                    <p class="text-gray-700">
+                        Access to quality, targeted attendees, and a powerful platform to
+                        promote your product and recruit top talent from a diverse pool of
+                        skilled professionals.
+                    </p>
+                </div>
+            </li>
+            <li class="flex items-start gap-5 rounded-lg bg-white p-6 shadow-lg">
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                    {{ comp.ui.icon({ name: "fa-seedling", classes: "text-xl text-accent" }) }}
+                </span>
+                <div>
+                    <h3 class="mb-2 text-lg font-semibold text-black">Commitment to community</h3>
+                    <p class="text-gray-700">
+                        Associate your brand with one of the fastest-growing technology
+                        communities and demonstrate your commitment to community growth and
+                        development.
+                    </p>
+                </div>
+            </li>
+            <li class="flex items-start gap-5 rounded-lg bg-white p-6 shadow-lg">
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                    {{ comp.ui.icon({ name: "fa-award", classes: "text-xl text-accent" }) }}
+                </span>
+                <div>
+                    <h3 class="mb-2 text-lg font-semibold text-black">Credibility</h3>
+                    <p class="text-gray-700">
+                        Establish your brand as a prominent and influential player in cloud
+                        native technology.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- Packages -->
+<section id="packages" class="bg-white px-6 py-16">
+    <div class="container mx-auto max-w-5xl">
+        <div class="mx-auto mb-12 max-w-2xl text-center">
+            <h2 class="mb-4 text-3xl font-bold text-primary md:text-4xl">
+                Sponsorship packages
+            </h2>
+            <p class="text-lg text-gray-600">
+                {{ if sponsorship.packages.length }}
+                    {{ packageCount }} ways to support the event. Every package is also open to
+                    discussion, so tell us what you are trying to achieve.
+                {{ else }}
+                    The packages are being put together; tell us what you are trying
+                    to achieve and we will shape one with you.
+                {{ /if }}
+            </p>
+        </div>
+
+        <ul class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {{ for pkg of sponsorship.packages }}
+                {{ comp.sponsorship.package({ pkg, href: `mailto:${email}?subject=${encodeURIComponent(`${siteTitle} ${pkg.name} sponsorship`)}` }) }}
+            {{ /for }}
+        </ul>
+    </div>
+</section>
+
+<!-- Audience: while there are survey figures. -->
+{{ if sponsorship.audience.roles.length || sponsorship.audience.facts.length }}
+<section id="audience" class="px-6 py-16">
+    <div class="container mx-auto max-w-4xl">
+        <div class="mx-auto mb-12 max-w-2xl text-center">
+            <h2 class="mb-4 text-3xl font-bold text-primary md:text-4xl">
+                Who is in the room
+            </h2>
+            {{# Names the survey `sponsorship.audience` comes from; update the two together. #}}
+            <p class="text-lg text-gray-600">
+                Figures from the Your City cloud native meetup's 2098 member survey.
+            </p>
+        </div>
+
+        {{# Bars scaled against 100%, so the lengths read as shares of the audience. #}}
+        <dl class="rounded-lg bg-white p-8 shadow-lg">
+            <p class="mb-6 text-xs font-semibold uppercase tracking-widest text-gray-500">
+                Attendees describe themselves as
+            </p>
+            {{ for role of sponsorship.audience.roles }}
+                <div class="mb-5 last:mb-0">
+                    <div class="mb-2 flex items-baseline justify-between gap-4">
+                        <dt class="font-medium text-black">{{ role.label }}</dt>
+                        <dd class="shrink-0 font-semibold tabular-nums text-primary">{{ role.value }}%</dd>
+                    </div>
+                    <div class="h-2 overflow-hidden rounded-full bg-gray-100">
+                        <div
+                            class="h-2 rounded-full bg-primary"
+                            style="width: {{ role.value }}%"
+                        ></div>
+                    </div>
+                </div>
+            {{ /for }}
+        </dl>
+
+        <ul class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {{ for fact of sponsorship.audience.facts }}
+                <li class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-lg">
+                    {{ comp.ui.icon({ name: fact.icon, classes: "mt-1 shrink-0 text-accent" }) }}
+                    <p class="text-gray-700 [&>strong]:font-semibold [&>strong]:text-black">{{ fact.text }}</p>
+                </li>
+            {{ /for }}
+        </ul>
+    </div>
+</section>
+{{ /if }}
+
+<!-- Key dates: while there are any. -->
+{{ if sponsorship.dates.length }}
+<section id="dates" class="bg-white px-6 py-16">
+    <div class="container mx-auto max-w-3xl">
+        <h2 class="mb-4 text-center text-3xl font-bold text-primary md:text-4xl">
+            Key dates
+        </h2>
+        {{# The deadline is the `highlight: true` entry in `sponsorship.dates`. #}}
+        <p class="mx-auto mb-12 max-w-2xl text-center text-lg text-gray-600">
+            Sponsorship fees and logo assets are due two weeks before the event.
+        </p>
+        <dl class="overflow-hidden rounded-lg border border-gray-200">
+            {{ for entry of sponsorship.dates }}
+                <div class="flex items-center justify-between gap-4 border-b border-gray-200 px-6 py-4 last:border-b-0 {{ if entry.highlight }}bg-accent/10{{ /if }}">
+                    <dt class="font-semibold {{ if entry.highlight }}text-accent{{ else }}text-black{{ /if }}">
+                        {{ entry.label }}
+                    </dt>
+                    <dd class="shrink-0 text-gray-600">
+                        <time datetime="{{ entry.date }}">{{ entry.date |> formatDate }}</time>
+                    </dd>
+                </div>
+            {{ /for }}
+        </dl>
+    </div>
+</section>
+{{ /if }}
+
+<!-- Contact -->
+<section class="px-6 py-16">
+    <div class="container mx-auto max-w-3xl text-center">
+        <h2 class="mb-4 text-3xl font-bold text-primary md:text-4xl">
+            Let's talk
+        </h2>
+        <p class="mx-auto mb-8 max-w-2xl text-lg text-gray-600">
+            Chloé Sample and Dev Fictional look after sponsorship. Email us and we
+            will come back to you with the details, or take the full prospectus
+            away and read it first.
+        </p>
+        {{ comp ui.actions }}
+            {{ comp.ui.button({
+                label: email,
+                href: `mailto:${email}?subject=${encodeURIComponent(`${siteTitle} sponsorship`)}`,
+                icon: "fa-envelope",
+                style: "primary",
+            }) }}
+            {{ comp.ui.button({
+                label: "Download the prospectus",
+                href: prospectus,
+                icon: "fa-file-pdf",
+                style: "outline",
+                note: `(${prospectusSize})`,
+            }) }}
+        {{ /comp }}
+
+        <div class="mx-auto mt-10 max-w-2xl rounded-lg border border-secondary bg-secondary/20 p-8 text-left">
+            <div class="flex items-start gap-4">
+                {{ comp.ui.icon({ name: "fa-people-group", classes: "mt-1 shrink-0 text-3xl text-accent" }) }}
+                <div>
+                    <h3 class="mb-2 text-xl font-semibold text-black">
+                        Community sponsors
+                    </h3>
+                    <p class="text-gray-700">
+                        We welcome community projects and influencers as
+                        community sponsors too. The packages above are not the
+                        only way in, so get in touch and we will find something
+                        that works.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

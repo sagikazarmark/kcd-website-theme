@@ -1,0 +1,6 @@
+# The Sessionize event `deno task sessionize` reads: the id in your event's
+# API/Embed endpoint (https://sessionize.com/api/v2/<endpoint>/view/All).
+# The build never fetches; the task writes agenda.yaml and speakers.yaml and
+# mirrors the speakers' photos into src/assets/speakers/. This is
+# Sessionize's sample event; replace it with yours.
+endpoint: "jl4ktls0"
