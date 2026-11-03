@@ -4,5 +4,5 @@
   <text x="600" y="290" text-anchor="middle" fill="white" font-family="sans-serif" font-size="28">Sample illustration · the closing session</text>
   <g fill="#fbbf24"><circle cx="220" cy="480" r="50"/><circle cx="470" cy="480" r="50"/><circle cx="730" cy="480" r="50"/><circle cx="980" cy="480" r="50"/></g>
   <path d="M140 670V560H300V670M390 670V560H550V670M650 670V560H810V670M900 670V560H1060V670" fill="#0086ff"/>
-  <text x="600" y="750" text-anchor="middle" fill="#0f172a" font-family="sans-serif" font-size="24">Gallery demo — not an event photograph</text>
+  <text x="600" y="750" text-anchor="middle" fill="#0f172a" font-family="sans-serif" font-size="24">Gallery demo: not an event photograph</text>
 </svg>

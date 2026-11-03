@@ -4,7 +4,7 @@ A website that grows with your **Kubernetes Community Day**, from the first
 announcement to the final recap. Built with [Lume](https://lume.land/) and
 [Deno](https://deno.com/), with your content and pages in your own repository.
 
-## Take a look — or get started
+## Take a look or get started
 
 | Explore | What you'll find |
 | --- | --- |
@@ -16,16 +16,16 @@ Want to see exactly what you start with? [Preview the starter website](https://k
 
 ## Highlights
 
-- 🗓️ **Templates for every event milestone** — announcement, call for papers,
+- 🗓️ **Templates for every event milestone**: announcement, call for papers,
   sponsorship, ticket sales, speaker reveals, the full agenda and a lasting recap.
-- 🎟️ **Pretix integration** — embed your ticket shop with a direct-shop fallback.
-- 🎤 **Sessionize integration** — import speakers, talks, photos and the timetable;
+- 🎟️ **Pretix integration**: embed your ticket shop with a direct-shop fallback.
+- 🎤 **Sessionize integration**: import speakers, talks, photos and the timetable;
   keep local corrections between imports.
-- 🎨 **Tailwind CSS v4** — make the theme yours with a shared color palette and
+- 🎨 **Tailwind CSS v4**: make the theme yours with a shared color palette and
   flexible page layouts.
-- 🤖 **Easy to edit with coding agents** — readable YAML content, commented page
+- 🤖 **Easy to edit with coding agents**: readable YAML content, commented page
   templates and build-time validation help keep changes focused.
-- ☁️ **Static hosting on Cloudflare** — deploy from your repository, review branch
+- ☁️ **Static hosting on Cloudflare**: deploy from your repository, review branch
   previews and publish updates by merging.
 
 ## Your first website
@@ -40,19 +40,19 @@ Want to see exactly what you start with? [Preview the starter website](https://k
 
 ## Keep your site current
 
-- **[Setting up a website](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/setup.md)** — first preview,
+- **[Setting up a website](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/setup.md)**: first preview,
   content, branding and publishing checks.
-- **[Deploying to Cloudflare](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/deployment.md)** — connect
+- **[Deploying to Cloudflare](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/deployment.md)**: connect
   your repository, previews, custom domains and deploy buttons.
-- **[Updating your event website](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/event-updates.md)** —
+- **[Updating your event website](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/event-updates.md)**:
   what to change as plans become announcements.
   - [Call for papers](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/cfp.md)
   - [Ticket sales with Pretix](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/pretix.md)
   - [Speakers and agenda with Sessionize](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/sessionize.md)
-- **[After the event and next year's archive](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/after-the-event.md)**
-  — publish resources and preserve the finished edition at `/year/`.
-- **[Customization and file reference](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/customization.md)**
-  — pages, navigation, colors, theme updates and content locations.
+- **[After the event and next year's archive](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/after-the-event.md)**:
+  publish resources and preserve the finished edition at `/year/`.
+- **[Customization and file reference](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/customization.md)**:
+  pages, navigation, colors, theme updates and content locations.
 
 ## Working on the theme
 
