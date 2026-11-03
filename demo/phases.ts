@@ -31,7 +31,7 @@ export interface Phase {
 }
 
 /** The host the phases are built for; `location` is `https://<host>/<slug>/`. */
-export const host = "kcd-demo.example";
+export const host = "kcd-website-demo.mark-sagikazar.workers.dev";
 
 /** The showcase, built under /showcase/ beside the phases. */
 export const showcase: Phase = {

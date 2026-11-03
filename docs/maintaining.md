@@ -17,9 +17,9 @@ depend on checking out or downloading that repository.
 
 Public endpoints:
 
-- [Demo](https://kcd-website-demo.cloudnativehu.workers.dev/)
-- [Showcase](https://kcd-website-showcase.cloudnativehu.workers.dev/)
-- [Starter preview](https://kcd-website-template.cloudnativehu.workers.dev/)
+- [Demo](https://kcd-website-demo.mark-sagikazar.workers.dev/)
+- [Showcase](https://kcd-website-showcase.mark-sagikazar.workers.dev/)
+- [Starter preview](https://kcd-website-template.mark-sagikazar.workers.dev/)
 
 ## Local development
 
@@ -48,8 +48,8 @@ See the [demo README](../demo/README.md) and [showcase README](../showcase/READM
 3. **Configure separate Cloudflare Workers.** Use the
    [deployment guide](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/deployment.md)
    with the roots below. Set the demo host in `demo/phases.ts` to
-   `kcd-website-demo.cloudnativehu.workers.dev`, and the showcase `location`
-   to `https://kcd-website-showcase.cloudnativehu.workers.dev/`.
+   `kcd-website-demo.mark-sagikazar.workers.dev`, and the showcase `location`
+   to `https://kcd-website-showcase.mark-sagikazar.workers.dev/`.
    The showcase still needs a `wrangler.jsonc` serving `./_site` with the
    same HTML/404 handling as the demo. Give each Worker its own name.
 4. **Check the first-run journey.** Visit the public sites, create a repo from

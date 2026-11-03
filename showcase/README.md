@@ -1,7 +1,7 @@
 # The showcase: the theme's components and shapes
 
-**[Browse the showcase](https://kcd-website-showcase.cloudnativehu.workers.dev/)** ·
-[Live event demo](https://kcd-website-demo.cloudnativehu.workers.dev/) ·
+**[Browse the showcase](https://kcd-website-showcase.mark-sagikazar.workers.dev/)** ·
+[Live event demo](https://kcd-website-demo.mark-sagikazar.workers.dev/) ·
 [Create your website](https://github.com/sagikazarmark/kcd-website-template/generate) ·
 [Customization guide](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/customization.md)
 

@@ -1,7 +1,7 @@
 # Live demo: a KCD website from announcement to recap
 
-**[Visit the demo](https://kcd-website-demo.cloudnativehu.workers.dev/)** ·
-[Feature showcase](https://kcd-website-showcase.cloudnativehu.workers.dev/) ·
+**[Visit the demo](https://kcd-website-demo.mark-sagikazar.workers.dev/)** ·
+[Feature showcase](https://kcd-website-showcase.mark-sagikazar.workers.dev/) ·
 [Create your website](https://github.com/sagikazarmark/kcd-website-template/generate) ·
 [Organizer handbook](https://github.com/sagikazarmark/kcd-website-template)
 
@@ -108,7 +108,7 @@ Deploy with Cloudflare Workers static assets over `_site/` (`wrangler.jsonc`).
 Set the root directory to `demo`, the
 build command to `npm run build` and the deploy command
 to `npx wrangler deploy`. Before publishing, set `host` in `phases.ts` to
-`kcd-website-demo.cloudnativehu.workers.dev`. See the
+`kcd-website-demo.mark-sagikazar.workers.dev`. See the
 [deployment guide](https://github.com/sagikazarmark/kcd-website-template/blob/main/docs/deployment.md) for branch previews.
 
 For a local deployment build, run `npm ci` first. The npm build script sets

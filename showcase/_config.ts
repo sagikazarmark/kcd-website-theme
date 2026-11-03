@@ -13,7 +13,7 @@ import { defaultRequired } from "kcd-theme/schema/mod.ts";
 
 const site = lume({
   src: "src",
-  location: new URL("https://kcd-demo.example"),
+  location: new URL("https://kcd-website-showcase.mark-sagikazar.workers.dev/"),
 });
 
 site.use(kcd({

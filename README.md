@@ -8,11 +8,11 @@ announcement to the final recap. Built with [Lume](https://lume.land/) and
 
 | Explore | What you'll find |
 | --- | --- |
-| **[🌍 Visit the live demo](https://kcd-website-demo.cloudnativehu.workers.dev/)** | A working website for the fictional **KCD Your City 2099**. Follow it from announcement through tickets, the agenda and the post-event recap. |
-| **[🎨 Browse the feature showcase](https://kcd-website-showcase.cloudnativehu.workers.dev/)** | Home page layouts, components, timetable, galleries and more, side by side. |
+| **[🌍 Visit the live demo](https://kcd-website-demo.mark-sagikazar.workers.dev/)** | A working website for the fictional **KCD Your City 2099**. Follow it from announcement through tickets, the agenda and the post-event recap. |
+| **[🎨 Browse the feature showcase](https://kcd-website-showcase.mark-sagikazar.workers.dev/)** | Home page layouts, components, timetable, galleries and more, side by side. |
 | **[🚀 Create your website](https://github.com/sagikazarmark/kcd-website-template/generate)** | Create a repository from the [template](https://github.com/sagikazarmark/kcd-website-template), personalize it and deploy. |
 
-Want to see exactly what you start with? [Preview the starter website](https://kcd-website-template.cloudnativehu.workers.dev/).
+Want to see exactly what you start with? [Preview the starter website](https://kcd-website-template.mark-sagikazar.workers.dev/).
 
 ## Highlights
 
